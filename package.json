@@ -10,9 +10,6 @@
     "postinstall": "nuxt prepare",
     "deploy-fb": "cd .output/server && rd /s /q node_modules && npm i && cd .. && firebase deploy"
   },
-  "engines": {
-    "node": ">=18.18.0 <19.0.0"
-  },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/node": "^18.17.3",
