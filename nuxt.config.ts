@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  nitro: {
+    preset: "firebase",
+  },
+  devtools: { enabled: false },
   // Css
   css: [
     "vuetify/lib/styles/main.sass",
@@ -15,9 +18,4 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
   modules: ["@pinia/nuxt"],
-  // $production: {
-  //   routeRules: {
-  //     "/**": { ssr: true },
-  //   },
-  // },
 });
