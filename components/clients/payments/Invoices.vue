@@ -1,0 +1,203 @@
+<template>
+  <div class="dashboard_banners_listing">
+    <div class="page_toolbar d-flex align-center justify-space-between">
+      <div class="toolbar_btns">
+        <v-btn width="20" size="sm" elevation="0" color="transparent">
+          <v-icon color="white" size="25">mdi-printer</v-icon>
+        </v-btn>
+      </div>
+      <v-breadcrumbs :items="items" dir="rtl" class="pa-0 mb">
+        <template v-slot:title="{ item }">
+          {{ item.title.toUpperCase() }}
+        </template>
+      </v-breadcrumbs>
+    </div>
+    <v-container class="page_container" fluid>
+      <v-row v-if="invoices" class="px-4 mt-1">
+        <v-col cols="12" class="px-0">
+          <ClientsPaymentsFilter
+            class="mb-7"
+            :loading="loading"
+            @filterData="getData"
+            :reFilter="reFilter"
+            @refiltered="(reFilter = false), (selected = [])"
+          />
+        </v-col>
+        <v-col cols="12" class="section_container dashboard_table pa-0">
+          <v-data-table-server
+            :headers="headers"
+            :items="invoices.content"
+            :loading="loading"
+            v-model:items-per-page="perPage"
+            v-model="selected"
+            v-model:page="page"
+            :items-length="invoices.totalElements ? invoices.totalElements : 0"
+            no-data-text="لايوجد بيانات"
+            show-current-page
+            id="clients_payments"
+            return-object
+            :show-select="
+              invoices.content && invoices.content.length ? true : false
+            "
+          >
+            <!-- <template v-slot:bottom>
+              <span class="d-none"></span>
+            </template> -->
+            <template v-slot:loading>
+              <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
+            </template>
+            <template v-slot:item.index="{ item }">
+              {{ item.index + 1 }}
+            </template>
+            <template v-slot:item.invoiceDate="{ item }">
+              <p>
+                {{ moment(item.selectable.date).format("DD/MM/YYYY") }} <br />
+                {{ moment(item.selectable.date).format("hh:mm") }}
+              </p>
+            </template>
+            <template v-slot:item.totalCompanyDues="{ item }">
+              <p>
+                {{ Number(item.selectable.totalCompanyDues).toFixed(2) }}
+              </p>
+            </template>
+            <template v-slot:item.paied="{ item }">
+              <p>
+                {{ Number(item.selectable.paied).toFixed(2) }}
+              </p>
+            </template>
+            <template v-slot:item.remaining="{ item }">
+              <p>
+                {{ Number(item.selectable.remaining).toFixed(2) }}
+              </p>
+            </template>
+
+            <template v-slot:item.isFullPayed="{ item }">
+              <v-chip color="green" label v-if="item.selectable.isFullPayed"
+                >مكتمل</v-chip
+              >
+              <v-chip color="red" label v-if="!item.selectable.isFullPayed"
+                >غير مكتمل</v-chip
+              >
+            </template>
+            <template v-slot:no-data>
+              <div>لايوجد بيانات</div>
+            </template>
+          </v-data-table-server>
+          <div class="text-end my-5 me-5" v-if="selected.length">
+            <v-btn color="green" @click="openPopup = true">دفع</v-btn>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+    <ClientsPaymentsPayNow
+      v-if="openPopup"
+      :openPopup="openPopup"
+      @closePopup="openPopup = false"
+      :selected="selected"
+      @regetData="reFilter = true"
+      :selectedGranary="selectedGranary"
+    />
+  </div>
+</template>
+<script setup>
+import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
+import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
+import moment from "moment";
+
+// Local Data
+const page = ref(1);
+const perPage = ref(10);
+
+const headers = ref([
+  { title: "رقم", key: "index" },
+  { title: "التاريخ", key: "date" },
+  { title: "اجمالي الكمية", key: "totalQuantitySupplied" },
+  { title: "اجمالي القيمة", key: "totalCompanyDues" },
+  { title: "القيمة المدفوعة", key: "paied" },
+  { title: "القيمة المتبقية", key: "remaining" },
+  { title: "حالة الدفع", key: "isFullPayed" },
+]);
+
+const items = [
+  {
+    title: "الرئيسية",
+    disabled: false,
+    to: {
+      name: "index",
+    },
+  },
+  {
+    title: "مستحقات الشركة",
+    disabled: true,
+  },
+];
+
+const selected = ref([]);
+const openPopup = ref(false);
+const reFilter = ref(false);
+const selectedGranary = ref("");
+const selectedClient = ref("");
+const fromDate = ref("");
+const toDate = ref("");
+
+// Props
+const props = defineProps(["invoices", "loading", "suppliers", "granaries"]);
+
+// Emits
+const emits = defineEmits(["regetItems", "filterData"]);
+
+// Methods
+const getData = (event) => {
+  selectedGranary.value = event.granaryId;
+  selectedClient.value = event.clientID;
+  fromDate.value = event.FromDate;
+  toDate.value = event.ToDate;
+  selected.value = [];
+  emits("filterData", {
+    ...event,
+    limit: perPage.value,
+    page: page.value,
+  });
+};
+
+watch(
+  () => page.value,
+  (newVal) => {
+    emits("filterData", {
+      FromDate: fromDate.value,
+      ToDate: toDate.value,
+      clientID: selectedClient.value,
+      granaryId: selectedGranary.value,
+      page: newVal,
+      limit: perPage.value,
+    });
+  }
+);
+
+watch(
+  () => perPage.value,
+  (newVal) => {
+    emits("filterData", {
+      FromDate: fromDate.value,
+      ToDate: toDate.value,
+      clientID: selectedClient.value,
+      granaryId: selectedGranary.value,
+      page: page.value,
+      limit: newVal,
+    });
+  }
+);
+</script>
+
+<style lang="scss">
+#clients_payments {
+  .v-data-table-header__content span {
+    font-size: 14px !important;
+    white-space: nowrap;
+  }
+  td {
+    white-space: nowrap;
+    font-size: 14px;
+  }
+}
+</style>

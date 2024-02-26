@@ -1,0 +1,325 @@
+// Reset Elements
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Vars
+// Colors
+$titleColor: #000000;
+$tdColor: black;
+$headerColor: #dee5f1;
+$bodyColor: #ffffff;
+$btnColor: #3c3d3d;
+
+// Font
+$thSize: 16px;
+$thWeight: 500;
+$tdSize: 14px;
+$tdWeight: 500;
+
+* {
+  font-family: Cairo, sans-serif;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 5px;
+    width: 5px;
+    background-color: rgb(189, 189, 189);
+  }
+  &::-webkit-scrollbar-track {
+    width: 5px;
+    height: 5px;
+    background-color: rgb(255, 255, 255);
+    border-left: 1px solid rgb(189, 189, 189);
+  }
+}
+.v-main {
+  .page_heading {
+    h2 {
+      color: #333333;
+      font-size: 22px !important;
+      font-weight: 900;
+    }
+  }
+  background-color: $bodyColor !important;
+  .table_header {
+    background-color: $headerColor !important;
+    padding: 15px 25px 10px;
+    align-items: center;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.272);
+  }
+  .section_container {
+    box-shadow: 0px 0px 7px -2px #00000051;
+    border-radius: 15px;
+    padding: 0 10px 0;
+    overflow: hidden;
+  }
+  .add_btn {
+    background-color: $btnColor;
+    color: white;
+    font-weight: 900;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+// Table Styling
+.main_title {
+  font-weight: 900;
+  color: $titleColor;
+}
+
+.v-navigation-drawer__content {
+  .router-link-active.router-link-exact-active {
+    background-color: $btnColor !important;
+    li {
+      background-color: $btnColor !important;
+      color: white;
+    }
+  }
+}
+
+.v-table {
+  background-color: white !important;
+  padding: 0 !important;
+  padding-bottom: 20px !important;
+  .v-table__wrapper {
+    direction: rtl;
+  }
+  .v-data-table-header__content {
+    font-weight: 300;
+    color: black !important;
+    text-align: start;
+    span {
+      font-weight: 900;
+      color: black !important;
+      text-align: start;
+      font-size: 15px;
+    }
+  }
+
+  .v-data-table-footer {
+    background-color: $bodyColor !important;
+    margin-top: 20px;
+  }
+
+  th {
+    color: rgb(64, 64, 64) !important;
+    background-color: #dee5f1 !important;
+    padding: 0 20px !important;
+  }
+  td {
+    background-color: $bodyColor !important;
+    font-weight: 700;
+    padding: 0 20px !important;
+    font-size: 12px;
+  }
+  tr {
+    &:nth-child(even) {
+      background-color: #f5f7fb !important;
+      td {
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+// Table Styling
+
+// Layout Styling
+.v-toolbar,
+.v-navigation-drawer {
+  .v-card {
+    background-color: transparent !important;
+  }
+}
+// Layout Styling
+
+// Dialog Styles
+.v-list {
+  .v-icon--size-default {
+    margin-inline-start: 15px !important;
+  }
+}
+.v-dialog {
+  .v-card {
+    border-radius: 10px !important;
+    .v-card-title {
+      background-color: $headerColor !important;
+      padding: 15px !important;
+      font-weight: bold;
+      letter-spacing: 0;
+    }
+    form {
+      background-color: $bodyColor !important;
+    }
+  }
+  button {
+    font-weight: 900 !important;
+  }
+}
+// Dialog Styles
+
+// Form Styling
+.err_msg {
+  color: indianred;
+  font-size: 13px;
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.err_field {
+  border: 1px solid indianred !important;
+  outline: 1px solid indianred !important;
+  font-size: 15px;
+  font-weight: bold;
+  &::placeholder {
+    color: indianred !important;
+  }
+}
+.field_container {
+  label {
+    font-weight: 900;
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+  .input_parent {
+    input,
+    textarea,
+    select {
+      border: 1px solid rgb(135, 135, 135);
+      outline: none;
+      border-radius: 8px;
+      padding: 8px 20px;
+      width: 100%;
+      padding-right: 40px;
+      font-size: 13px;
+      &::placeholder {
+        color: rgba(0, 0, 0, 0.495);
+      }
+    }
+    i {
+      right: 10px;
+      top: 45%;
+      transform: translateY(-50%);
+      color: rgba(102, 102, 102, 0.607);
+    }
+  }
+}
+
+.v-breadcrumbs-item {
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+// SNackBar
+.v-overlay__content.v-snackbar__wrapper {
+  direction: rtl;
+}
+
+.v-snackbar__content {
+  margin-right: 0 !important;
+}
+
+.v-autocomplete .v-field--dirty .v-autocomplete__selection {
+  font-size: 13px !important;
+  padding-bottom: 7px;
+}
+
+.v-select,
+.v-autocomplete,
+.v-select--multiple {
+  position: relative;
+  z-index: 1;
+  border-radius: 8px !important;
+  input {
+    border: none !important;
+    outline: none !important;
+    top: 0;
+    text-align: end;
+    padding-right: 0 !important;
+    padding-top: 7px;
+    padding-bottom: 28px !important;
+    font-size: 13px;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.495) !important;
+      font-weight: bold !important;
+      opacity: 1 !important;
+    }
+  }
+  .v-input__control {
+    height: 37px;
+    outline: none !important;
+    padding: 0 !important;
+  }
+  .v-field__input {
+    outline: none !important;
+    padding-top: 0 !important;
+    justify-content: end;
+  }
+  &.err_field {
+    input {
+      outline: none !important;
+      font-weight: bold;
+      &::placeholder {
+        color: indianred !important;
+        opacity: 1 !important;
+      }
+    }
+  }
+  .v-field__overlay {
+    border: 1px solid rgb(135, 135, 135) !important;
+  }
+  .v-field__outline__start {
+    display: none;
+  }
+  .v-field__outline__end {
+    display: none;
+  }
+  .mdi-menu-down.v-autocomplete__menu-icon,
+  .mdi-menu-down.v-select__menu-icon {
+    opacity: 0;
+  }
+}
+
+input[type="datetime-local"] {
+    font-size: 13px !important;
+    padding: 6.5px 20px !important;
+    
+  &::-webkit-calendar-picker-indicator {
+    z-index: 2;
+    right: 10px !important;
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+  }
+}
+
+.custom_placeholer {
+  position: absolute;
+  top: 50%;
+  right: 43px;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.v-data-table-footer__items-per-page {
+  .v-field__input {
+    padding-top: 7px !important;
+    padding-right: 0px !important;
+  }
+}
+
+.page_toolbar {
+  background: #1a8e5f;
+  color: white;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+}
