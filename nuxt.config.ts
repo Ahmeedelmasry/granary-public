@@ -2,7 +2,12 @@
 export default defineNuxtConfig({
   nitro: {
     preset: "firebase",
+    compressPublicAssets: true,
   },
+  // app: {
+  //   baseURL: "/",
+  // },
+  ssr: true,
   devtools: { enabled: false },
   // Css
   css: [

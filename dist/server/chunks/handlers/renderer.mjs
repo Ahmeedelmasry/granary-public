@@ -2,7 +2,7 @@ import { createRenderer } from 'vue-bundle-renderer/runtime';
 import { eventHandler, setResponseStatus, getQuery, createError } from 'h3';
 import { stringify, uneval } from 'devalue';
 import { renderToString } from 'vue/server-renderer';
-import { u as useNitroApp, a as useRuntimeConfig, g as getRouteRules } from '../nitro/node-server.mjs';
+import { u as useNitroApp, a as useRuntimeConfig, g as getRouteRules } from '../nitro/firebase.mjs';
 import { joinURL } from 'ufo';
 
 function defineRenderHandler(handler) {

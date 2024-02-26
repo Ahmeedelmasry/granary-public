@@ -17,19 +17,14 @@ import '@unhead/shared';
 import 'mitt';
 import 'defu';
 import 'axios';
-import '../../nitro/node-server.mjs';
+import '../../nitro/firebase.mjs';
 import 'node-fetch-native/polyfill';
-import 'node:http';
-import 'node:https';
+import 'firebase-functions';
 import 'unenv/runtime/fetch/index';
 import 'scule';
 import 'klona';
 import 'unstorage';
 import 'radix3';
-import 'node:fs';
-import 'node:url';
-import 'pathe';
-import 'http-graceful-shutdown';
 import './AppSideDrawer-6f452c96.mjs';
 
 const _sfc_main = {

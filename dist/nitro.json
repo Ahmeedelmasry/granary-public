@@ -1,7 +1,7 @@
 {
-  "date": "2024-02-26T00:31:28.589Z",
-  "preset": "node-server",
+  "date": "2024-02-26T21:43:52.837Z",
+  "preset": "firebase",
   "commands": {
-    "preview": "node ./server/index.mjs"
+    "deploy": "npx firebase deploy"
   }
 }

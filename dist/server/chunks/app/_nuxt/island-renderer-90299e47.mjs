@@ -16,19 +16,14 @@ import 'mitt';
 import 'vue/server-renderer';
 import 'defu';
 import 'axios';
-import '../../nitro/node-server.mjs';
+import '../../nitro/firebase.mjs';
 import 'node-fetch-native/polyfill';
-import 'node:http';
-import 'node:https';
+import 'firebase-functions';
 import 'unenv/runtime/fetch/index';
 import 'scule';
 import 'klona';
 import 'unstorage';
 import 'radix3';
-import 'node:fs';
-import 'node:url';
-import 'pathe';
-import 'http-graceful-shutdown';
 
 const components_islands = {};
 const islandComponents = /* @__PURE__ */ Object.freeze({
