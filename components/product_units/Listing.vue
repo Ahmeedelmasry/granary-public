@@ -134,7 +134,7 @@ const items = [
     },
   },
   {
-    title: "وحدات التعبئة",
+    title: "وحدات الفوارغ",
     disabled: true,
   },
 ];

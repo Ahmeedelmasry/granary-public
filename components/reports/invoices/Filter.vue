@@ -15,7 +15,38 @@
               v-model="data.supplierId"
               :disabled="loading"
               placeholder="اختر المورد"
-            ></v-autocomplete>
+              @update:model-value="
+                supplierFound ? (supplierFound = false) : false
+              "
+              name="supplier"
+              id="supplier"
+              :custom-filter="
+                (item, text, obj) =>
+                  obj.title.toString().includes(text) ||
+                  obj.value.toString().includes(text)
+              "
+            >
+              <template v-slot:prepend-item>
+                <div
+                  class="d-flex ps-4 pe-2 py-2"
+                  style="justify-content: space-between"
+                >
+                  <span>الاسم</span>
+                  <span>الكود</span>
+                </div>
+              </template>
+
+              <template v-slot:item="{ props, item }">
+                <div
+                  v-bind="props"
+                  class="d-flex select_slot"
+                  style="justify-content: space-between"
+                >
+                  <v-list-item>{{ item.raw.name }}</v-list-item>
+                  <v-list-item>{{ item.raw.id }}</v-list-item>
+                </div>
+              </template>
+            </v-autocomplete>
             <v-icon class="position-absolute">mdi-account-cowboy-hat</v-icon>
           </div>
         </div>
@@ -84,10 +115,10 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
         <div class="field_container">
-          <label for="creationFromDate">تاريخ الانشاء (من)</label>
+          <label for="creationFromDate">من</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="creationFromDate"
               :disabled="loading"
               id="creationFromDate"
@@ -100,10 +131,10 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
         <div class="field_container">
-          <label for="creationToDate">تاريخ الانشاء (الي)</label>
+          <label for="creationToDate">الي</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="creationToDate"
               id="creationToDate"
               :disabled="loading"
@@ -114,12 +145,12 @@
           </div>
         </div>
       </v-col>
-      <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
+      <!-- <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
         <div class="field_container" dir="rtl">
           <label for="FromDate">تاريخ التوريد (من)</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="FromDate"
               id="FromDate"
               :disabled="loading"
@@ -135,7 +166,7 @@
           <label for="ToDate">تاريخ التوريد (الي)</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="ToDate"
               v-model="data.ToDate"
               :disabled="loading"
@@ -145,7 +176,7 @@
             <v-icon class="position-absolute">mdi-calendar</v-icon>
           </div>
         </div>
-      </v-col>
+      </v-col> -->
       <v-col
         cols="12"
         sm="6"
@@ -223,7 +254,9 @@ const submitFilter = () => {
       ? moment(data.value.creationFromDate).format("DD/MM/YYYY")
       : null,
     creationToDate: data.value.creationToDate
-      ? moment(data.value.creationToDate).format("DD/MM/YYYY")
+      ? moment(
+          Date.now(data.value.creationToDate) + 24 * 60 * 60 * 1000
+        ).format("DD/MM/YYYY")
       : null,
     FromDate: data.value.FromDate
       ? moment(data.value.FromDate).format("DD/MM/YYYY")

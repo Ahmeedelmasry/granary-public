@@ -1,5 +1,5 @@
 <template>
-  <div class="dues_supplier_payments">
+  <div class="dues_supplier_payments" v-if="selectedSupplier">
     <table
       class="w-100 text-right"
       dir="rtl"
@@ -13,9 +13,21 @@
       <tbody>
         <tr>
           <th class="pb-2">اسم المورد:</th>
-          <td class="pb-2">{{ selectedSupplier.supplier.name }}</td>
+          <td class="pb-2">
+            {{
+              selectedSupplier && selectedSupplier.supplier
+                ? selectedSupplier.supplier.name
+                : ""
+            }}
+          </td>
           <th class="pb-2">اسم الصومعة:</th>
-          <td class="pb-2">{{ selectedSupplier.granary.name }}</td>
+          <td class="pb-2">
+            {{
+              selectedSupplier && selectedSupplier.granary
+                ? selectedSupplier.granary.name
+                : ""
+            }}
+          </td>
         </tr>
         <tr>
           <th class="pb-2">المنتج:</th>

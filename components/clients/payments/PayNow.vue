@@ -6,7 +6,7 @@
           class="mb-0 text-center bg-grey-lighten-3 main_title font-safe-bold"
           style="font-size: 22px"
         >
-          اضافة مدفوعات جديدة
+          اضافة سدادات جديدة
         </v-card-title>
         <v-table class="text-center w-100" v-if="selected && selected.length">
           <thead>
@@ -21,7 +21,7 @@
                 style="background-color: #f3f3f3 !important"
                 class="text-center font-weight-bold"
               >
-                الكمية المتبقية
+                المبلغ المتبقي
               </th>
               <th
                 style="background-color: #f3f3f3 !important"
@@ -34,7 +34,7 @@
           <tbody v-for="(item, i) in selected" :key="item.id">
             <tr>
               <td style="font-size: 15px">{{ item.date }}</td>
-              <td style="font-size: 15px">{{ item.remaining }}</td>
+              <td style="font-size: 15px">{{ item.remaining.toFixed(2) }}</td>
               <td style="font-size: 15px">
                 <v-chip color="green" v-if="item.isFullPayed">مكتمل</v-chip>
                 <v-chip color="red" v-if="!item.isFullPayed">غير مكتمل</v-chip>
@@ -45,7 +45,7 @@
             <tr class="pt-5">
               <td style="font-weight: bold; font-size: 18px">الاجمالي</td>
               <td style="font-weight: bold; font-size: 18px">
-                {{ totalDues }}
+                {{ totalDues.toFixed(2) }}
               </td>
               <td></td>
             </tr>
@@ -80,10 +80,32 @@
                   </span>
                 </div>
               </td>
-              <td></td>
+              <td>
+                <v-radio-group v-model="data.transactionType" inline class="mt-9">
+                  <v-radio
+                    label="تحويل بنكي"
+                    class="mr-2"
+                    value="تحويل بنكي"
+                  ></v-radio>
+                  <v-radio label="شيك" value="شيك"></v-radio>
+                </v-radio-group>
+              </td>
             </tr>
           </tfoot>
         </v-table>
+        <div class="field_container">
+          <div class="input_parent px-5 text-end">
+            <label for="">اضافة ملاحظة</label>
+            <textarea
+              class="px-5 text-end"
+              style="width: 100%; resize: none"
+              placeholder="اضافة ملاحظة"
+              type="text"
+              v-model="data.notes"
+              :rows="5"
+            ></textarea>
+          </div>
+        </div>
         <div class="actions text-center mt-5">
           <v-btn
             color="red"
@@ -117,6 +139,8 @@ const clientModule = clientStore();
 // Local Data
 const data = ref({
   paymentAmount: null,
+  transactionType: "تحويل بنكي",
+  notes: null,
 });
 
 const dialog = ref(false);
@@ -156,6 +180,8 @@ const submitData = async () => {
       granary: {
         id: props.selectedGranary,
       },
+      transactionType: data.value.transactionType,
+      notes: data.value.notes,
     };
     btnLoading.value = true;
     const result = await clientModule.doPayClients(obj);

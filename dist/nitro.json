@@ -1,7 +1,0 @@
-{
-  "date": "2024-02-26T21:43:52.837Z",
-  "preset": "firebase",
-  "commands": {
-    "deploy": "npx firebase deploy"
-  }
-}

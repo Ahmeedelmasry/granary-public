@@ -6,7 +6,7 @@
           class="mb-0 text-center bg-grey-lighten-3 main_title font-safe-bold"
           style="font-size: 22px"
         >
-          اضافة مدفوعات جديدة
+          اضافة سدادات جديدة
         </v-card-title>
         <v-table class="text-center w-100" v-if="selected && selected.length">
           <thead>
@@ -21,7 +21,7 @@
                 style="background-color: #f3f3f3 !important"
                 class="text-center font-weight-bold"
               >
-                الكمية المتبقية
+                المبلغ المتبقي
               </th>
               <th
                 style="background-color: #f3f3f3 !important"

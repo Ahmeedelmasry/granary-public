@@ -67,7 +67,7 @@
           <label for="FromDate">من</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="FromDate"
               id="FromDate"
               :disabled="loading"
@@ -83,7 +83,7 @@
           <label for="ToDate">الي</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="ToDate"
               v-model="data.ToDate"
               :disabled="loading"
@@ -188,7 +188,9 @@ const submitFilter = async () => {
         ? moment(data.value.FromDate).format("DD/MM/YYYY")
         : null,
       ToDate: data.value.ToDate
-        ? moment(data.value.ToDate).format("DD/MM/YYYY")
+        ? moment(Date.now(data.value.ToDate) + 24 * 60 * 60 * 1000).format(
+            "DD/MM/YYYY"
+          )
         : null,
     };
     emits("filterData", obj);

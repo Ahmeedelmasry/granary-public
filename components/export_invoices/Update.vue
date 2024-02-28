@@ -55,20 +55,46 @@
                     <v-autocomplete
                       return-object
                       :items="suppliers.content"
-                      item-title="name"
                       item-value="id"
+                      item-title="name"
                       variant="outlined"
                       placeholder="اختر المورد"
                       name="supplier"
                       id="supplier"
                       v-model="data.supplier"
                       hide-details
+                      :custom-filter="
+                        (item, text, obj) =>
+                          obj.title.toString().includes(text) ||
+                          obj.value.id.toString().includes(text)
+                      "
                       :class="[
                         $v.$errors.find((el) => el.$property == 'supplier')
                           ? 'err_field'
                           : '',
                       ]"
-                    ></v-autocomplete>
+                    >
+                      <template v-slot:prepend-item>
+                        <div
+                          class="d-flex ps-4 pe-2 py-2"
+                          style="justify-content: space-between"
+                        >
+                          <span>الاسم</span>
+                          <span>الكود</span>
+                        </div>
+                      </template>
+
+                      <template v-slot:item="{ props, item }">
+                        <div
+                          v-bind="props"
+                          class="d-flex select_slot"
+                          style="justify-content: space-between"
+                        >
+                          <v-list-item>{{ item.raw.name }}</v-list-item>
+                          <v-list-item>{{ item.raw.id }}</v-list-item>
+                        </div>
+                      </template>
+                    </v-autocomplete>
                     <v-icon class="position-absolute"
                       >mdi-account-cowboy-hat
                     </v-icon>
@@ -150,7 +176,7 @@
                   <label for="date">التاريخ</label>
                   <div class="input_parent position-relative">
                     <input
-                      type="datetime-local"
+                      type="date"
                       name="date"
                       id="date"
                       v-model="data.date"
@@ -505,11 +531,11 @@
               </v-col>
               <v-col cols="12" sm="6" md="3" lg="">
                 <div class="field_container">
-                  <label for="totalPackingWeight">قيمة الاستمارة</label>
+                  <label for="totalPackingWeight">ضريبة دمغة</label>
                   <div class="input_parent position-relative">
                     <input
                       type="text"
-                      placeholder="قيمة الاستمارة"
+                      placeholder="ضريبة دمغة"
                       name="totalPackingWeight"
                       id="totalPackingWeight"
                       :value="getTaxes.docTax.value"
@@ -521,11 +547,11 @@
               </v-col>
               <v-col cols="12" sm="6" md="3" lg="">
                 <div class="field_container">
-                  <label for="totalPackingWeight">قيمة خصم الاردب</label>
+                  <label for="totalPackingWeight">ضريبة مهن زراعية</label>
                   <div class="input_parent position-relative">
                     <input
                       type="text"
-                      placeholder="قيمة خصم الاردب"
+                      placeholder="مهن زراعية"
                       name="totalPackingWeight"
                       id="totalPackingWeight"
                       :value="getTaxes.agroTax.value"
@@ -570,8 +596,10 @@
                       name="totalPackingWeight"
                       id="totalPackingWeight"
                       :value="
-                        invoicTotalTaxesCut
-                          ? totalClearWeight * data.productType.pricePerKilo
+                        totalClearWeight && data.productType.pricePerKilo
+                          ? (
+                              totalClearWeight * data.productType.pricePerKilo
+                            ).toFixed(2)
                           : 0
                       "
                       disabled
@@ -592,8 +620,36 @@
                       disabled
                       :value="
                         invoicTotalTaxesCut
-                          ? totalClearWeight * data.productType.pricePerKilo -
-                            invoicTotalTaxesCut
+                          ? (
+                              totalClearWeight * data.productType.pricePerKilo -
+                              invoicTotalTaxesCut
+                            ).toFixed(2)
+                          : 0
+                      "
+                    />
+                    <v-icon class="position-absolute">mdi-currency-usd </v-icon>
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="12" sm="6" md="3" lg="">
+                <div class="field_container">
+                  <label for="totalPackingWeight"
+                    >القيمة بعد الخصم والتعتيق</label
+                  >
+                  <div class="input_parent position-relative">
+                    <input
+                      type="text"
+                      placeholder="القيمة بعد الخصم والتعتيق"
+                      name="totalPackingWeight"
+                      id="totalPackingWeight"
+                      disabled
+                      :value="
+                        invoicTotalTaxesCut
+                          ? parseInt(
+                              totalClearWeight * data.productType.pricePerKilo -
+                                invoicTotalTaxesCut -
+                                agingTotalPrice
+                            )
                           : 0
                       "
                     />
@@ -679,7 +735,7 @@ const data = ref({
   documentNumber: null,
   carNumber: null,
   supplier: null,
-  date: null,
+  date: moment(new Date()).format("YYYY-MM-DD"),
   product: null,
   productType: null,
   productMeasuringUnit: null,
@@ -735,8 +791,8 @@ const roles = ref({
     required: helpers.withMessage("هذا الحقل مطلوب", required),
     numeric: helpers.withMessage("هذا الحقل يقبل ارقام فقط", numeric),
     between: helpers.withMessage(
-      "يجب ان يكون الرقم اكبر من 0",
-      between(1, 10000000)
+      "يجب ان يكون الرقم اكبر من او يساوي 0",
+      between(0, 10000000)
     ),
   },
 });
@@ -783,16 +839,14 @@ const getTaxes = computed(() => {
     agroTax: 0,
   };
   if (taxes.value.content && taxes.value.content.length) {
-    obj.docTax = taxes.value.content.find((el) => el.name == "قيمة الاستمارة");
-    obj.agroTax = taxes.value.content.find(
-      (el) => el.name == "قيمة الخصم لكل اردب"
-    );
+    obj.docTax = taxes.value.content.find((el) => el.name == "ضريبة دمغة");
+    obj.agroTax = taxes.value.content.find((el) => el.name == "مهن زراعية");
   }
   return obj;
 });
 
 const totalInvoiceArdabs = computed(() => {
-  if (Number(agingTotalPrice.value)) {
+  if (Number(totalClearWeight.value)) {
     const totalArdabs =
       Number(totalClearWeight.value) / data.value.productType.weightPerArdab;
 
@@ -802,13 +856,12 @@ const totalInvoiceArdabs = computed(() => {
 });
 
 const invoicTotalTaxesCut = computed(() => {
-  if (Number(agingTotalPrice.value)) {
-    const ardabTaxTotal =
+  if (Number(totalClearWeight.value)) {
+    const ardabAgroTaxTotal =
       totalInvoiceArdabs.value * getTaxes.value.agroTax.value;
 
-    const subTotal =
-      agingTotalPrice.value + ardabTaxTotal + getTaxes.value.docTax.value;
-    return Math.ceil(subTotal);
+    const subTotal = getTaxes.value.docTax.value + ardabAgroTaxTotal;
+    return subTotal.toFixed(2);
   }
   return 0;
 });
@@ -865,20 +918,47 @@ const submitData = async () => {
       formPrice: getTaxes.value.docTax.value,
       pricePerArdab: getTaxes.value.agroTax.value,
       totalArdab: totalInvoiceArdabs.value,
-      totalPrice:
-        totalClearWeight.value *
-        parseFloat(data.value.productType.pricePerKilo),
-      totalDiscount: invoicTotalTaxesCut.value,
-      totalAfterDiscount:
+      totalPrice: (
+        totalClearWeight.value * parseFloat(data.value.productType.pricePerKilo)
+      ).toFixed(2),
+      totalDiscount: parseFloat(invoicTotalTaxesCut.value).toFixed(2),
+      totalDiscountWithAging: parseFloat(
+        invoicTotalTaxesCut.value + agingTotalPrice.value
+      ).toFixed(2),
+      totalAfterDiscount: parseFloat(
         totalClearWeight.value *
           parseFloat(data.value.productType.pricePerKilo) -
-        invoicTotalTaxesCut.value,
-      date: moment(new Date(data.value.date)).format("DD-MM-YYYY hh:mm:ss"),
+          invoicTotalTaxesCut.value
+      ).toFixed(2),
+      totalAfterDiscountWithAging: parseFloat(
+        totalClearWeight.value *
+          parseFloat(data.value.productType.pricePerKilo) -
+          invoicTotalTaxesCut.value -
+          agingTotalPrice.value
+      ).toFixed(2),
+      date: moment(new Date(data.value.date)).format("DD-MM-YYYY"),
     };
     const result = await invoicesModule.doAddInvoice(obj);
     if (result) {
+      localStorage.setItem(
+        "selectedItems",
+        JSON.stringify({
+          granary: data.value.granary,
+          product: data.value.product,
+          date: data.value.date,
+          unit: data.value.productUnit,
+        })
+      );
       emits("regetData");
-      dialog.value = false;
+      $v.value.$reset();
+      data.value.documentNumber = null;
+      data.value.carNumber = null;
+      data.value.supplier = null;
+      data.value.productMeasuringUnit = null;
+      data.value.carWeightWith = null;
+      data.value.carWeightWithOut = null;
+      data.value.totalPackingWeight = null;
+      data.value.agingPricePerTon = null;
     }
     btnLoading.value = false;
   }
@@ -892,6 +972,13 @@ onMounted(() => {
   productsModule.doGetProducts(0, 10000);
   productUnitsModule.doGetProductUnits(0, 10000);
   taxedModule.doGetTaxes(0, 10000);
+  if (localStorage.getItem("selectedItems")) {
+    const localData = JSON.parse(localStorage.getItem("selectedItems"));
+    data.value.granary = localData.granary;
+    data.value.product = localData.product;
+    data.value.date = localData.date;
+    data.value.productUnit = localData.unit;
+  }
   dialog.value = props.openPopup;
 });
 </script>

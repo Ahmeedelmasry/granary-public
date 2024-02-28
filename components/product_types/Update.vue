@@ -13,12 +13,12 @@
             <v-row dir="rtl">
               <v-col cols="12">
                 <div class="field_container">
-                  <label for="typeName">اسم نوع المنتج</label>
+                  <label for="typeName">اسم الفرز</label>
                   <div class="input_parent position-relative">
                     <input
                       type="text"
                       v-model="data.name"
-                      placeholder="اسم نوع المنتج"
+                      placeholder="اسم الفرز"
                       name="typeName"
                       id="typeName"
                       :class="

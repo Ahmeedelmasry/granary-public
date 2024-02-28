@@ -164,7 +164,7 @@
                 justify-content: flex-end;
               "
               append-icon="mdi-circle-medium"
-              title="انواع المنتج"
+              title="درجات الفرز"
               value="suppliers"
               :to="{ name: 'product_types' }"
             >
@@ -222,7 +222,7 @@
               :to="{ name: 'suppliers' }"
             >
             </v-list-item>
-            <v-list-item
+            <!-- <v-list-item
               style="
                 gap: 0px !important;
                 padding: 10px 40px 10px 0;
@@ -234,7 +234,7 @@
               value="measuring_units"
               :to="{ name: 'measuring_units' }"
             >
-            </v-list-item>
+            </v-list-item> -->
             <v-list-item
               style="
                 gap: 0px !important;
@@ -243,7 +243,7 @@
                 justify-content: flex-end;
               "
               append-icon="mdi-circle-medium"
-              title="وحدات التعبئة"
+              title="وحدات الفوارغ"
               value="product_units"
               :to="{ name: 'product_units' }"
             >

@@ -29,7 +29,7 @@ const loading = ref(true);
 const getData = async (page, limit) => {
   loading.value = true;
   await Promise.all([
-    measuringUnitsModule.doGetUnits(0, 10000),
+    // measuringUnitsModule.doGetUnits(0, 10000),
     productsModule.doGetProducts(page - 1, limit),
   ]);
   loading.value = false;

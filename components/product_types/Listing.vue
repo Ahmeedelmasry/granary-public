@@ -134,7 +134,7 @@ const items = [
     },
   },
   {
-    title: "فروزات المنتجات",
+    title: "درجات الفرز",
     disabled: true,
   },
 ];

@@ -202,6 +202,10 @@ a {
       &::placeholder {
         color: rgba(0, 0, 0, 0.495);
       }
+      &:disabled {
+        background-color: rgba(239, 239, 239, 0.504);
+        border-color: rgb(225, 225, 225);
+      }
     }
     i {
       right: 10px;
@@ -254,6 +258,11 @@ a {
       opacity: 1 !important;
     }
   }
+  &.v-autocomplete--multiple {
+    input {
+      padding-bottom: 0px !important;
+    }
+  }
   .v-input__control {
     height: 37px;
     outline: none !important;
@@ -289,10 +298,10 @@ a {
   }
 }
 
-input[type="datetime-local"] {
-    font-size: 13px !important;
-    padding: 6.5px 20px !important;
-    
+input[type="date"] {
+  font-size: 13px !important;
+  padding: 6.5px 20px !important;
+
   &::-webkit-calendar-picker-indicator {
     z-index: 2;
     right: 10px !important;
@@ -322,4 +331,11 @@ input[type="datetime-local"] {
   color: white;
   padding: 15px 20px;
   margin-bottom: 15px;
+}
+
+.select_slot {
+  &:hover {
+    background-color: rgb(225, 225, 225);
+    cursor: pointer;
+  }
 }

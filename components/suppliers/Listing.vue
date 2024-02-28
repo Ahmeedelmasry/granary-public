@@ -134,9 +134,10 @@ const items = [
 ];
 
 const headers = ref([
-  { title: "رقم", key: "index" },
+  { title: "رقم", key: "index", width: "10px" },
   { title: "اسم المورد", key: "name" },
   { title: "رقم الهاتف", key: "phone" },
+  { title: "رقم البطاقة", key: "nationalid" },
   { title: "اجراء", key: "actions" },
 ]);
 

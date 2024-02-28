@@ -48,8 +48,7 @@
             </template>
             <template v-slot:item.date="{ item }">
               <p>
-                {{ moment(item.selectable.date).format("DD/MM/YYYY") }} <br />
-                {{ moment(item.selectable.date).format("hh:mm") }}
+                {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
               </p>
             </template>
             <template v-slot:item.actions="{ item }">
@@ -129,7 +128,7 @@ const page = ref(1);
 const perPage = ref(10);
 
 const headers = ref([
-  { title: "رقم", key: "index" },
+  { title: "رقم", key: "index", width: "0px" },
   { title: "الصومعة", key: "granary.name" },
   { title: "المورد", key: "supplier.name" },
   { title: "قيمة السداد", key: "paid" },

@@ -51,8 +51,7 @@
             </template>
             <template v-slot:item.invoiceDate="{ item }">
               <p>
-                {{ moment(item.selectable.date).format("DD/MM/YYYY") }} <br />
-                {{ moment(item.selectable.date).format("hh:mm") }}
+                {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
               </p>
             </template>
             <template v-slot:item.totalCompanyDues="{ item }">

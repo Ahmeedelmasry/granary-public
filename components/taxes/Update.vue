@@ -24,8 +24,8 @@
                         toUpdate &&
                         toUpdate.selectable &&
                         toUpdate.selectable.name &&
-                        (toUpdate.selectable.name == 'قيمة الاستمارة' ||
-                          toUpdate.selectable.name == 'قيمة الخصم لكل اردب')
+                        (toUpdate.selectable.name == 'ضريبة دمغة' ||
+                          toUpdate.selectable.name == 'مهن زراعية')
                       "
                       id="typeName"
                       :class="

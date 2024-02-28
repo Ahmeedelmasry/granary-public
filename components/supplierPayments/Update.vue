@@ -35,7 +35,35 @@
                           ? 'err_field'
                           : ''
                       "
-                    ></v-autocomplete>
+                      name="supplier"
+                      id="supplier"
+                      :custom-filter="
+                        (item, text, obj) =>
+                          obj.title.toString().includes(text) ||
+                          obj.value.id.toString().includes(text)
+                      "
+                    >
+                      <template v-slot:prepend-item>
+                        <div
+                          class="d-flex ps-4 pe-2 py-2"
+                          style="justify-content: space-between"
+                        >
+                          <span>الاسم</span>
+                          <span>الكود</span>
+                        </div>
+                      </template>
+
+                      <template v-slot:item="{ props, item }">
+                        <div
+                          v-bind="props"
+                          class="d-flex select_slot"
+                          style="justify-content: space-between"
+                        >
+                          <v-list-item>{{ item.raw.name }}</v-list-item>
+                          <v-list-item>{{ item.raw.id }}</v-list-item>
+                        </div>
+                      </template>
+                    </v-autocomplete>
                     <v-icon class="position-absolute">mdi-store-24-hour</v-icon>
                   </div>
                 </div>
@@ -162,7 +190,7 @@
                   <label for="typeName">تاريخ السداد</label>
                   <div class="input_parent position-relative">
                     <input
-                      type="datetime-local"
+                      type="date"
                       name="insertDate"
                       id="insertDate"
                       :class="
@@ -269,7 +297,7 @@ const supplierFound = ref(false);
 
 const data = ref({
   amount: null,
-  date: null,
+  date: moment(new Date()).format("YYYY-MM-DD"),
   notes: null,
 });
 
@@ -340,11 +368,12 @@ const submitData = async () => {
       due: Number(supplierInvoice.value),
       paid: Number(data.value.amount),
       remain: Number(supplierInvoice.value) - Number(data.value.amount),
-      date: moment(new Date(data.value.date)).format("DD-MM-YYYY hh:mm:ss"),
+      date: moment(new Date(data.value.date)).format("DD-MM-YYYY"),
       notes: data.value.notes,
     };
     const result = await suppliersPaymentsModule.doAddPayment(obj);
     if (result) {
+      localStorage.setItem("supplierPayDate", data.value.date);
       emits("regetData");
       dialog.value = false;
     }
@@ -382,6 +411,9 @@ onMounted(() => {
       .split(":")
       .slice(0, 2)
       .join(":");
+  }
+  if (localStorage.getItem("supplierPayDate")) {
+    data.value.date = localStorage.getItem("supplierPayDate");
   }
 });
 </script>

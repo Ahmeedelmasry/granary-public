@@ -67,6 +67,37 @@
                   }}
                 </span>
               </v-col>
+              <v-col cols="12" md="6">
+                <div class="field_container">
+                  <label for="typeName">رقم البطاقة</label>
+                  <div class="input_parent position-relative">
+                    <input
+                      type="text"
+                      v-model="data.nationalid"
+                      placeholder="رقم البطاقة"
+                      name="phoneNum"
+                      id="phoneNum"
+                      :class="
+                        $v.$errors.find((el) => el.$property == 'nationalid')
+                          ? 'err_field'
+                          : ''
+                      "
+                    />
+                    <v-icon class="position-absolute" style="top: 18px"
+                      >mdi-card-account-details</v-icon
+                    >
+                  </div>
+                </div>
+                <span
+                  class="err_msg"
+                  v-if="$v.$errors.find((el) => el.$property == 'nationalid')"
+                >
+                  {{
+                    $v.$errors.find((el) => el.$property == "nationalid")
+                      .$message
+                  }}
+                </span>
+              </v-col>
             </v-row>
           </v-container>
           <div class="actions text-center">
@@ -105,6 +136,7 @@ const supplierModule = supplierStore();
 const data = ref({
   name: null,
   phone: null,
+  nationalid: null,
 });
 const dialog = ref(false);
 const btnLoading = ref(false);
@@ -121,6 +153,18 @@ const roles = ref({
     maxLength: helpers.withMessage(
       "هذا الحقل يجب ان يتكون من 11 رقم",
       maxLength(11)
+    ),
+  },
+  nationalid: {
+    required: helpers.withMessage("هذا الحقل مطلوب", required),
+    numeric: helpers.withMessage("هذا الحقل يقبل ارقام فقط", numeric),
+    minLength: helpers.withMessage(
+      "هذا الحقل يجب ان يتكون من 14 رقم",
+      minLength(14)
+    ),
+    maxLength: helpers.withMessage(
+      "هذا الحقل يجب ان يتكون من 14 رقم",
+      maxLength(14)
     ),
   },
 });
@@ -158,6 +202,7 @@ const submitData = async () => {
         id: props.toUpdate.selectable.id,
         name: data.value.name,
         phone: data.value.phone,
+        nationalid: data.value.nationalid,
         isLocked: false,
       });
 
@@ -169,6 +214,7 @@ const submitData = async () => {
       const result = await supplierModule.doAddSupplier({
         name: data.value.name,
         phone: data.value.phone,
+        nationalid: data.value.nationalid,
         isLocked: false,
       });
       if (result) {
@@ -186,6 +232,7 @@ onMounted(() => {
   if (props.toUpdate) {
     data.value.name = props.toUpdate.selectable.name;
     data.value.phone = props.toUpdate.selectable.phone;
+    data.value.nationalid = props.toUpdate.selectable.nationalid;
   }
 });
 </script>

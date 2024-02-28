@@ -67,7 +67,7 @@
           <label for="FromDate">من</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="FromDate"
               id="FromDate"
               :disabled="loading"

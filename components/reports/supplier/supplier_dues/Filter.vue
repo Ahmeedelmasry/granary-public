@@ -6,7 +6,7 @@
           <label for="supplierId">اختر المورد</label>
           <div class="input_parent position-relative">
             <v-autocomplete
-              item-title="name"
+            item-title="name"
               item-value="id"
               :items="suppliers.content"
               transition="slide-y-transition"
@@ -20,7 +20,35 @@
                   ? 'err_field'
                   : ''
               "
-            ></v-autocomplete>
+              name="supplier"
+              id="supplier"
+              :custom-filter="
+                (item, text, obj) =>
+                  obj.title.toString().includes(text) ||
+                  obj.value.toString().includes(text)
+              "
+            >
+              <template v-slot:prepend-item>
+                <div
+                  class="d-flex ps-4 pe-2 py-2"
+                  style="justify-content: space-between"
+                >
+                  <span>الاسم</span>
+                  <span>الكود</span>
+                </div>
+              </template>
+
+              <template v-slot:item="{ props, item }">
+                <div
+                  v-bind="props"
+                  class="d-flex select_slot"
+                  style="justify-content: space-between"
+                >
+                  <v-list-item>{{ item.raw.name }}</v-list-item>
+                  <v-list-item>{{ item.raw.id }}</v-list-item>
+                </div>
+              </template>
+            </v-autocomplete>
             <v-icon class="position-absolute">mdi-account-cowboy-hat</v-icon>
           </div>
           <span
@@ -63,10 +91,10 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="3">
         <div class="field_container" dir="rtl">
-          <label for="FromDate">تاريخ (من)</label>
+          <label for="FromDate">من</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="FromDate"
               id="FromDate"
               :disabled="loading"
@@ -79,10 +107,10 @@
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="3">
         <div class="field_container" dir="rtl">
-          <label for="ToDate">تاريخ (الي)</label>
+          <label for="ToDate">الي</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="ToDate"
               v-model="data.ToDate"
               :disabled="loading"
@@ -173,7 +201,9 @@ const submitFilter = async () => {
         ? moment(data.value.creationFromDate).format("DD/MM/YYYY")
         : null,
       creationToDate: data.value.creationToDate
-        ? moment(data.value.creationToDate).format("DD/MM/YYYY")
+        ? moment(
+            Date.now(data.value.creationToDate) + 24 * 60 * 60 * 1000
+          ).format("DD/MM/YYYY")
         : null,
       FromDate: data.value.FromDate
         ? moment(data.value.FromDate).format("DD/MM/YYYY")

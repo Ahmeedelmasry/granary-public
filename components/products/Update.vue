@@ -39,7 +39,7 @@
                   {{ $v.$errors.find((el) => el.$property == "name").$message }}
                 </span>
               </v-col>
-              <v-col cols="12" md="6" class="mt-0" v-if="productTypes.content">
+              <!-- <v-col cols="12" md="6" class="mt-0" v-if="productTypes.content">
                 <div class="field_container">
                   <label for="typeName">وحدات وزن المنتج</label>
                   <div class="input_parent position-relative">
@@ -82,8 +82,8 @@
                       .$message
                   }}
                 </span>
-              </v-col>
-              <v-col cols="12" class="mt-0" v-if="productTypes.content">
+              </v-col> -->
+              <v-col cols="12" md="6" class="mt-0" v-if="productTypes.content">
                 <div class="field_container">
                   <label for="typeName">فروزات المنتج</label>
                   <div class="input_parent position-relative">
@@ -129,7 +129,7 @@
           </v-container>
         </v-form>
 
-        <div style="max-height: 200px; overflow-y: auto">
+        <div style="max-height: 400px; overflow-y: auto">
           <v-table class="text-center w-100" v-if="data.productType.length">
             <thead>
               <tr>
@@ -269,9 +269,6 @@ const btnLoading = ref(false);
 const roles = ref({
   name: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
   productType: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
-  measuringUnits: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
-  },
 });
 
 // Props
@@ -372,7 +369,6 @@ const submitData = async () => {
         locked: props.toUpdate.selectable.locked,
         typePriceList: [],
         id: props.toUpdate.selectable.id,
-        measuringUnitList: [],
       };
 
       data.value.productType.forEach((el) => {
@@ -386,10 +382,6 @@ const submitData = async () => {
           productType: {
             id: el.id,
           },
-        });
-      });
-      data.value.measuringUnits.forEach((el) => {
-        obj.measuringUnitList.push({
           id: el.id,
         });
       });

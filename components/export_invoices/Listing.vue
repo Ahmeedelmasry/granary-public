@@ -48,8 +48,7 @@
               <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
             </template>
             <template v-slot:item.invoiceDate="{ item }">
-              {{ moment(item.selectable.date).format("DD/MM/YYYY") }} <br />
-              {{ moment(item.selectable.date).format("hh:mm") }}
+              {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
             </template>
             <template v-slot:item.productDetails="{ item }">
               {{ item.selectable.product.name }} /
@@ -134,7 +133,7 @@ const page = ref(1);
 const perPage = ref(10);
 
 const headers = ref([
-  { title: "رقم", key: "index" },
+  { title: "رقم", key: "index", width: "0px" },
   { title: "التاريخ", key: "invoiceDate" },
   { title: "الصومعة", key: "granary.name" },
   { title: "المورد", key: "supplier.name" },

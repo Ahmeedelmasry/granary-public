@@ -76,4 +76,7 @@ watch(
 .v-snackbar--vertical .v-snackbar__wrapper {
   align-items: baseline;
 }
+a:hover {
+  text-decoration: none !important;
+}
 </style>
