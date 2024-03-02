@@ -17,6 +17,7 @@
           elevation="0"
           color="transparent"
           class="ms-3"
+          v-print="printObj"
         >
           <v-icon color="white" size="25">mdi-printer</v-icon>
         </v-btn>
@@ -29,7 +30,12 @@
     </div>
     <v-container class="page_container" fluid>
       <v-row v-if="invoices" class="px-4">
-        <v-col cols="12" class="section_container dashboard_table pa-0">
+        <v-col
+          cols="12"
+          class="section_container dashboard_table pa-0"
+          id="printable"
+        >
+          <h1 dir="rtl" class="my-2 hide_till_print">فواتير التوريد</h1>
           <v-data-table-server
             :headers="headers"
             :items="invoices.content"
@@ -41,47 +47,78 @@
             show-current-page
             id="invoices_table"
           >
-            <template v-slot:item.index="{ item }">
-              {{ item.index + 1 }}
+            <template v-slot:headers>
+              <tr>
+                <th>رقم</th>
+                <th>التاريخ</th>
+                <th>الصومعه</th>
+                <th>المورد</th>
+                <th>المستند</th>
+                <th>رقم السيارة</th>
+                <th>منتج / فرز</th>
+                <th>قبل الخصم</th>
+                <th>بعد الخصم</th>
+                <th>بعد الخصم والتعتيق</th>
+              </tr>
+            </template>
+            <template v-slot:item="{ item }">
+              <tr>
+                <td>{{ item.index + 1 }}</td>
+                <td>
+                  {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
+                </td>
+                <td>
+                  {{ item.selectable.granary.name }}
+                </td>
+                <td>
+                  {{ item.selectable.supplier.name }}
+                </td>
+                <td>
+                  {{ item.selectable.documentNumber }}
+                </td>
+                <td>
+                  {{ item.selectable.carNumber }}
+                </td>
+                <td>
+                  {{ item.selectable.product.name }} /
+                  {{ item.selectable.productType.name }}
+                </td>
+                <td>
+                  {{ item.selectable.totalPrice.toFixed(2) }}
+                </td>
+                <td>
+                  {{ item.selectable.totalAfterDiscount.toFixed(2) }}
+                </td>
+                <td>
+                  {{ item.selectable.totalAfterDiscountWithAging.toFixed(2) }}
+                </td>
+                <!-- <td>
+                  <v-icon
+                    color="blue"
+                    style="cursor: pointer"
+                    @click="(toUpdate = item), (openUpdate = true)"
+                    >mdi-square-edit-outline</v-icon
+                  >
+                  <v-btn
+                    elevation="0"
+                    color="transparent"
+                    :loading="item.selectable.loading"
+                    :ripple="false"
+                  >
+                    <v-icon
+                      color="red"
+                      style="cursor: pointer"
+                      class="ml-2"
+                      size="23"
+                      @click="(toDelete = item.selectable), (openDelete = true)"
+                      >mdi-lock</v-icon
+                    >
+                  </v-btn>
+                </td> -->
+              </tr>
             </template>
             <template v-slot:loading>
-              <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
-            </template>
-            <template v-slot:item.invoiceDate="{ item }">
-              {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
-            </template>
-            <template v-slot:item.productDetails="{ item }">
-              {{ item.selectable.product.name }} /
-              {{ item.selectable.productType.name }}
-            </template>
-            <template v-slot:item.totalInvoicePrice="{ item }">
-              {{ item.selectable.totalPrice.toLocaleString() }}
-            </template>
-            <template v-slot:item.totalInvoicePriceAfterDiscount="{ item }">
-              {{ item.selectable.totalAfterDiscount.toLocaleString() }}
-            </template>
-            <template v-slot:item.actions="{ item }">
-              <v-icon
-                color="blue"
-                style="cursor: pointer"
-                @click="(toUpdate = item), (openUpdate = true)"
-                >mdi-square-edit-outline</v-icon
-              >
-              <v-btn
-                elevation="0"
-                color="transparent"
-                :loading="item.selectable.loading"
-                :ripple="false"
-              >
-                <v-icon
-                  color="red"
-                  style="cursor: pointer"
-                  class="ml-2"
-                  size="23"
-                  @click="(toDelete = item.selectable), (openDelete = true)"
-                  >mdi-lock</v-icon
-                >
-              </v-btn>
+              <v-skeleton-loader type="table-row@6"></v-skeleton-loader>
             </template>
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
@@ -142,6 +179,7 @@ const headers = ref([
   { title: "منتج / فرز", key: "productDetails" },
   { title: "قبل الخصم", key: "totalInvoicePrice" },
   { title: "بعد الخصم", key: "totalInvoicePriceAfterDiscount" },
+  { title: "بعد الخصم والتعتيق", key: "totalAfterDiscountWithAging" },
   // { title: "اجراء", key: "actions" },
 ]);
 
@@ -158,6 +196,24 @@ const items = [
     disabled: true,
   },
 ];
+
+// Print
+const printObj = ref({
+  id: "printable",
+  popTitle: " -",
+  extraCss:
+    "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
+  extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+  beforeOpenCallback(vue) {
+    console.log("Before Open");
+  },
+  openCallback(vue) {
+    console.log("Opened");
+  },
+  closeCallback(vue) {
+    console.log("After Close");
+  },
+});
 
 // Props
 const props = defineProps(["invoices", "loading"]);

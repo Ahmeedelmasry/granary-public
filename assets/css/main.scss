@@ -92,6 +92,9 @@ a {
   .v-table__wrapper {
     direction: rtl;
   }
+  th {
+    font-size: 15px;
+  }
   .v-data-table-header__content {
     font-weight: 300;
     color: black !important;
@@ -337,5 +340,36 @@ input[type="date"] {
   &:hover {
     background-color: rgb(225, 225, 225);
     cursor: pointer;
+  }
+}
+.hide_till_print {
+  display: none;
+}
+.hide_till_print_table {
+  display: none;
+}
+@media print {
+  .hide_on_print,
+  .v-data-table-footer {
+    display: none !important;
+  }
+  .v-table:not(#not_styled_prin) {
+    th,
+    td {
+      border: 1px solid #7f7f7f;
+      padding: 8px;
+      &:first-child {
+        border-left: none;
+      }
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+  .hide_till_print {
+    display: block !important;
+  }
+  .hide_till_print_table {
+    display: table-cell !important;
   }
 }

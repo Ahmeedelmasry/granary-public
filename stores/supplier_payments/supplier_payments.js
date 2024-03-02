@@ -43,11 +43,11 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
             mainStore().apiURL
           }/supplier/getSupplierTotals?page=${page}&size=${limit}${
             filters && filters.supplierId
-              ? `&supplierId=${filters && filters.supplierId}`
+              ? `&supplierId=${filters && filters.supplierId.id}`
               : ""
           }${
             filters && filters.granaryId
-              ? `&granaryId=${filters.granaryId}`
+              ? `&granaryId=${filters.granaryId.id}`
               : ""
           }${
             filters && filters.creationFromDate

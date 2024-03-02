@@ -6,20 +6,17 @@
           <label for="supplierId">اختر المورد</label>
           <div class="input_parent position-relative">
             <v-autocomplete
-            item-title="name"
+              item-title="name"
               item-value="id"
               :items="suppliers.content"
               transition="slide-y-transition"
               variant="outlined"
               hide-details
               v-model="data.supplierId"
+              auto-select-first
+              return-object
               :disabled="loading"
               placeholder="اختر المورد"
-              :class="
-                $v.$errors.find((el) => el.$property == 'supplierId')
-                  ? 'err_field'
-                  : ''
-              "
               name="supplier"
               id="supplier"
               :custom-filter="
@@ -51,12 +48,6 @@
             </v-autocomplete>
             <v-icon class="position-absolute">mdi-account-cowboy-hat</v-icon>
           </div>
-          <span
-            class="err_msg"
-            v-if="$v.$errors.find((el) => el.$property == 'supplierId')"
-          >
-            {{ $v.$errors.find((el) => el.$property == "supplierId").$message }}
-          </span>
         </div>
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="3">
@@ -66,6 +57,7 @@
             <v-autocomplete
               item-title="name"
               item-value="id"
+              return-object
               :items="granaries.content"
               transition="slide-y-transition"
               variant="outlined"
@@ -174,21 +166,18 @@ const data = ref({
 });
 
 const roles = ref({
-  supplierId: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
-  },
   granaryId: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
   },
 });
+
+let $v = useVuelidator(roles, data);
 
 // Props
 const props = defineProps(["loading"]);
 
 // Emits
 const emits = defineEmits(["filterData"]);
-
-let $v = useVuelidator(roles, data);
 
 // Methods
 const submitFilter = async () => {
@@ -212,9 +201,13 @@ const submitFilter = async () => {
         ? moment(data.value.ToDate).format("DD/MM/YYYY")
         : null,
     };
+    supplierChange(obj);
     emits("filterData", obj);
   }
 };
+
+// Injects
+const supplierChange = inject("supplierSelect");
 
 onMounted(() => {
   granaryModule.doGetGranaries(0, 10000);

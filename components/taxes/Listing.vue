@@ -16,6 +16,7 @@
           size="sm"
           elevation="0"
           color="transparent"
+          v-print="printObj"
           class="ms-3"
         >
           <v-icon color="white" size="25">mdi-printer</v-icon>
@@ -29,7 +30,12 @@
     </div>
     <v-container class="page_container" fluid>
       <v-row v-if="taxes" class="px-4">
-        <v-col cols="12" class="section_container dashboard_table">
+        <v-col
+          cols="12"
+          class="section_container dashboard_table"
+          id="printable"
+        >
+          <h1 dir="rtl" class="my-2 hide_till_print">انواع الضرايب</h1>
           <v-data-table-server
             :headers="headers"
             :items="taxes.content"
@@ -41,33 +47,45 @@
             show-current-page
           >
             <template v-slot:loading>
-              <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
+              <v-skeleton-loader type="table-row@6"></v-skeleton-loader>
             </template>
-            <template v-slot:item.index="{ item }">
-              {{ item.index + 1 }}
+            <template v-slot:headers>
+              <tr>
+                <th>رقم</th>
+                <th>اسم الضريبة</th>
+                <th>قيمة الضريبة</th>
+                <th class="hide_on_print">اجراء</th>
+              </tr>
             </template>
-            <template v-slot:item.actions="{ item }">
-              <v-icon
-                color="blue"
-                style="cursor: pointer"
-                @click="(toUpdate = item), (openUpdate = true)"
-                >mdi-square-edit-outline</v-icon
-              >
-              <v-btn
-                elevation="0"
-                color="transparent"
-                :loading="item.selectable.loading"
-                :ripple="false"
-              >
-                <v-icon
-                  color="red"
-                  style="cursor: pointer"
-                  class="ml-2"
-                  size="23"
-                  @click="(toDelete = item.selectable), (openDelete = true)"
-                  >mdi-lock</v-icon
-                >
-              </v-btn>
+            <template v-slot:item="{ item }">
+              <tr>
+                <td>{{ item.index + 1 }}</td>
+                <td>{{ item.selectable.name }}</td>
+                <td>{{ item.selectable.value }}</td>
+                <td class="hide_on_print">
+                  <v-icon
+                    color="blue"
+                    style="cursor: pointer"
+                    @click="(toUpdate = item), (openUpdate = true)"
+                    >mdi-square-edit-outline</v-icon
+                  >
+                  <v-btn
+                    elevation="0"
+                    color="transparent"
+                    :loading="item.selectable.loading"
+                    :ripple="false"
+                  >
+                    <v-icon
+                      color="red"
+                      style="cursor: pointer"
+                      class="ml-2"
+                      size="23"
+                      @click="(toDelete = item.selectable), (openDelete = true)"
+                      >mdi-lock</v-icon
+                    >
+                  </v-btn>
+                </td>
+              </tr>
             </template>
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
@@ -137,6 +155,24 @@ const headers = ref([
   { title: "قيمة الضريبة", key: "value" },
   { title: "اجراء", key: "actions" },
 ]);
+
+// Print
+const printObj = ref({
+  id: "printable",
+  popTitle: " -",
+  extraCss:
+    "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
+  extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+  beforeOpenCallback(vue) {
+    console.log("Before Open");
+  },
+  openCallback(vue) {
+    console.log("Opened");
+  },
+  closeCallback(vue) {
+    console.log("After Close");
+  },
+});
 
 // Props
 const props = defineProps(["taxes", "loading"]);

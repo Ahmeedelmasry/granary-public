@@ -2,7 +2,13 @@
   <div class="dashboard_banners_listing">
     <div class="page_toolbar d-flex align-center justify-space-between">
       <div class="toolbar_btns">
-        <v-btn width="20" size="sm" elevation="0" color="transparent">
+        <v-btn
+          width="20"
+          size="sm"
+          elevation="0"
+          color="transparent"
+          v-print="printObj"
+        >
           <v-icon color="white" size="25">mdi-printer</v-icon>
         </v-btn>
       </div>
@@ -21,7 +27,13 @@
             @filterData="emits('filterData', $event)"
           />
         </v-col>
-        <v-col cols="12" class="section_container dashboard_table pa-0">
+        <v-col
+          cols="12"
+          class="section_container dashboard_table pa-0"
+          id="printable"
+        >
+          <h1 dir="rtl" class="my-2 hide_till_print">تقرير سدادات الموردين</h1>
+
           <v-data-table-server
             :headers="headers"
             :items="payments.content"
@@ -32,6 +44,17 @@
             no-data-text="لايوجد بيانات"
             show-current-page
           >
+            <template v-slot:headers>
+              <tr>
+                <th>كود</th>
+                <th>المورد</th>
+                <th>الصومعة</th>
+                <th>قيمة السداد</th>
+                <th>المبلغ المتبقي</th>
+                <th>تاريخ السداد</th>
+                <th>ملاحظات</th>
+              </tr>
+            </template>
             <template v-slot:bottom>
               <span class="d-none"></span>
             </template>
@@ -39,7 +62,7 @@
               <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
             </template>
             <template v-slot:item.index="{ item }">
-              {{ item.index + 1 }}
+              {{ item.selectable.supplier.id }}
             </template>
             <template v-slot:item.date="{ item }">
               <p>
@@ -93,6 +116,24 @@ const items = [
     disabled: true,
   },
 ];
+
+// Print
+const printObj = ref({
+  id: "printable",
+  popTitle: " -",
+  extraCss:
+    "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
+  extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+  beforeOpenCallback(vue) {
+    console.log("Before Open");
+  },
+  openCallback(vue) {
+    console.log("Opened");
+  },
+  closeCallback(vue) {
+    console.log("After Close");
+  },
+});
 
 // Props
 const props = defineProps(["payments", "loading", "suppliers", "granaries"]);

@@ -17,6 +17,7 @@
           elevation="0"
           color="transparent"
           class="ms-3"
+          v-print="printObj"
         >
           <v-icon color="white" size="25">mdi-printer</v-icon>
         </v-btn>
@@ -29,7 +30,13 @@
     </div>
     <v-container fluid class="page_container">
       <v-row v-if="payments" class="px-4">
-        <v-col cols="12" class="section_container dashboard_table pa-0">
+        <v-col
+          cols="12"
+          class="section_container dashboard_table pa-0"
+          id="printable"
+        >
+          <h1 dir="rtl" class="my-2 hide_till_print">سدادات الموردين</h1>
+
           <v-data-table-server
             :headers="headers"
             :items="payments.content"
@@ -40,25 +47,42 @@
             no-data-text="لايوجد بيانات"
             show-current-page
           >
+            <template v-slot:headers>
+              <tr>
+                <th>كود</th>
+                <th>المورد</th>
+                <th>الصومعة</th>
+                <th>قيمة السداد</th>
+                <th>المبلغ المتبقي</th>
+                <th>تاريخ السداد</th>
+                <th>ملاحظات</th>
+                <!-- <th>اجراء</th> -->
+              </tr>
+            </template>
+            <template v-slot:item="{ item }">
+              <tr>
+                <td>{{ item.selectable.supplier.id }}</td>
+                <td>{{ item.selectable.supplier.name }}</td>
+                <td>{{ item.selectable.granary.name }}</td>
+                <td>{{ item.selectable.paid }}</td>
+                <td>{{ item.selectable.remain }}</td>
+                <td>
+                  {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
+                </td>
+                <td>{{ item.selectable.notes }}</td>
+              </tr>
+            </template>
             <template v-slot:loading>
-              <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
+              <v-skeleton-loader type="table-row@6"></v-skeleton-loader>
             </template>
-            <template v-slot:item.index="{ item }">
-              {{ item.index + 1 }}
-            </template>
-            <template v-slot:item.date="{ item }">
-              <p>
-                {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
-              </p>
-            </template>
-            <template v-slot:item.actions="{ item }">
-              <!-- <v-icon
+            <!-- <template v-slot:item.actions="{ item }"> -->
+            <!-- <v-icon
                 color="blue"
                 style="cursor: pointer"
                 @click="(toUpdate = item), (openUpdate = true)"
                 >mdi-square-edit-outline</v-icon
               > -->
-              <v-btn
+            <!-- <v-btn
                 elevation="0"
                 color="transparent"
                 :loading="item.selectable.loading"
@@ -72,8 +96,8 @@
                   @click="(toDelete = item.selectable), (openDelete = true)"
                   >mdi-lock</v-icon
                 >
-              </v-btn>
-            </template>
+              </v-btn> -->
+            <!-- </template> -->
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
             </template>
@@ -151,6 +175,24 @@ const items = [
     disabled: true,
   },
 ];
+
+// Print
+const printObj = ref({
+  id: "printable",
+  popTitle: " -",
+  extraCss:
+    "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
+  extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+  beforeOpenCallback(vue) {
+    console.log("Before Open");
+  },
+  openCallback(vue) {
+    console.log("Opened");
+  },
+  closeCallback(vue) {
+    console.log("After Close");
+  },
+});
 
 // Props
 const props = defineProps(["payments", "loading", "suppliers", "granaries"]);

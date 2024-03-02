@@ -13,6 +13,7 @@
               variant="outlined"
               hide-details
               v-model="data.supplierId"
+              auto-select-first
               :disabled="loading"
               placeholder="اختر المورد"
               @update:model-value="

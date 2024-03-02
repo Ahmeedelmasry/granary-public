@@ -62,6 +62,7 @@
                       name="supplier"
                       id="supplier"
                       v-model="data.supplier"
+                      auto-select-first
                       hide-details
                       :custom-filter="
                         (item, text, obj) =>
@@ -743,7 +744,7 @@ const data = ref({
   carWeightWithOut: null,
   productUnit: null,
   totalPackingWeight: null,
-  agingPricePerTon: null,
+  agingPricePerTon: 0,
 });
 const dialog = ref(false);
 const btnLoading = ref(false);
@@ -922,8 +923,9 @@ const submitData = async () => {
         totalClearWeight.value * parseFloat(data.value.productType.pricePerKilo)
       ).toFixed(2),
       totalDiscount: parseFloat(invoicTotalTaxesCut.value).toFixed(2),
-      totalDiscountWithAging: parseFloat(
-        invoicTotalTaxesCut.value + agingTotalPrice.value
+      totalDiscountWithAging: (
+        parseFloat(invoicTotalTaxesCut.value) +
+        parseFloat(agingTotalPrice.value)
       ).toFixed(2),
       totalAfterDiscount: parseFloat(
         totalClearWeight.value *

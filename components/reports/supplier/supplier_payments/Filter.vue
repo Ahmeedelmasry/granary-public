@@ -14,6 +14,7 @@
               hide-details
               v-model="data.supplierId"
               :disabled="loading"
+              auto-select-first
               placeholder="اختر المورد"
               name="supplier"
               id="supplier"

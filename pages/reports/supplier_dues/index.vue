@@ -5,7 +5,6 @@
       :loading="loading"
       :granaries="granaries.content"
       :suppliers="suppliers.content"
-      :selectedSupplier="supplierDues.invoices ? supplierDues.invoices.content[0]:{}"
       @regetItems="getData($event.page, $event.limit)"
       @filterData="getData(1, 1000, $event)"
     />

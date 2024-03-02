@@ -7,6 +7,7 @@
           size="sm"
           elevation="0"
           color="transparent"
+          v-print="printObj"
         >
           <v-icon color="white" size="25">mdi-printer</v-icon>
         </v-btn>
@@ -32,7 +33,13 @@
             @refiltered="(reFilter = false), (selected = [])"
           />
         </v-col>
-        <v-col cols="12" class="section_container dashboard_table pa-0">
+        <v-col
+          cols="12"
+          class="section_container dashboard_table pa-0"
+          id="printable"
+        >
+          <h1 dir="rtl" class="my-2 hide_till_print">تقرير مستحقات الشركة</h1>
+
           <v-data-table-server
             :headers="headers"
             :items="invoices.content"
@@ -144,6 +151,24 @@ const selected = ref([]);
 const openPopup = ref(false);
 const reFilter = ref(false);
 const selectedGranary = ref("");
+
+// Print
+const printObj = ref({
+  id: "printable",
+  popTitle: " -",
+  extraCss:
+    "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
+  extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+  beforeOpenCallback(vue) {
+    console.log("Before Open");
+  },
+  openCallback(vue) {
+    console.log("Opened");
+  },
+  closeCallback(vue) {
+    console.log("After Close");
+  },
+});
 
 // Props
 const props = defineProps(["invoices", "loading", "suppliers", "granaries"]);

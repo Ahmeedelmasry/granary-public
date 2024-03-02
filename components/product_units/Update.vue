@@ -101,6 +101,7 @@ watch(
 
 // Methods
 let $v = useVuelidator(roles, data);
+
 const submitData = async () => {
   if (props.toUpdate) {
     roles.value.image = {};

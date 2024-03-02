@@ -18,6 +18,7 @@
                     <v-autocomplete
                       item-title="name"
                       item-value="id"
+                      auto-select-first
                       :items="suppliers.content"
                       return-object
                       transition="slide-y-transition"

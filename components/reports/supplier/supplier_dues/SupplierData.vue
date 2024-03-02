@@ -1,5 +1,5 @@
 <template>
-  <div class="dues_supplier_payments" v-if="selectedSupplier">
+  <div class="dues_supplier_payments">
     <table
       class="w-100 text-right"
       dir="rtl"
@@ -9,44 +9,44 @@
         padding: 13px;
         background: #f0f0f0ba;
       "
+      id="not_styled_print"
     >
       <tbody>
         <tr>
           <th class="pb-2">اسم المورد:</th>
           <td class="pb-2">
-            {{
-              selectedSupplier && selectedSupplier.supplier
-                ? selectedSupplier.supplier.name
-                : ""
-            }}
+            {{ selectedSupplier ? selectedSupplier.name : "الكل" }}
           </td>
           <th class="pb-2">اسم الصومعة:</th>
           <td class="pb-2">
-            {{
-              selectedSupplier && selectedSupplier.granary
-                ? selectedSupplier.granary.name
-                : ""
-            }}
+            {{ selectedGranary ? selectedGranary.name : "الكل" }}
           </td>
         </tr>
         <tr>
-          <th class="pb-2">المنتج:</th>
-          <td class="pb-2">{{ supplierDues.productName }}</td>
-          <th>الكمية الموردة:</th>
-          <td>{{ supplierDues.totalAmount }}</td>
+          <th class="pb-2">تاريخ من</th>
+          <td class="pb-2">
+            {{ fromDate ? moment(fromDate).format("DD-MM-YYYY") : "الكل" }}
+          </td>
+          <th class="pb-2">تاريخ الي</th>
+          <td>
+            {{ toDate ? moment(toDate).format("DD-MM-YYYY") : "الكل" }}
+          </td>
         </tr>
-        <tr>
-          <th>اجمالي مبلغ التوريد:</th>
-          <td>{{ Math.round(supplierDues.totalPriceAfterDiscount) }}</td>
-        </tr>
-        <tr></tr>
       </tbody>
     </table>
   </div>
 </template>
 
 <script setup>
-const props = defineProps(["supplierDues", "selectedSupplier"]);
+import moment from "moment";
+
+const props = defineProps([
+  "supplierDues",
+  "selectedSupplier",
+  "selectedGranary",
+  "fromDate",
+  "toDate",
+]);
 </script>
 
 <style lang="scss">
