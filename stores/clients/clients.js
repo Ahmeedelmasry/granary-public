@@ -80,6 +80,37 @@ export const clientStore = defineStore("clientStore", {
         });
       return result;
     },
+    async doGetClientInvoicesReport(page, limit, filters) {
+      let result;
+      await axios
+        .get(
+          `${
+            mainStore().apiURL
+          }/companyDues/getCompanyDuesPayments?page=${page}&size=${limit}${
+            filters && filters.granaryId
+              ? `&granaryId=${filters.granaryId}`
+              : ""
+          }${
+            filters && filters.clientID ? `&clientId=${filters.clientID}` : ""
+          }${
+            filters && filters.FromDate ? `&FromDate=${filters.FromDate}` : ""
+          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}
+          ${
+            filters && filters.transactionType
+              ? `&transactionType=${filters.transactionType}`
+              : ""
+          }`
+        )
+        .then((res) => {
+          this.clientInvoices = res.data;
+          result = true;
+        })
+        .catch((err) => {
+          mainStore().callResponse(true, err.response.data.message, 2);
+          result = false;
+        });
+      return result;
+    },
     async doPayClients(data) {
       let result;
       await axios

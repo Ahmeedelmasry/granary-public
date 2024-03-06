@@ -91,7 +91,38 @@
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
             </template>
+            <template v-slot:bottom>
+              <span class="d-none"></span>
+            </template>
           </v-data-table-server>
+          <div
+            class="text-center pt-2 d-flex justify-space-between hide_on_print"
+            style="width: 60%"
+            v-if="!loading"
+          >
+            <div class="ps-5 d-flex align-center">
+              <v-select
+                v-model="perPage"
+                :items="[10, 50, 100, 500]"
+                variant="outlined"
+                hide-details
+              ></v-select>
+              <label
+                for=""
+                class="mb-2 d-block text-end ms-3 mt-1"
+                style="font-size: 12px"
+                >النتائج لكل صفحة</label
+              >
+            </div>
+            <v-pagination
+              v-model="page"
+              :length="
+                productTypes.totalElements
+                  ? Math.ceil(productTypes.totalElements / perPage)
+                  : 1
+              "
+            ></v-pagination>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -163,15 +194,15 @@ const printObj = ref({
   extraCss:
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
   extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
-  beforeOpenCallback(vue) {
-    console.log("Before Open");
-  },
-  openCallback(vue) {
-    console.log("Opened");
-  },
-  closeCallback(vue) {
-    console.log("After Close");
-  },
+  // beforeOpenCallback(vue) {
+  //   console.log("Before Open");
+  // },
+  // openCallback(vue) {
+  //   console.log("Opened");
+  // },
+  // closeCallback(vue) {
+  //   console.log("After Close");
+  // },
 });
 
 // Props

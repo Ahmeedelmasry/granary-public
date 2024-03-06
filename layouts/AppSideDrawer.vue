@@ -8,6 +8,7 @@
       class="pt-0 cart-drawer"
       location="right"
       theme="dark"
+      id="app_drawer"
     >
       <v-card class="px-0" elevation="0">
         <v-card-title
@@ -106,6 +107,20 @@
               "
               append-icon="mdi-circle-medium"
               class="text-white"
+              title="تقرير التوريدات 2"
+              value="reports-no-aging-invoices"
+              :to="{ name: 'reports-no-aging-invoices' }"
+            >
+            </v-list-item>
+            <v-list-item
+              style="
+                gap: 0px !important;
+                padding: 10px 40px 10px 0;
+                display: flex;
+                justify-content: flex-end;
+              "
+              append-icon="mdi-circle-medium"
+              class="text-white"
               title="تقرير مستحقات الموردين"
               value="reports-suppliers_dues"
               :to="{ name: 'reports-supplier_dues' }"
@@ -125,7 +140,7 @@
               :to="{ name: 'reports-suppliers_payments' }"
             >
             </v-list-item>
-            <!-- <v-list-item
+            <v-list-item
               style="
                 gap: 0px !important;
                 padding: 10px 40px 10px 0;
@@ -138,7 +153,7 @@
               value="reports-clients_dues"
               :to="{ name: 'reports-clients_dues' }"
             >
-            </v-list-item> -->
+            </v-list-item>
           </v-list-group>
           <v-list-group value="مدخلات البرنامج">
             <template v-slot:activator="{ props }">

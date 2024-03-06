@@ -124,15 +124,15 @@ const printObj = ref({
   extraCss:
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
   extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
-  beforeOpenCallback(vue) {
-    console.log("Before Open");
-  },
-  openCallback(vue) {
-    console.log("Opened");
-  },
-  closeCallback(vue) {
-    console.log("After Close");
-  },
+  // beforeOpenCallback(vue) {
+  //   console.log("Before Open");
+  // },
+  // openCallback(vue) {
+  //   console.log("Opened");
+  // },
+  // closeCallback(vue) {
+  //   console.log("After Close");
+  // },
 });
 
 // Props

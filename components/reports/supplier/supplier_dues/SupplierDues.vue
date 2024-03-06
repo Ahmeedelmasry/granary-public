@@ -64,7 +64,7 @@
                 <th>نقدية مستحقة</th>
                 <th>نقدية مسددة</th>
                 <th>نقدية متبقية</th>
-                <th class="hide_till_print_table">نقدية مستلمة</th>
+                <!-- <th class="hide_till_print_table">نقدية مستلمة</th> -->
                 <th class="hide_till_print_table">التوقيع</th>
               </tr>
             </template>
@@ -94,13 +94,13 @@
                 <td>
                   {{ item.selectable.totalCashRemaining }}
                 </td>
-                <td class="hide_till_print_table">
+                <!-- <td class="hide_till_print_table">
                   <div class="field_container">
                     <div class="input_parent">
                       <input type="text" style="width: 130px" />
                     </div>
                   </div>
-                </td>
+                </td> -->
                 <td class="hide_till_print_table">
                   <div class="field_container">
                     <div class="input_parent">
@@ -171,9 +171,9 @@ const printObj = ref({
   beforeOpenCallback(vue) {
     printLoading.value = true;
   },
-  openCallback() {
-    console.log("opened");
-  },
+  // openCallback() {
+  //   console.log("opened");
+  // },
   closeCallback(vue) {
     printLoading.value = false;
   },

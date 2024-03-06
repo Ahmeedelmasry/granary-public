@@ -1,5 +1,5 @@
 <template>
-  <div class="supplierPaymentReportFilter">
+  <div class="clientPaymentReportFilter">
     <v-row dir="rtl" class="pt-0">
       <v-col cols="12" sm="6" md="4" lg="3" class="pt-0">
         <div class="field_container">
@@ -12,6 +12,7 @@
               transition="slide-y-transition"
               variant="outlined"
               hide-details
+              @update:model-value="data.granaryId = null"
               v-model="data.clientID"
               placeholder="اختر العميل"
               :disabled="loading"
@@ -78,12 +79,13 @@
           </div>
         </div>
       </v-col>
+
       <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
         <div class="field_container" dir="rtl">
           <label for="ToDate">الي</label>
           <div class="input_parent position-relative">
             <input
-              type="datetime-local"
+              type="date"
               name="ToDate"
               v-model="data.ToDate"
               :disabled="loading"
@@ -94,6 +96,22 @@
           </div>
         </div>
       </v-col>
+
+      <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
+        <div>
+          <v-radio-group v-model="data.transactionType" inline class="mt-3">
+            <v-radio label="شيك" value="شيك"></v-radio>
+            <v-radio
+              label="تحويل بنكي"
+              class="mr-2"
+              value="تحويل بنكي"
+              v-model="data.transactionType"
+            ></v-radio>
+            <v-radio label="الكل" :value="null"></v-radio>
+          </v-radio-group>
+        </div>
+      </v-col>
+
       <v-col
         cols="12"
         sm="6"
@@ -139,6 +157,7 @@ const data = ref({
   granaryId: null,
   FromDate: null,
   ToDate: null,
+  transactionType: null,
 });
 
 const roles = ref({
@@ -183,6 +202,7 @@ const submitFilter = async () => {
   if (res) {
     const obj = {
       clientID: data.value.clientID,
+      transactionType: data.value.transactionType,
       granaryId: data.value.granaryId,
       FromDate: data.value.FromDate
         ? moment(data.value.FromDate).format("DD/MM/YYYY")

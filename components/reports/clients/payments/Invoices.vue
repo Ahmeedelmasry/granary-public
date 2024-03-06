@@ -25,12 +25,10 @@
             class="mb-7"
             :loading="loading"
             @filterData="
-              (selectedGranary = $event.granaryId),
-                (selected = []),
-                emits('filterData', $event)
+              (selectedGranary = $event.granaryId), emits('filterData', $event)
             "
             :reFilter="reFilter"
-            @refiltered="(reFilter = false), (selected = [])"
+            @refiltered="reFilter = false"
           />
         </v-col>
         <v-col
@@ -45,16 +43,12 @@
             :items="invoices.content"
             :loading="loading"
             v-model:items-per-page="perPage"
-            v-model="selected"
             v-model:page="page"
             :items-length="invoices.totalElements ? invoices.totalElements : 0"
             no-data-text="لايوجد بيانات"
             show-current-page
             id="clients_payments"
             return-object
-            :show-select="
-              invoices.content && invoices.content.length ? true : false
-            "
           >
             <template v-slot:bottom>
               <span class="d-none"></span>
@@ -92,20 +86,9 @@
               <div>لايوجد بيانات</div>
             </template>
           </v-data-table-server>
-          <div class="text-end my-5 me-5" v-if="selected.length">
-            <v-btn color="green" @click="openPopup = true">دفع</v-btn>
-          </div>
         </v-col>
       </v-row>
     </v-container>
-    <ReportsClientsPaymentsPayNow
-      v-if="openPopup"
-      :openPopup="openPopup"
-      @closePopup="openPopup = false"
-      :selected="selected"
-      @regetData="reFilter = true"
-      :selectedGranary="selectedGranary"
-    />
   </div>
 </template>
 <script setup>
@@ -121,10 +104,12 @@ const headers = ref([
   { title: "رقم", key: "index" },
   { title: "التاريخ", key: "date" },
   { title: "اجمالي الكمية", key: "totalQuantitySupplied" },
-  { title: "اجمالي القيمة", key: "totalCompanyDues" },
+  { title: "اجمالي القيمة", key: "companyDues" },
   { title: "القيمة المدفوعة", key: "paied" },
   { title: "القيمة المتبقية", key: "remaining" },
+  { title: "نوع التحويل", key: "transactionType" },
   { title: "حالة الدفع", key: "isFullPayed" },
+  { title: "ملاحظات", key: "notes" },
 ]);
 
 const items = [
@@ -147,8 +132,6 @@ const items = [
   },
 ];
 
-const selected = ref([]);
-const openPopup = ref(false);
 const reFilter = ref(false);
 const selectedGranary = ref("");
 
@@ -159,15 +142,15 @@ const printObj = ref({
   extraCss:
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
   extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
-  beforeOpenCallback(vue) {
-    console.log("Before Open");
-  },
-  openCallback(vue) {
-    console.log("Opened");
-  },
-  closeCallback(vue) {
-    console.log("After Close");
-  },
+  // beforeOpenCallback(vue) {
+  //   console.log("Before Open");
+  // },
+  // openCallback(vue) {
+  //   console.log("Opened");
+  // },
+  // closeCallback(vue) {
+  //   console.log("After Close");
+  // },
 });
 
 // Props

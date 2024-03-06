@@ -93,8 +93,39 @@
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
             </template>
+            <template v-slot:bottom>
+              <span class="d-none"></span>
+            </template>
           </v-data-table-server>
-          <div class="text-end my-5 me-5" v-if="selected.length">
+          <div
+            class="text-center pt-2 d-flex justify-space-between hide_on_print"
+            style="width: 60%"
+            v-if="!loading && invoices.content && invoices.content.length"
+          >
+            <div class="ps-5 d-flex align-center">
+              <v-select
+                v-model="perPage"
+                :items="[10, 50, 100, 500]"
+                variant="outlined"
+                hide-details
+              ></v-select>
+              <label
+                for=""
+                class="mb-2 d-block text-end ms-3 mt-1"
+                style="font-size: 12px"
+                >النتائج لكل صفحة</label
+              >
+            </div>
+            <v-pagination
+              v-model="page"
+              :length="
+                invoices.totalElements
+                  ? Math.ceil(invoices.totalElements / perPage)
+                  : 1
+              "
+            ></v-pagination>
+          </div>
+          <div class="text-end my-5 me-5 hide_on_print" v-if="selected.length">
             <v-btn color="green" @click="openPopup = true">دفع</v-btn>
           </div>
         </v-col>
@@ -158,15 +189,15 @@ const printObj = ref({
   extraCss:
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
   extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
-  beforeOpenCallback(vue) {
-    console.log("Before Open");
-  },
-  openCallback(vue) {
-    console.log("Opened");
-  },
-  closeCallback(vue) {
-    console.log("After Close");
-  },
+  // beforeOpenCallback(vue) {
+  //   console.log("Before Open");
+  // },
+  // openCallback(vue) {
+  //   console.log("Opened");
+  // },
+  // closeCallback(vue) {
+  //   console.log("After Close");
+  // },
 });
 
 // Props

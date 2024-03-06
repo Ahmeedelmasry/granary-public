@@ -53,9 +53,10 @@
                 <th>المستند</th>
                 <th>رقم السيارة</th>
                 <th>منتج / فرز</th>
+                <th>الكمية</th>
                 <th>قبل الخصم</th>
+                <th>قيمة الخصم</th>
                 <th>بعد الخصم</th>
-                <th>بعد الخصم والتعتيق</th>
               </tr>
             </template>
             <template v-slot:item="{ item }">
@@ -81,39 +82,37 @@
                   {{ item.selectable.productType.name }}
                 </td>
                 <td>
+                  {{ item.selectable.totalClearWeight.toFixed(2) }}
+                </td>
+                <td>
                   {{ item.selectable.totalPrice.toFixed(2) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalAfterDiscount.toFixed(2) }}
+                  {{ item.selectable.totalDiscountWithAging.toFixed(2) }}
                 </td>
                 <td>
                   {{ item.selectable.totalAfterDiscountWithAging.toFixed(2) }}
                 </td>
               </tr>
+              <tr v-if="item.index + 1 == invoices.content.length">
+                <td colspan="7" style="font-size: 14px">الاجمالي</td>
+                <td colspan="1" style="font-size: 14px">
+                  {{ totals.clearWeight.toFixed(2) }}
+                </td>
+                <td colspan="1" style="font-size: 14px">
+                  {{ totals.beforeDisc.toFixed(2) }}
+                </td>
+                <td style="font-size: 14px">{{ totals.disc.toFixed(2) }}</td>
+                <td style="font-size: 14px">
+                  {{ totals.afterDisc.toFixed(2) }}
+                </td>
+              </tr>
             </template>
             <template v-slot:bottom>
-              <span class="d-none"></span>
+              <div class="d-none"></div>
             </template>
             <template v-slot:loading>
               <v-skeleton-loader type="table-row@4"></v-skeleton-loader>
-            </template>
-            <template v-slot:item.index="{ item }">
-              {{ item.index + 1 }}
-            </template>
-            <template v-slot:item.invoiceDate="{ item }">
-              <p>
-                {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
-              </p>
-            </template>
-            <template v-slot:item.productDetails="{ item }">
-              {{ item.selectable.product.name }} /
-              {{ item.selectable.productType.name }}
-            </template>
-            <template v-slot:item.totalInvoicePrice="{ item }">
-              {{ item.selectable.totalPrice.toLocaleString() }}
-            </template>
-            <template v-slot:item.totalInvoicePriceAfterDiscount="{ item }">
-              {{ item.selectable.totalAfterDiscount.toLocaleString() }}
             </template>
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
@@ -141,8 +140,9 @@ const headers = ref([
   { title: "المستند", key: "documentNumber" },
   { title: "رقم السيارة", key: "carNumber" },
   { title: "منتج / فرز", key: "productDetails" },
-  { title: "قبل الخصم", key: "totalInvoicePrice" },
   { title: "بعد الخصم", key: "totalInvoicePriceAfterDiscount" },
+  { title: "قبل الخصم", key: "totalInvoicePrice" },
+  { title: "قيمة الخصم", key: "totalDiscountWithAging" },
   { title: "بعد الخصم والتعتيق", key: "totalAfterDiscountWithAging" },
 ]);
 
@@ -173,15 +173,15 @@ const printObj = ref({
   extraCss:
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
   extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
-  beforeOpenCallback(vue) {
-    console.log("Before Open");
-  },
-  openCallback(vue) {
-    console.log("Opened");
-  },
-  closeCallback(vue) {
-    console.log("After Close");
-  },
+  // beforeOpenCallback(vue) {
+  //   console.log("Before Open");
+  // },
+  // openCallback(vue) {
+  //   console.log("Opened");
+  // },
+  // closeCallback(vue) {
+  //   console.log("After Close");
+  // },
 });
 
 // Props
@@ -209,6 +209,29 @@ watch(
     });
   }
 );
+
+// Totals
+const totals = computed(() => {
+  const obj = {
+    clearWeight: 0,
+    beforeDisc: 0,
+    disc: 0,
+    afterDisc: 0,
+  };
+  if (
+    props.invoices &&
+    props.invoices.content &&
+    props.invoices.content.length
+  ) {
+    props.invoices.content.forEach((el) => {
+      obj.clearWeight += el.totalClearWeight;
+      obj.beforeDisc += el.totalPrice;
+      obj.disc += el.totalDiscountWithAging;
+      obj.afterDisc += el.totalAfterDiscountWithAging;
+    });
+    return obj;
+  }
+});
 </script>
 
 <style lang="scss">
