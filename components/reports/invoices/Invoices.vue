@@ -91,7 +91,7 @@
                   {{ item.selectable.totalDiscountWithAging.toFixed(2) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalAfterDiscountWithAging.toFixed(2) }}
+                  {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
                 </td>
               </tr>
               <tr v-if="item.index + 1 == invoices.content.length">
@@ -104,7 +104,7 @@
                 </td>
                 <td style="font-size: 14px">{{ totals.disc.toFixed(2) }}</td>
                 <td style="font-size: 14px">
-                  {{ totals.afterDisc.toFixed(2) }}
+                  {{ totals.afterDisc }}
                 </td>
               </tr>
             </template>
@@ -227,7 +227,7 @@ const totals = computed(() => {
       obj.clearWeight += el.totalClearWeight;
       obj.beforeDisc += el.totalPrice;
       obj.disc += el.totalDiscountWithAging;
-      obj.afterDisc += el.totalAfterDiscountWithAging;
+      obj.afterDisc += parseInt(el.totalAfterDiscountWithAging);
     });
     return obj;
   }

@@ -41,14 +41,24 @@ const filtersData = ref({
 const getData = async (page, limit, filters) => {
   loading.value = true;
   filtersData.value = filters
-    ? filters
+    ? {
+        FromDate: filters.FromDate,
+        ToDate: filters.ToDate,
+        clientID: filters.clientID.id,
+        granaryId: filters.granaryId.id,
+        transactionType: filters.transactionType,
+      }
     : {
         clientID: null,
         granaryId: null,
         FromDate: null,
         ToDate: null,
       };
-  await clientModule.doGetClientInvoicesReport(page - 1, limit, filtersData.value);
+  await clientModule.doGetClientInvoicesReport(
+    page - 1,
+    limit,
+    filtersData.value
+  );
   loading.value = false;
 };
 

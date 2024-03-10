@@ -36,7 +36,20 @@
           class="section_container dashboard_table pa-0"
           id="printable"
         >
-          <h1 dir="rtl" class="my-2 hide_till_print">تقرير مستحقات الشركة</h1>
+          <h1 dir="rtl" class="my-2 hide_till_print">تقرير سدادات الشركة</h1>
+          <ReportsClientsPaymentsClientData
+            :selectedClient="selectedClient"
+            :selectedGranary="selectedGranary"
+            :fromDate="fromDate"
+            v-if="
+              invoices &&
+              invoices.content &&
+              invoices.content.length &&
+              !loading
+            "
+            :toDate="toDate"
+            class="mb-5"
+          />
 
           <v-data-table-server
             :headers="headers"
@@ -99,6 +112,10 @@ import moment from "moment";
 // Local Data
 const page = ref(1);
 const perPage = ref(10000);
+const selectedClient = ref(null);
+const selectedGranary = ref(null);
+const fromDate = ref(null);
+const toDate = ref(null);
 
 const headers = ref([
   { title: "رقم", key: "index" },
@@ -127,13 +144,12 @@ const items = [
     },
   },
   {
-    title: "تقرير مستحقات العملاء",
+    title: "تقرير مستحقات الشركة",
     disabled: true,
   },
 ];
 
 const reFilter = ref(false);
-const selectedGranary = ref("");
 
 // Print
 const printObj = ref({
@@ -178,6 +194,14 @@ watch(
     });
   }
 );
+
+// Provide
+provide("supplierSelect", (data) => {
+  fromDate.value = data.FromDate;
+  toDate.value = data.ToDate;
+  selectedClient.value = data.clientID;
+  selectedGranary.value = data.granaryId;
+});
 </script>
 
 <style lang="scss">

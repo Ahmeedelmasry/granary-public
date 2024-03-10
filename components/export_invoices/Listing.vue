@@ -94,11 +94,7 @@
                   {{ item.selectable.totalAfterDiscount.toFixed(2) }}
                 </td>
                 <td>
-                  {{
-                    item.selectable.totalAgingPrice
-                      ? item.selectable.totalAfterDiscountWithAging.toFixed(2)
-                      : "---"
-                  }}
+                  {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
                 </td>
                 <!-- <td>
                   <v-icon
@@ -136,7 +132,7 @@
                   {{ totals.disc.toFixed(2) }}
                 </td>
                 <td style="font-size: 14px !important">
-                  {{ totals.afterDisc.toFixed(2) }}
+                  {{ totals.afterDisc }}
                 </td>
               </tr>
             </template>
@@ -269,8 +265,8 @@ const totals = computed(() => {
     props.invoices.content.forEach((el) => {
       obj.clearWeight += el.totalClearWeight;
       obj.beforeDisc += el.totalPrice;
-      obj.disc += el.totalDiscountWithAging;
-      obj.afterDisc += el.totalAfterDiscountWithAging;
+      obj.disc += el.totalAfterDiscount;
+      obj.afterDisc += parseInt(el.totalAfterDiscountWithAging);
     });
     return obj;
   }

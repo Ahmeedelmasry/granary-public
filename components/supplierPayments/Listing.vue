@@ -55,6 +55,7 @@
                 <th>قيمة السداد</th>
                 <th>المبلغ المتبقي</th>
                 <th>تاريخ السداد</th>
+                <th>تاريخ الانشاء</th>
                 <th>ملاحظات</th>
                 <!-- <th>اجراء</th> -->
               </tr>
@@ -68,6 +69,9 @@
                 <td>{{ item.selectable.remain }}</td>
                 <td>
                   {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
+                </td>
+                <td>
+                  {{ moment(item.selectable.creationDate).format("DD/MM/YYYY") }}
                 </td>
                 <td>{{ item.selectable.notes }}</td>
               </tr>
@@ -189,6 +193,7 @@ const headers = ref([
   { title: "قيمة السداد", key: "paid" },
   { title: "المبلغ المتبقي", key: "remain" },
   { title: "تاريخ السداد", key: "date" },
+  { title: "تاريخ الانشاء", key: "creationDate" },
   { title: "ملاحظات", key: "notes" },
   { title: "اجراء", key: "actions" },
 ]);

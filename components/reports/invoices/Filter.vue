@@ -251,20 +251,20 @@ const submitFilter = () => {
     productTypeId: data.value.productTypeId
       ? data.value.productTypeId.id
       : null,
-    creationFromDate: data.value.creationFromDate
+    FromDate: data.value.creationFromDate
       ? moment(data.value.creationFromDate).format("DD/MM/YYYY")
       : null,
-    creationToDate: data.value.creationToDate
+    ToDate: data.value.creationToDate
       ? moment(
           Date.now(data.value.creationToDate) + 24 * 60 * 60 * 1000
         ).format("DD/MM/YYYY")
       : null,
-    FromDate: data.value.FromDate
-      ? moment(data.value.FromDate).format("DD/MM/YYYY")
-      : null,
-    ToDate: data.value.ToDate
-      ? moment(data.value.ToDate).format("DD/MM/YYYY")
-      : null,
+    // FromDate: data.value.FromDate
+    //   ? moment(data.value.FromDate).format("DD/MM/YYYY")
+    //   : null,
+    // ToDate: data.value.ToDate
+    //   ? moment(data.value.ToDate).format("DD/MM/YYYY")
+    //   : null,
   };
   emits("filterData", obj);
 };

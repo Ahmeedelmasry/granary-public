@@ -161,7 +161,7 @@ const items = [
     },
   },
   {
-    title: "تقرير التوريدات",
+    title: "يوميات العملاء",
     disabled: true,
   },
 ];

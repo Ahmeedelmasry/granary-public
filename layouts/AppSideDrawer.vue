@@ -107,7 +107,7 @@
               "
               append-icon="mdi-circle-medium"
               class="text-white"
-              title="تقرير التوريدات 2"
+              title="يوميات العملاء"
               value="reports-no-aging-invoices"
               :to="{ name: 'reports-no-aging-invoices' }"
             >
@@ -149,7 +149,7 @@
               "
               append-icon="mdi-circle-medium"
               class="text-white"
-              title="تقرير مستحقات الشركة"
+              title="تقرير سدادات الشركة"
               value="reports-clients_dues"
               :to="{ name: 'reports-clients_dues' }"
             >

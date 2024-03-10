@@ -52,6 +52,7 @@
                 <th>قيمة السداد</th>
                 <th>المبلغ المتبقي</th>
                 <th>تاريخ السداد</th>
+                <th>تاريخ الانشاء</th>
                 <th>ملاحظات</th>
               </tr>
             </template>
@@ -67,6 +68,11 @@
             <template v-slot:item.date="{ item }">
               <p>
                 {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
+              </p>
+            </template>
+            <template v-slot:item.creationDate="{ item }">
+              <p>
+                {{ moment(item.selectable.creationDate).format("DD/MM/YYYY") }}
               </p>
             </template>
             <template v-slot:no-data>
@@ -94,6 +100,7 @@ const headers = ref([
   { title: "قيمة السداد", key: "paid" },
   { title: "المبلغ المتبقي", key: "remain" },
   { title: "تاريخ السداد", key: "date" },
+  { title: "تاريخ الانشاء", key: "creationDate" },
   { title: "ملاحظات", key: "notes" },
 ]);
 

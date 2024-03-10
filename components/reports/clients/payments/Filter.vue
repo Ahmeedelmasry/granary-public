@@ -15,6 +15,7 @@
               @update:model-value="data.granaryId = null"
               v-model="data.clientID"
               placeholder="اختر العميل"
+              return-object
               :disabled="loading"
               :class="
                 $v.$errors.find((el) => el.$property == 'clientID')
@@ -41,6 +42,7 @@
               item-value="id"
               :items="getRelatedGranaries"
               transition="slide-y-transition"
+              return-object
               variant="outlined"
               :disabled="loading"
               placeholder="اختر الصومعة"
@@ -179,9 +181,11 @@ let $v = useVuelidator(roles, data);
 
 // Computed
 const getRelatedGranaries = computed(() => {
-  if (data.value.clientID)
-    return clientLockup.value.find((el) => el.client.id == data.value.clientID)
-      .granaryList;
+  if (data.value.clientID) {
+    return clientLockup.value.find(
+      (el) => el.client.id == data.value.clientID.client.id
+    ).granaryList;
+  }
   return [];
 });
 
@@ -196,12 +200,15 @@ watch(
   }
 );
 
+// Injects
+const supplierChange = inject("supplierSelect");
+
 // Methods
 const submitFilter = async () => {
   const res = await $v.value.$validate();
   if (res) {
     const obj = {
-      clientID: data.value.clientID,
+      clientID: data.value.clientID.client,
       transactionType: data.value.transactionType,
       granaryId: data.value.granaryId,
       FromDate: data.value.FromDate
@@ -211,6 +218,7 @@ const submitFilter = async () => {
         ? moment(data.value.ToDate).format("DD/MM/YYYY")
         : null,
     };
+    supplierChange(obj);
     emits("filterData", obj);
   }
 };
