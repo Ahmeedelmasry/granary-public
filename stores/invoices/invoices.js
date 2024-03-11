@@ -36,6 +36,14 @@ export const invoiceModule = defineStore("invoiceModule", {
             filters && filters.productId
               ? `&productId=${filters.productId}`
               : ""
+          }${
+            filters && filters.documentNumber
+              ? `&documentNumber=${filters.documentNumber}`
+              : ""
+          }${
+            filters && filters.carNumber
+              ? `&carNumber=${filters.carNumber}`
+              : ""
           }`
         )
         .then((res) => {

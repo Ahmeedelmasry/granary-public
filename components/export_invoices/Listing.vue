@@ -16,10 +16,21 @@
           size="sm"
           elevation="0"
           color="transparent"
-          class="ms-3"
+          class="mx-3"
           v-print="printObj"
         >
           <v-icon color="white" size="25">mdi-printer</v-icon>
+        </v-btn>
+        <v-btn
+          width="20"
+          size="sm"
+          elevation="0"
+          color="transparent"
+          @click="showFilters = !showFilters"
+        >
+          <v-icon color="white" size="25">
+            {{ showFilters ? "mdi-filter-off" : "mdi-filter" }}</v-icon
+          >
         </v-btn>
       </div>
       <v-breadcrumbs :items="items" dir="rtl" class="pa-0 mb">
@@ -30,6 +41,21 @@
     </div>
     <v-container class="page_container" fluid>
       <v-row v-if="invoices" class="px-4">
+        <v-col cols="12">
+          <transition>
+            <export-invoices-Filter
+              v-if="showFilters"
+              @filterData="
+                emits('filterData', {
+                  page: page,
+                  limit: perPage,
+                  filters: $event,
+                })
+              "
+              :loading="loading"
+            />
+          </transition>
+        </v-col>
         <v-col
           cols="12"
           class="section_container dashboard_table pa-0"
@@ -216,6 +242,7 @@ const openAdd = ref(false);
 const openUpdate = ref(false);
 // const openDelete = ref(false);
 const toUpdate = ref(null);
+const showFilters = ref(false);
 // const toDelete = ref(null);
 const page = ref(1);
 const perPage = ref(10);
@@ -279,22 +306,13 @@ const printObj = ref({
   extraCss:
     "https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css",
   extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
-  // beforeOpenCallback(vue) {
-  //   console.log("Before Open");
-  // },
-  // openCallback(vue) {
-  //   console.log("Opened");
-  // },
-  // closeCallback(vue) {
-  //   console.log("After Close");
-  // },
 });
 
 // Props
 const props = defineProps(["invoices", "loading"]);
 
 // Emits
-const emits = defineEmits(["regetItems"]);
+const emits = defineEmits(["regetItems", "filterData"]);
 
 watch(
   () => page.value,
@@ -327,5 +345,14 @@ watch(
     font-size: 12px !important;
     white-space: nowrap;
   }
+}
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

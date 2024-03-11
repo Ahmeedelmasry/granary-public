@@ -1,7 +1,10 @@
 <template>
   <div
     class="login_fields w-100"
-    style="display: flex; align-items: center; height: 100%"
+    :style="`display: flex;
+      align-items: center;
+      height: 100%;
+      ${smAndDown ? 'min-height: 95vh;' : ''}`"
   >
     <v-form class="w-100">
       <v-row dir="rtl">
@@ -57,6 +60,9 @@
 </template>
 
 <script setup>
+import { useDisplay } from "vuetify";
+
+const { smAndDown } = useDisplay();
 // Cookie
 const logger = useCookie("logger");
 // Data

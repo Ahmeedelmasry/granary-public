@@ -66,6 +66,11 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  const { $pwa } = useNuxtApp();
+  console.log($pwa);
+});
 </script>
 
 <style lang="scss">
