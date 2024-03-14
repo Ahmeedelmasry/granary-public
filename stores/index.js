@@ -21,7 +21,7 @@ export const mainStore = defineStore("mainStore", {
     async doDeleteItem(url, id) {
       let result;
       await axios
-        .delete(`${this.apiURL}/FutureLab/${url}/${id}`)
+        .delete(`${this.apiURL}/${url}/${id}`)
         .then((res) => {
           result = true;
           this.callResponse(true, res.data.message, 1);

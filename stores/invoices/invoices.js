@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const invoiceModule = defineStore("invoiceModule", {
   state: () => ({
@@ -44,7 +45,12 @@ export const invoiceModule = defineStore("invoiceModule", {
             filters && filters.carNumber
               ? `&carNumber=${filters.carNumber}`
               : ""
-          }`
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
         )
         .then((res) => {
           this.invoices = res.data;
@@ -53,7 +59,11 @@ export const invoiceModule = defineStore("invoiceModule", {
     async doAddInvoice(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/supplyInvoice`, data)
+        .post(`${mainStore().apiURL}/supplyInvoice`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -70,6 +80,9 @@ export const invoiceModule = defineStore("invoiceModule", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/supplyInvoice`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const measuringUnitStore = defineStore("measuringUnitStore", {
   state: () => ({
@@ -9,7 +10,11 @@ export const measuringUnitStore = defineStore("measuringUnitStore", {
   actions: {
     async doGetUnits(page, limit) {
       await axios
-        .get(`${mainStore().apiURL}/measuringUnit?page=${page}&size=${limit}`)
+        .get(`${mainStore().apiURL}/measuringUnit?page=${page}&size=${limit}`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           this.units = res.data;
         });
@@ -17,7 +22,11 @@ export const measuringUnitStore = defineStore("measuringUnitStore", {
     async doAddUnit(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/measuringUnit`, data)
+        .post(`${mainStore().apiURL}/measuringUnit`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -34,6 +43,9 @@ export const measuringUnitStore = defineStore("measuringUnitStore", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/measuringUnit`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;

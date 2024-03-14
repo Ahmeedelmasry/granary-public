@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const clientStore = defineStore("clientStore", {
   state: () => ({
@@ -11,14 +12,22 @@ export const clientStore = defineStore("clientStore", {
   actions: {
     async doGetClients(page, limit) {
       await axios
-        .get(`${mainStore().apiURL}/client?page=${page}&size=${limit}`)
+        .get(`${mainStore().apiURL}/client?page=${page}&size=${limit}`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           this.clients = res.data;
         });
     },
     async doGetClientsLockup() {
       await axios
-        .get(`${mainStore().apiURL}/client/getClientsWithGranary`)
+        .get(`${mainStore().apiURL}/client/getClientsWithGranary`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           this.clientLockup = res.data;
         });
@@ -26,7 +35,11 @@ export const clientStore = defineStore("clientStore", {
     async doAddClient(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/client`, data)
+        .post(`${mainStore().apiURL}/client`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -43,6 +56,9 @@ export const clientStore = defineStore("clientStore", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/client`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;
@@ -68,7 +84,12 @@ export const clientStore = defineStore("clientStore", {
             filters && filters.clientID ? `&clientId=${filters.clientID}` : ""
           }${
             filters && filters.FromDate ? `&FromDate=${filters.FromDate}` : ""
-          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}`
+          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
         )
         .then((res) => {
           this.clientInvoices = res.data;
@@ -99,7 +120,12 @@ export const clientStore = defineStore("clientStore", {
             filters && filters.transactionType
               ? `&transactionType=${filters.transactionType}`
               : ""
-          }`
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
         )
         .then((res) => {
           this.clientInvoices = res.data;
@@ -114,7 +140,11 @@ export const clientStore = defineStore("clientStore", {
     async doPayClients(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/companyDues/pay`, data)
+        .post(`${mainStore().apiURL}/companyDues/pay`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);

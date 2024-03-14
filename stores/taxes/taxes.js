@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const taxStore = defineStore("taxStore", {
   state: () => ({
@@ -9,7 +10,11 @@ export const taxStore = defineStore("taxStore", {
   actions: {
     async doGetTaxes(page, limit) {
       await axios
-        .get(`${mainStore().apiURL}/tax?page=${page}&size=${limit}`)
+        .get(`${mainStore().apiURL}/tax?page=${page}&size=${limit}`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           this.taxes = res.data;
         });
@@ -17,7 +22,11 @@ export const taxStore = defineStore("taxStore", {
     async doAddTax(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/tax`, data)
+        .post(`${mainStore().apiURL}/tax`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -34,6 +43,9 @@ export const taxStore = defineStore("taxStore", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/tax`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;

@@ -58,9 +58,16 @@
 
 <script setup>
 import AppSideDrawer from "./AppSideDrawer.vue";
+import { authStore } from "@/stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+// Init Store
+const loginStore = authStore();
 
 // Props
 const props = defineProps(["currentWidth"]);
+
+const { loggerData, token } = storeToRefs(loginStore);
 
 // Data
 const router = useRouter();
@@ -75,6 +82,8 @@ const openDrawer = () => {
 
 const logout = () => {
   useCookie("logger").value = undefined;
+  loggerData.value = {};
+  token.value = null;
   setTimeout(() => {}, router.push({ name: "signin" }));
 };
 </script>

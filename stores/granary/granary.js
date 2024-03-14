@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const granaryStore = defineStore("granaryStore", {
   state: () => ({
@@ -9,7 +10,11 @@ export const granaryStore = defineStore("granaryStore", {
   actions: {
     async doGetGranaries(page, limit) {
       await axios
-        .get(`${mainStore().apiURL}/granary?page=${page}&size=${limit}`)
+        .get(`${mainStore().apiURL}/granary?page=${page}&size=${limit}`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           this.granaries = res.data;
         });
@@ -17,7 +22,11 @@ export const granaryStore = defineStore("granaryStore", {
     async doAddGranary(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/granary`, data)
+        .post(`${mainStore().apiURL}/granary`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -34,6 +43,9 @@ export const granaryStore = defineStore("granaryStore", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/granary`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;

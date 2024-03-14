@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const productTypeStore = defineStore("productTypeStore", {
   state: () => ({
@@ -9,7 +10,11 @@ export const productTypeStore = defineStore("productTypeStore", {
   actions: {
     async doGetProductTypes(page, limit) {
       await axios
-        .get(`${mainStore().apiURL}/productType?page=${page}&size=${limit}`)
+        .get(`${mainStore().apiURL}/productType?page=${page}&size=${limit}`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           res.data.content.forEach((el) => {
             el.selectedId = el.id;
@@ -21,7 +26,11 @@ export const productTypeStore = defineStore("productTypeStore", {
     async doAddProductType(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/productType`, data)
+        .post(`${mainStore().apiURL}/productType`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -38,6 +47,9 @@ export const productTypeStore = defineStore("productTypeStore", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/productType`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { mainStore } from "@/stores";
+import { authStore } from "@/stores/auth/auth";
 
 export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
   state: () => ({
@@ -30,7 +31,12 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
               : ""
           }${
             filters && filters.FromDate ? `&FromDate=${filters.FromDate}` : ""
-          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}`
+          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
         )
         .then((res) => {
           this.payments = res.data;
@@ -59,7 +65,12 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
               : ""
           }${
             filters && filters.FromDate ? `&FromDate=${filters.FromDate}` : ""
-          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}`
+          }${filters && filters.ToDate ? `&ToDate=${filters.ToDate}` : ""}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
         )
         .then((res) => {
           this.supplierDues = res.data;
@@ -72,7 +83,12 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
         .get(
           `${
             mainStore().apiURL
-          }/supplierPayment/getSupplierDue?supplierId=${supplier}&granaryId=${granary}`
+          }/supplierPayment/getSupplierDue?supplierId=${supplier}&granaryId=${granary}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
         )
         .then((res) => {
           this.supplierInvoice = res.data;
@@ -87,7 +103,11 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
     async doAddPayment(data) {
       let result;
       await axios
-        .post(`${mainStore().apiURL}/supplierPayment`, data)
+        .post(`${mainStore().apiURL}/supplierPayment`, data, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           mainStore().callResponse(true, res.data.message, 1);
@@ -104,6 +124,9 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/supplierPayment`,
+        headers: {
+          Authorization: `Bearer ${authStore().token}`,
+        },
       })
         .then((res) => {
           result = true;
