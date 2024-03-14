@@ -98,8 +98,8 @@ const { smAndDown } = useDisplay();
 
 // Data
 const formData = ref({
-  username: "abdoSalah",
-  password: "150150",
+  username: "",
+  password: "",
 });
 
 const { loggerData, token } = storeToRefs(loginStore);
