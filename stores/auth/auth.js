@@ -33,8 +33,16 @@ export const authStore = defineStore("authStore", {
           this.token = res.data.token;
         })
         .catch((err) => {
+          if (err.code == "ERR_NETWORK") {
+            mainStore().callResponse(true, "Faild to connect server", 2);
+          } else {
+            mainStore().callResponse(
+              true,
+              err.response?.data?.message || "Something Went Wrong",
+              2
+            );
+          }
           result = false;
-          mainStore().callResponse(true, err.response.data.message, 2);
         });
       return result;
     },

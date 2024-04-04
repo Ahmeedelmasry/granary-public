@@ -58,6 +58,7 @@ watch(
     }
   }
 );
+
 watch(
   () => snackbar.value,
   (newVal) => {
@@ -68,8 +69,7 @@ watch(
 );
 
 onMounted(() => {
-  const { $pwa } = useNuxtApp();
-  console.log($pwa);
+  console.log(router.options.routes);
 });
 </script>
 

@@ -276,6 +276,19 @@
               :to="{ name: 'taxes' }"
             >
             </v-list-item>
+            <v-list-item
+              style="
+                gap: 0px !important;
+                padding: 10px 40px 10px 0;
+                display: flex;
+                justify-content: flex-end;
+              "
+              append-icon="mdi-circle-medium"
+              title="المستخدمين"
+              value="users"
+              :to="{ name: 'users' }"
+            >
+            </v-list-item>
           </v-list-group>
         </v-list>
       </v-card>
