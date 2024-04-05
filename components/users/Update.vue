@@ -271,11 +271,11 @@ const { the_user_roles } = storeToRefs(rolesModule);
 const { granaries } = storeToRefs(granaryModule);
 
 const data = ref({
-  username: "wdwqfd",
-  firstName: "wfewf",
-  lastName: "wedfewfew",
-  password: "ewfewfew",
-  role: "ADMIN",
+  username: "",
+  firstName: "",
+  lastName: "",
+  password: "",
+  role: "",
   granaries: [],
   isLocked: false,
 });
