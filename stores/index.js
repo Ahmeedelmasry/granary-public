@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const mainStore = defineStore("mainStore", {
   state: () => ({
-    apiURL: `http://localhost:8081`,
+    apiURL: `http://localhost:8081/Granary`,
     callSuccess: false,
     callMsg: "",
     callColor: 0,
