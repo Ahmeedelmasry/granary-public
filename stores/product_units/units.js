@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/plugins/axios_instance.js";
 import { mainStore } from "@/stores";
 import { authStore } from "@/stores/auth/auth";
 
@@ -9,7 +9,7 @@ export const productUnitsStore = defineStore("productUnitsStore", {
   }),
   actions: {
     async doGetProductUnits(page, limit) {
-      await axios
+      await axios()
         .get(`${mainStore().apiURL}/packageUnit?page=${page}&size=${limit}`, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -21,7 +21,7 @@ export const productUnitsStore = defineStore("productUnitsStore", {
     },
     async doAddProductunit(data) {
       let result;
-      await axios
+      await axios()
         .post(`${mainStore().apiURL}/packageUnit`, data, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -39,7 +39,7 @@ export const productUnitsStore = defineStore("productUnitsStore", {
     },
     async doUpdateUnit(data) {
       let result;
-      await axios({
+      await axios()({
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/packageUnit`,

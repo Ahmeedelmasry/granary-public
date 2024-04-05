@@ -11,6 +11,20 @@
 <script setup>
 import { taxStore } from "@/stores/taxes/taxes";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find((el) => el.authority == "TAX_GETALL")
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const taxModule = taxStore();

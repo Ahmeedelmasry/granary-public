@@ -130,6 +130,71 @@
                   }}
                 </span>
               </v-col>
+
+              <v-col cols="12" md="6" lg="">
+                <div class="field_container">
+                  <label for="granary">دور المستخدم</label>
+                  <div class="input_parent position-relative">
+                    <v-autocomplete
+                      :items="createUserRoles"
+                      item-title="name"
+                      variant="outlined"
+                      placeholder="دور المستخدم"
+                      id="userRole"
+                      v-model="data.role"
+                      hide-details
+                      :class="[
+                        $v.$errors.find((el) => el.$property == 'role')
+                          ? 'err_field'
+                          : '',
+                      ]"
+                    ></v-autocomplete>
+                    <v-icon class="position-absolute">mdi-account</v-icon>
+                  </div>
+                </div>
+                <span
+                  class="err_msg"
+                  v-if="$v.$errors.find((el) => el.$property == 'granary')"
+                >
+                  {{
+                    $v.$errors.find((el) => el.$property == "granary").$message
+                  }}
+                </span>
+              </v-col>
+
+              <v-col cols="12" md="6" lg="" v-if="data.role != 'ADMIN'">
+                <div class="field_container">
+                  <label for="granary">الصومعة</label>
+                  <div class="input_parent position-relative">
+                    <v-autocomplete
+                      :items="granaries.content"
+                      item-title="name"
+                      item-value="id"
+                      variant="outlined"
+                      multiple
+                      placeholder="اختر الصومعة"
+                      id="granary"
+                      v-model="data.granaries"
+                      hide-details
+                      :class="[
+                        $v.$errors.find((el) => el.$property == 'granaries')
+                          ? 'err_field'
+                          : '',
+                      ]"
+                    ></v-autocomplete>
+                    <v-icon class="position-absolute">mdi-store-24-hour</v-icon>
+                  </div>
+                </div>
+                <span
+                  class="err_msg"
+                  v-if="$v.$errors.find((el) => el.$property == 'granaries')"
+                >
+                  {{
+                    $v.$errors.find((el) => el.$property == "granaries")
+                      .$message
+                  }}
+                </span>
+              </v-col>
               <v-col cols="12">
                 <h3 class="text-center">الصلاحيات</h3>
               </v-col>
@@ -154,6 +219,7 @@
                       :key="j"
                       :value="true"
                       v-model="val.value"
+                      :disabled="data.role == 'ADMIN'"
                       style="min-width: 150px"
                     ></v-checkbox>
                   </div>
@@ -178,51 +244,79 @@
 </template>
 
 <script setup>
-import { supplierStore } from "@/stores/supplier/supplier";
+import { granaryStore } from "@/stores/granary/granary.js";
+import { userStore } from "@/stores/users/users.js";
 import { userRoles } from "@/stores/users/roles";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
+
 import {
   required,
   helpers,
   minLength,
   maxLength,
-  numeric,
+  requiredUnless,
 } from "@vuelidate/validators";
+
 import { storeToRefs } from "pinia";
 
 // Init STores
-const supplierModule = supplierStore();
 const rolesModule = userRoles();
+const granaryModule = granaryStore();
+const userModule = userStore();
 
 // Local Data
 const { the_user_roles } = storeToRefs(rolesModule);
+const { granaries } = storeToRefs(granaryModule);
+
 const data = ref({
-  username: null,
-  firstName: null,
-  lastName: null,
-  password: null,
+  username: "",
+  firstName: "",
+  lastName: "",
+  password: "",
+  role: "",
+  granaries: [],
+  isLocked: false,
 });
 const dialog = ref(false);
 const btnLoading = ref(false);
 
-const roles = ref({
-  username: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
-  firstName: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
-  lastName: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
-  password: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
-    numeric: helpers.withMessage("هذا الحقل يقبل ارقام فقط", numeric),
-    minLength: helpers.withMessage(
-      "هذا الحقل يجب ان يتكون من 6 رقم",
-      minLength(6)
-    ),
-    maxLength: helpers.withMessage(
-      "هذا الحقل يجب ان يتكون من 20 رقم",
-      maxLength(20)
-    ),
+const createUserRoles = ref([
+  {
+    name: "مسؤول",
+    value: "ADMIN",
   },
+  {
+    name: "مشرف",
+    value: "USER",
+  },
+]);
+
+const roles = computed(() => {
+  return {
+    username: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
+    firstName: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
+    lastName: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
+    role: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
+    password: {
+      required: helpers.withMessage("هذا الحقل مطلوب", required),
+      minLength: helpers.withMessage(
+        "هذا الحقل يجب ان يتكون من 6 رقم",
+        minLength(6)
+      ),
+      maxLength: helpers.withMessage(
+        "هذا الحقل يجب ان يتكون من 20 رقم",
+        maxLength(20)
+      ),
+    },
+    granaries: {
+      requiredUnless: helpers.withMessage(
+        "هذا الحقل مطلوب",
+        requiredUnless(data.value.role == "ADMIN")
+      ),
+    },
+  };
 });
 
 // Props
@@ -243,7 +337,27 @@ watch(
   }
 );
 
+watch(
+  () => data.value.role,
+  (newVal) => {
+    if (newVal == "ADMIN") {
+      updateRolesStatus(true);
+      data.granaries = [];
+    } else {
+      updateRolesStatus(false);
+    }
+  }
+);
+
 // Methods
+const updateRolesStatus = (value) => {
+  for (const val of Object.entries(the_user_roles.value)) {
+    for (const val_2 of Object.entries(val[1].obj)) {
+      val_2[1].value = value;
+    }
+  }
+};
+
 let $v = useVuelidator(roles, data);
 const submitData = async () => {
   if (props.toUpdate) {
@@ -253,26 +367,42 @@ const submitData = async () => {
   const res = await $v.value.$validate();
   if (res) {
     btnLoading.value = true;
-    if (props.toUpdate) {
-      const result = await supplierModule.doUpdateSupplier({
-        id: props.toUpdate.selectable.id,
-        name: data.value.name,
-        phone: data.value.phone,
-        nationalid: data.value.nationalid,
-        isLocked: false,
-      });
+    const obj = { ...data.value };
+    obj.granaries = data.value.granaries.map(
+      (el) =>
+        (el = {
+          id: el,
+        })
+    );
+    obj.authorities = [obj.role];
+    if (obj.role != "ADMIN") {
+      obj.authorities = [];
 
-      if (result) {
-        emits("regetData");
-        dialog.value = false;
+      for (const val of Object.entries(the_user_roles.value)) {
+        for (const val_2 of Object.entries(val[1].obj)) {
+          if (val_2[1].value) {
+            obj.authorities.push(`${val[0]}_${val_2[0]}`);
+          }
+        }
       }
+    }
+
+    delete obj.role;
+
+    if (props.toUpdate) {
+      // const result = await supplierModule.doUpdateSupplier({
+      //   id: props.toUpdate.selectable.id,
+      //   name: data.value.name,
+      //   phone: data.value.phone,
+      //   nationalid: data.value.nationalid,
+      //   isLocked: false,
+      // });
+      // if (result) {
+      //   emits("regetData");
+      //   dialog.value = false;
+      // }
     } else {
-      const result = await supplierModule.doAddSupplier({
-        name: data.value.name,
-        phone: data.value.phone,
-        nationalid: data.value.nationalid,
-        isLocked: false,
-      });
+      const result = await userModule.doAddUser(obj);
       if (result) {
         emits("regetData");
         dialog.value = false;
@@ -285,6 +415,7 @@ const submitData = async () => {
 // Hooks
 onMounted(() => {
   dialog.value = props.openPopup;
+  granaryModule.doGetGranaries(0, 1000);
   if (props.toUpdate) {
     data.value.name = props.toUpdate.selectable.name;
     data.value.phone = props.toUpdate.selectable.phone;

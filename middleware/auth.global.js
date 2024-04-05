@@ -11,6 +11,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   } else {
     if (!token.value) {
       token.value = logger.value;
+      authStore().decodeToken(token.value);
     }
     if (to.name == "signin") {
       return navigateTo({ name: "index" });

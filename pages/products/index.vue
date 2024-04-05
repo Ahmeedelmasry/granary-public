@@ -13,6 +13,22 @@
 import { productStore } from "@/stores/products/products";
 import { storeToRefs } from "pinia";
 import { measuringUnitStore } from "@/stores/measuring_units/measuringUnits.js";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "PRODUCT_GETALL"
+        )
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const productsModule = productStore();

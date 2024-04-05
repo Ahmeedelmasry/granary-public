@@ -31,7 +31,9 @@
                 id="profile_menu"
               >
                 <v-list-item class="top_bar">
-                  <v-list-item-title> مرحبا, احمد </v-list-item-title>
+                  <v-list-item-title>
+                    مرحبا, {{ loggerData.sub }}
+                  </v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-title>
@@ -82,9 +84,11 @@ const openDrawer = () => {
 
 const logout = () => {
   useCookie("logger").value = undefined;
-  loggerData.value = {};
-  token.value = null;
-  setTimeout(() => {}, router.push({ name: "signin" }));
+  setTimeout(() => {
+    router.push({ name: "signin" });
+    loggerData.value = {};
+    token.value = null;
+  }, 200);
 };
 </script>
 
