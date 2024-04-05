@@ -84,9 +84,11 @@ const openDrawer = () => {
 
 const logout = () => {
   useCookie("logger").value = undefined;
-  loggerData.value = {};
-  token.value = null;
-  setTimeout(() => {}, router.push({ name: "signin" }));
+  setTimeout(() => {
+    router.push({ name: "signin" });
+    loggerData.value = {};
+    token.value = null;
+  }, 200);
 };
 </script>
 
