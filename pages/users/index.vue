@@ -1,8 +1,7 @@
 <template>
   <div class="dashboard_tests_page mb-10">
-
     <UsersListing
-      :suppliers="suppliers"
+      :users="users"
       :loading="loading"
       @regetItems="getData($event.page, $event.limit)"
     />
@@ -10,14 +9,30 @@
 </template>
 
 <script setup>
-import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
+import { userStore } from "@/stores/users/users.js";
+// import { authStore } from "@/stores/auth/auth";
+
+// definePageMeta({
+//   middleware: [
+//     (to, from) => {
+//       const { loggerData } = storeToRefs(authStore());
+//       if (
+//         !loggerData.value.authorities.find(
+//           (el) => el.authority == "USER_GETALL"
+//         )
+//       ) {
+//         return navigateTo("/");
+//       }
+//     },
+//   ],
+// });
 
 // Init STores
-const suppliersModule = supplierStore();
+const storeModule = userStore();
 
 // Store Data
-const { suppliers } = storeToRefs(suppliersModule);
+const { users } = storeToRefs(storeModule);
 
 // Local Data
 const loading = ref(true);
@@ -25,7 +40,7 @@ const loading = ref(true);
 // Methods
 const getData = async (page, limit) => {
   loading.value = true;
-  await suppliersModule.doGetSuppliers(page - 1, limit);
+  await storeModule.doGetUsers(page - 1, limit);
   loading.value = false;
 };
 

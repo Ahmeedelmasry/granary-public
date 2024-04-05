@@ -67,10 +67,6 @@ watch(
     }
   }
 );
-
-onMounted(() => {
-  console.log(router.options.routes);
-});
 </script>
 
 <style lang="scss">

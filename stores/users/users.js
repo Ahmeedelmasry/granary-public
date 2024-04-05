@@ -3,50 +3,47 @@ import axios from "@/plugins/axios_instance.js";
 import { mainStore } from "@/stores";
 import { authStore } from "@/stores/auth/auth";
 
-export const productTypeStore = defineStore("productTypeStore", {
+export const userStore = defineStore("userStore", {
   state: () => ({
-    productTypes: [],
+    users: [],
   }),
   actions: {
-    async doGetProductTypes(page, limit) {
+    async doGetUsers(page, limit) {
       await axios()
-        .get(`${mainStore().apiURL}/productType?page=${page}&size=${limit}`, {
+        .get(`${mainStore().apiURL}/user?page=${page}&size=${limit}`, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
           },
         })
         .then((res) => {
-          res.data.content.forEach((el) => {
-            el.selectedId = el.id;
-            el.selectedName = el.name;
-          });
-          this.productTypes = res.data;
+          this.users = res.data;
         });
     },
-    async doAddProductType(data) {
+    async doAddUser(data) {
       let result;
       await axios()
-        .post(`${mainStore().apiURL}/productType`, data, {
+        .post(`${mainStore().apiURL}/user/register`, data, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
           },
         })
-        .then((res) => {
+        .then(() => {
           result = true;
-          mainStore().callResponse(true, res.data.message, 1);
+          mainStore().callResponse(true, "تم انشاء المستخدم بنجاح", 1);
         })
         .catch((err) => {
+          console.log(err);
           result = false;
           mainStore().callResponse(true, err.response.data.message, 2);
         });
       return result;
     },
-    async doUpdateType(data) {
+    async doUpdateUser(data) {
       let result;
       await axios()({
         data: data,
         method: "PATCH",
-        url: `${mainStore().apiURL}/productType`,
+        url: `${mainStore().apiURL}/tax`,
         headers: {
           Authorization: `Bearer ${authStore().token}`,
         },

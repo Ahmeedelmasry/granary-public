@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/plugins/axios_instance.js";
 
 export const mainStore = defineStore("mainStore", {
   state: () => ({
-    apiURL: `http://localhost:8081`,
+    apiURL: `https://granary.onrender.com/Granary`,
     callSuccess: false,
     callMsg: "",
     callColor: 0,
@@ -20,7 +20,7 @@ export const mainStore = defineStore("mainStore", {
     },
     async doDeleteItem(url, id) {
       let result;
-      await axios
+      await axios()
         .delete(`${this.apiURL}/${url}/${id}`)
         .then((res) => {
           result = true;

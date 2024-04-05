@@ -16,6 +16,22 @@ import { clientStore } from "@/stores/clients/clients.js";
 import { granaryStore } from "@/stores/granary/granary.js";
 import { supplierStore } from "@/stores/supplier/supplier.js";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "COMPANYDUES_GETALL"
+        )
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const clientModule = clientStore();

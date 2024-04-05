@@ -8,17 +8,9 @@
           size="sm"
           elevation="0"
           color="transparent"
+          v-if="showAdd"
         >
           <v-icon color="white" size="25">mdi-plus-circle</v-icon>
-        </v-btn>
-        <v-btn
-          width="20"
-          size="sm"
-          elevation="0"
-          color="transparent"
-          class="ms-3"
-        >
-          <v-icon color="white" size="25">mdi-printer</v-icon>
         </v-btn>
       </div>
       <v-breadcrumbs :items="items" dir="rtl" class="pa-0 mb">
@@ -104,11 +96,15 @@
             <template v-slot:item.index="{ item }">
               {{ item.index + 1 }}
             </template>
-            <template v-slot:item.actions="{ item }">
+            <template
+              v-slot:item.actions="{ item }"
+              v-if="showUpdate || showDelete"
+            >
               <v-icon
                 color="blue"
                 style="cursor: pointer"
                 @click="(toUpdate = item), (openUpdate = true)"
+                v-if="showUpdate"
                 >mdi-square-edit-outline</v-icon
               >
               <v-btn
@@ -116,6 +112,7 @@
                 color="transparent"
                 :loading="item.selectable.loading"
                 :ripple="false"
+                v-if="showDelete"
               >
                 <v-icon
                   color="red"
@@ -198,6 +195,36 @@
 <script setup>
 import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
 import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
+import { authStore } from "@/stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+// Init Store
+const authModule = authStore();
+const { loggerData } = storeToRefs(authModule);
+
+const showAdd = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "PRODUCT_ADD"
+  )
+    ? true
+    : false;
+});
+
+const showUpdate = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "PRODUCT_UPDATE"
+  )
+    ? true
+    : false;
+});
+
+const showDelete = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "PRODUCT_DELETE"
+  )
+    ? true
+    : false;
+});
 
 // Local Data
 const openAdd = ref(false);

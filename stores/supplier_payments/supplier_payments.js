@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/plugins/axios_instance.js";
 import { mainStore } from "@/stores";
 import { authStore } from "@/stores/auth/auth";
 
@@ -11,7 +11,7 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
   }),
   actions: {
     async doGetPayments(page, limit, filters) {
-      await axios
+      await axios()
         .get(
           `${mainStore().apiURL}/supplierPayment?page=${page}&size=${limit}${
             filters && filters.supplierId
@@ -43,7 +43,7 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
         });
     },
     async doGetSupplierDues(page, limit, filters) {
-      await axios
+      await axios()
         .get(
           `${
             mainStore().apiURL
@@ -79,7 +79,7 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
     async doGetSupplierFinance(supplier, granary) {
       this.supplierInvoice = null;
       let result;
-      await axios
+      await axios()
         .get(
           `${
             mainStore().apiURL
@@ -102,7 +102,7 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
     },
     async doAddPayment(data) {
       let result;
-      await axios
+      await axios()
         .post(`${mainStore().apiURL}/supplierPayment`, data, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -120,7 +120,7 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
     },
     async doUpdatePayment(data) {
       let result;
-      await axios({
+      await axios()({
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/supplierPayment`,

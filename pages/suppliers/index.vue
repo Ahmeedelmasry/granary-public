@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard_tests_page mb-10">
-
     <SuppliersListing
       :suppliers="suppliers"
       :loading="loading"
@@ -12,6 +11,22 @@
 <script setup>
 import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "SUPPLIER_GETALL"
+        )
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const suppliersModule = supplierStore();

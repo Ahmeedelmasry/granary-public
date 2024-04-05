@@ -125,7 +125,10 @@
               "
             ></v-pagination>
           </div>
-          <div class="text-end my-5 me-5 hide_on_print" v-if="selected.length">
+          <div
+            class="text-end my-5 me-5 hide_on_print"
+            v-if="selected.length && showAdd"
+          >
             <v-btn color="green" @click="openPopup = true">دفع</v-btn>
           </div>
         </v-col>
@@ -145,6 +148,36 @@
 import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
 import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
 import moment from "moment";
+import { authStore } from "@/stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+// Init Store
+const authModule = authStore();
+const { loggerData } = storeToRefs(authModule);
+
+const showAdd = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "COMPANYDUES_ADD"
+  )
+    ? true
+    : false;
+});
+
+const showUpdate = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "COMPANYDUES_UPDATE"
+  )
+    ? true
+    : false;
+});
+
+const showDelete = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "COMPANYDUES_DELETE"
+  )
+    ? true
+    : false;
+});
 
 // Local Data
 const page = ref(1);

@@ -8,6 +8,7 @@
           size="sm"
           elevation="0"
           color="transparent"
+          v-if="showAdd"
         >
           <v-icon color="white" size="25">mdi-plus-circle</v-icon>
         </v-btn>
@@ -57,7 +58,9 @@
                 <th>تاريخ السداد</th>
                 <th>تاريخ الانشاء</th>
                 <th>ملاحظات</th>
-                <!-- <th>اجراء</th> -->
+                <th class="hide_on_print" v-if="showUpdate || showDelete">
+                  اجراء
+                </th>
               </tr>
             </template>
             <template v-slot:item="{ item }">
@@ -71,37 +74,41 @@
                   {{ moment(item.selectable.date).format("DD/MM/YYYY") }}
                 </td>
                 <td>
-                  {{ moment(item.selectable.creationDate).format("DD/MM/YYYY") }}
+                  {{
+                    moment(item.selectable.creationDate).format("DD/MM/YYYY")
+                  }}
                 </td>
                 <td>{{ item.selectable.notes }}</td>
+                <td class="hide_on_print" v-if="showUpdate || showDelete">
+                  <v-icon
+                    color="blue"
+                    style="cursor: pointer"
+                    @click="(toUpdate = item), (openUpdate = true)"
+                    v-if="showUpdate"
+                    >mdi-square-edit-outline</v-icon
+                  >
+                  <v-btn
+                    elevation="0"
+                    color="transparent"
+                    :loading="item.selectable.loading"
+                    :ripple="false"
+                    v-if="showDelete"
+                  >
+                    <v-icon
+                      color="red"
+                      style="cursor: pointer"
+                      class="ml-2"
+                      size="23"
+                      @click="(toDelete = item.selectable), (openDelete = true)"
+                      >mdi-lock</v-icon
+                    >
+                  </v-btn>
+                </td>
               </tr>
             </template>
             <template v-slot:loading>
               <v-skeleton-loader type="table-row@6"></v-skeleton-loader>
             </template>
-            <!-- <template v-slot:item.actions="{ item }"> -->
-            <!-- <v-icon
-                color="blue"
-                style="cursor: pointer"
-                @click="(toUpdate = item), (openUpdate = true)"
-                >mdi-square-edit-outline</v-icon
-              > -->
-            <!-- <v-btn
-                elevation="0"
-                color="transparent"
-                :loading="item.selectable.loading"
-                :ripple="false"
-              >
-                <v-icon
-                  color="red"
-                  style="cursor: pointer"
-                  class="ml-2"
-                  size="23"
-                  @click="(toDelete = item.selectable), (openDelete = true)"
-                  >mdi-lock</v-icon
-                >
-              </v-btn> -->
-            <!-- </template> -->
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
             </template>
@@ -176,6 +183,36 @@
 import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
 import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
 import moment from "moment";
+import { authStore } from "@/stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+// Init Store
+const authModule = authStore();
+const { loggerData } = storeToRefs(authModule);
+
+const showAdd = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "SUPPLIERPAYMENT_ADD"
+  )
+    ? true
+    : false;
+});
+
+const showUpdate = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "SUPPLIERPAYMENT_UPDATE"
+  )
+    ? true
+    : false;
+});
+
+const showDelete = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "SUPPLIERPAYMENT_DELETE"
+  )
+    ? true
+    : false;
+});
 
 // Local Data
 const openAdd = ref(false);

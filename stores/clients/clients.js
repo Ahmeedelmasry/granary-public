@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/plugins/axios_instance.js";
 import { mainStore } from "@/stores";
 import { authStore } from "@/stores/auth/auth";
 
@@ -11,7 +11,7 @@ export const clientStore = defineStore("clientStore", {
   }),
   actions: {
     async doGetClients(page, limit) {
-      await axios
+      await axios()
         .get(`${mainStore().apiURL}/client?page=${page}&size=${limit}`, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -22,7 +22,7 @@ export const clientStore = defineStore("clientStore", {
         });
     },
     async doGetClientsLockup() {
-      await axios
+      await axios()
         .get(`${mainStore().apiURL}/client/getClientsWithGranary`, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -34,7 +34,7 @@ export const clientStore = defineStore("clientStore", {
     },
     async doAddClient(data) {
       let result;
-      await axios
+      await axios()
         .post(`${mainStore().apiURL}/client`, data, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -52,7 +52,7 @@ export const clientStore = defineStore("clientStore", {
     },
     async doUpdateClient(data) {
       let result;
-      await axios({
+      await axios()({
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/client`,
@@ -72,7 +72,7 @@ export const clientStore = defineStore("clientStore", {
     },
     async doGetClientInvoices(page, limit, filters) {
       let result;
-      await axios
+      await axios()
         .get(
           `${
             mainStore().apiURL
@@ -103,7 +103,7 @@ export const clientStore = defineStore("clientStore", {
     },
     async doGetClientInvoicesReport(page, limit, filters) {
       let result;
-      await axios
+      await axios()
         .get(
           `${
             mainStore().apiURL
@@ -139,7 +139,7 @@ export const clientStore = defineStore("clientStore", {
     },
     async doPayClients(data) {
       let result;
-      await axios
+      await axios()
         .post(`${mainStore().apiURL}/companyDues/pay`, data, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,

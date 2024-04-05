@@ -31,7 +31,9 @@
                 id="profile_menu"
               >
                 <v-list-item class="top_bar">
-                  <v-list-item-title> مرحبا, احمد </v-list-item-title>
+                  <v-list-item-title>
+                    مرحبا, {{ loggerData.sub }}
+                  </v-list-item-title>
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-title>

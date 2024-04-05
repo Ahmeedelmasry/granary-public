@@ -3,270 +3,262 @@ import { defineStore } from "pinia";
 export const userRoles = defineStore("userRoles", {
   state: () => ({
     the_user_roles: {
-      invoices: {
+      SUPPLYINVOICE: {
         title: "فواتير التوريد",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      supplierPayment: {
+      SUPPLIERPAYMENT: {
         title: "سدادات الموردين",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      companyDues: {
+      COMPANYDUES: {
         title: "مستحقات الشركة",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      productTypes: {
+      PRODUCTTYPE: {
         title: "فروزات المنتج",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      products: {
+      PRODUCT: {
         title: "المنتجات",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      granaries: {
+      GRANARY: {
         title: "الصوامع",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      clients: {
+      CLIENT: {
         title: "العملاء",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      suppliers: {
+      SUPPLIER: {
         title: "الموردين",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      productUnits: {
+      PACKAGEUNIT: {
         title: "وحدات الفوارغ",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      taxes: {
+      TAX: {
         title: "الضرائب",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      users: {
+      USER: {
         title: "المستخدمين",
         obj: {
-          list: {
+          GETALL: {
             name: "عرض",
             value: false,
           },
-          add: {
+          ADD: {
             name: "اضافة",
             value: false,
           },
-          update: {
+          UPDATE: {
             name: "تعديل",
             value: false,
           },
-          delete: {
+          DELETE: {
             name: "حذف",
             value: false,
           },
         },
       },
-      reports: {
-        title: "التقارير",
-        obj: {
-          invoices: {
-            name: "فواتير التوريد",
-            value: false,
-          },
-          clientDaily: {
-            name: "يوميات العملاء",
-            value: false,
-          },
-          supplierDues: {
-            name: "مستحقات الموردين",
-            value: false,
-          },
-          supplierPayments: {
-            name: "سدادات الموردين",
-            value: false,
-          },
-          clientPayments: {
-            name: "سدادات الشركة",
-            value: false,
-          },
-        },
-      },
+      // reports: {
+      //   title: "التقارير",
+      //   obj: {
+      //     invoices: {
+      //       name: "فواتير التوريد",
+      //       value: false,
+      //     },
+      //     clientDaily: {
+      //       name: "يوميات العملاء",
+      //       value: false,
+      //     },
+      //     supplierDues: {
+      //       name: "مستحقات الموردين",
+      //       value: false,
+      //     },
+      //     supplierPayments: {
+      //       name: "سدادات الموردين",
+      //       value: false,
+      //     },
+      //     clientPayments: {
+      //       name: "سدادات الشركة",
+      //       value: false,
+      //     },
+      //   },
+      // },
     },
   }),
-  //   actions: {
-  //     changeLang(language) {
-  //       this.lang = [language];
-  //     },
-  //     switchDashboard(val) {
-  //       this.isDashboard = val;
-  //     },
-  //   },
 });

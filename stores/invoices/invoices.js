@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/plugins/axios_instance.js";
 import { mainStore } from "@/stores";
 import { authStore } from "@/stores/auth/auth";
 
@@ -9,7 +9,7 @@ export const invoiceModule = defineStore("invoiceModule", {
   }),
   actions: {
     async doGetInvoices(page, limit, filters) {
-      await axios
+      await axios()
         .get(
           `${mainStore().apiURL}/supplyInvoice?page=${page}&size=${limit}${
             filters && filters.supplierId
@@ -54,11 +54,12 @@ export const invoiceModule = defineStore("invoiceModule", {
         )
         .then((res) => {
           this.invoices = res.data;
-        });
+        })
+        .catch((err) => console.log(err));
     },
     async doAddInvoice(data) {
       let result;
-      await axios
+      await axios()
         .post(`${mainStore().apiURL}/supplyInvoice`, data, {
           headers: {
             Authorization: `Bearer ${authStore().token}`,
@@ -76,7 +77,7 @@ export const invoiceModule = defineStore("invoiceModule", {
     },
     async doUpdateInvoice(data) {
       let result;
-      await axios({
+      await axios()({
         data: data,
         method: "PATCH",
         url: `${mainStore().apiURL}/supplyInvoice`,

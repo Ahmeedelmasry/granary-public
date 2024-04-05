@@ -12,6 +12,22 @@
 <script setup>
 import { invoiceModule } from "@/stores/invoices/invoices.js";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "SUPPLYINVOICE_GETALL"
+        )
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const invoicesModule = invoiceModule();

@@ -8,6 +8,7 @@
           size="sm"
           elevation="0"
           color="transparent"
+          v-if="showAdd"
         >
           <v-icon color="white" size="25">mdi-plus-circle</v-icon>
         </v-btn>
@@ -59,7 +60,9 @@
                 <th>المحافظة</th>
                 <th>المدينة</th>
                 <th>المنطقة / الحي</th>
-                <th class="hide_on_print">اجراء</th>
+                <th class="hide_on_print" v-if="showUpdate || showDelete">
+                  اجراء
+                </th>
               </tr>
             </template>
             <template v-slot:item="{ item }">
@@ -70,11 +73,12 @@
                 <td>{{ item.selectable.governorate }}</td>
                 <td>{{ item.selectable.city }}</td>
                 <td>{{ item.selectable.region }}</td>
-                <td class="hide_on_print">
+                <td class="hide_on_print" v-if="showUpdate || showDelete">
                   <v-icon
                     color="blue"
                     style="cursor: pointer"
                     @click="(toUpdate = item), (openUpdate = true)"
+                    v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
                   >
                   <v-btn
@@ -82,6 +86,7 @@
                     color="transparent"
                     :loading="item.selectable.loading"
                     :ripple="false"
+                    v-if="showDelete"
                   >
                     <v-icon
                       color="red"
@@ -164,6 +169,36 @@
 <script setup>
 import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
 import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
+import { authStore } from "@/stores/auth/auth";
+import { storeToRefs } from "pinia";
+
+// Init Store
+const authModule = authStore();
+const { loggerData } = storeToRefs(authModule);
+
+const showAdd = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "GRANARY_ADD"
+  )
+    ? true
+    : false;
+});
+
+const showUpdate = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "GRANARY_UPDATE"
+  )
+    ? true
+    : false;
+});
+
+const showDelete = computed(() => {
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "GRANARY_DELETE"
+  )
+    ? true
+    : false;
+});
 
 // Local Data
 const openAdd = ref(false);
