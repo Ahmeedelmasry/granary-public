@@ -33,6 +33,11 @@
               display: flex;
               justify-content: flex-end;
             "
+            v-if="
+              loggerData.authorities.find(
+                (el) => el.authority == 'SUPPLYINVOICE_GETALL'
+              ) || loggerData.authorities.find((el) => el.authority == 'ADMIN')
+            "
             append-icon="mdi-receipt-text"
             title="فواتير التوريد"
             value="export_invoices"
@@ -50,6 +55,11 @@
             title="سدادات الموردين"
             value="suppliers_payments"
             :to="{ name: 'suppliers_payments' }"
+            v-if="
+              loggerData.authorities.find(
+                (el) => el.authority == 'SUPPLIERPAYMENT_GETALL'
+              ) || loggerData.authorities.find((el) => el.authority == 'ADMIN')
+            "
           >
           </v-list-item>
 
@@ -65,6 +75,11 @@
             title="مستحقات الشركة"
             value="clients_dues"
             :to="{ name: 'clients_dues' }"
+            v-if="
+              loggerData.authorities.find(
+                (el) => el.authority == 'COMPANYDUES_GETALL'
+              ) || loggerData.authorities.find((el) => el.authority == 'ADMIN')
+            "
           >
           </v-list-item>
 
@@ -182,6 +197,12 @@
               title="درجات الفرز"
               value="suppliers"
               :to="{ name: 'product_types' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'PRODUCTTYPE_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
 
@@ -196,6 +217,12 @@
               title="المنتجات"
               value="products"
               :to="{ name: 'products' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'PRODUCT_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -209,6 +236,12 @@
               title="الصوامع"
               value="granary"
               :to="{ name: 'granary' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'GRANARY_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -222,6 +255,12 @@
               title="العملاء"
               value="clients"
               :to="{ name: 'clients' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'CLIENT_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -235,6 +274,12 @@
               title="الموردين"
               value="product_types"
               :to="{ name: 'suppliers' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'SUPPLIER_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <!-- <v-list-item
@@ -261,6 +306,12 @@
               title="وحدات الفوارغ"
               value="product_units"
               :to="{ name: 'product_units' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'PACKAGEUNIT_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -274,6 +325,12 @@
               title="انواع الضرايب"
               value="taxes"
               :to="{ name: 'taxes' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'TAX_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -287,6 +344,12 @@
               title="المستخدمين"
               value="users"
               :to="{ name: 'users' }"
+              v-if="
+                loggerData.authorities.find(
+                  (el) => el.authority == 'USER_GETALL'
+                ) ||
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
           </v-list-group>
@@ -297,9 +360,15 @@
 </template>
 
 <script setup>
+import { authStore } from "@/stores/auth/auth";
+import { storeToRefs } from "pinia";
+
 // Data
 const drawer = ref(false);
 const currentWidth = ref(null);
+const authModule = authStore();
+
+const { loggerData } = storeToRefs(authModule);
 
 // Event Bus
 const { $listen } = useNuxtApp();
