@@ -178,7 +178,7 @@ const showAdd = computed(() => {
 const showUpdate = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "TAX_UPDATE"
-  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+  ) || loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -186,7 +186,7 @@ const showUpdate = computed(() => {
 const showDelete = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "TAX_DELETE"
-  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+  ) || loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
