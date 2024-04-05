@@ -22,7 +22,8 @@ definePageMeta({
       if (
         !loggerData.value.authorities.find(
           (el) => el.authority == "PRODUCT_GETALL"
-        )
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
       ) {
         return navigateTo("/");
       }

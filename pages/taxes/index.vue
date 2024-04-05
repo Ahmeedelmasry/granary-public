@@ -18,7 +18,10 @@ definePageMeta({
     (to, from) => {
       const { loggerData } = storeToRefs(authStore());
       if (
-        !loggerData.value.authorities.find((el) => el.authority == "TAX_GETALL")
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "TAX_GETALL"
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
       ) {
         return navigateTo("/");
       }

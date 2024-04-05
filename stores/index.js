@@ -3,11 +3,8 @@ import axios from "@/plugins/axios_instance.js";
 
 export const mainStore = defineStore("mainStore", {
   state: () => ({
-<<<<<<< HEAD
     apiURL: `http://localhost:8081/Granary`,
-=======
-    apiURL: `https://granary.onrender.com/Granary`,
->>>>>>> 13b77525d67c03a03162dc2bbf218a63d9f4090f
+   // apiURL: `https://granary.onrender.com/Granary`,
     callSuccess: false,
     callMsg: "",
     callColor: 0,

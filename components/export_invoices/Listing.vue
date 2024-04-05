@@ -250,7 +250,7 @@ const { loggerData } = storeToRefs(authModule);
 const showAdd = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "SUPPLYINVOICE_ADD"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -258,7 +258,7 @@ const showAdd = computed(() => {
 const showUpdate = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "SUPPLYINVOICE_UPDATE"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -266,7 +266,7 @@ const showUpdate = computed(() => {
 const showDelete = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "SUPPLYINVOICE_DELETE"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
