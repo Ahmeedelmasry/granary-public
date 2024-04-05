@@ -20,7 +20,8 @@ definePageMeta({
       if (
         !loggerData.value.authorities.find(
           (el) => el.authority == "CLIENT_GETALL"
-        )
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
       ) {
         return navigateTo("/");
       }

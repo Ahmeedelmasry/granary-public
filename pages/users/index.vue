@@ -11,22 +11,23 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { userStore } from "@/stores/users/users.js";
-// import { authStore } from "@/stores/auth/auth";
+import { authStore } from "@/stores/auth/auth";
 
-// definePageMeta({
-//   middleware: [
-//     (to, from) => {
-//       const { loggerData } = storeToRefs(authStore());
-//       if (
-//         !loggerData.value.authorities.find(
-//           (el) => el.authority == "USER_GETALL"
-//         )
-//       ) {
-//         return navigateTo("/");
-//       }
-//     },
-//   ],
-// });
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "USER_GETALL"
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const storeModule = userStore();

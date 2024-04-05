@@ -58,7 +58,7 @@
                 <th>اسم المورد</th>
                 <th>رقم الهاتف</th>
                 <th>رقم البطاقة</th>
-                                <th class="hide_on_print" v-if="showUpdate || showDelete">
+                <th class="hide_on_print" v-if="showUpdate || showDelete">
                   اجراء
                 </th>
               </tr>
@@ -77,7 +77,7 @@
                     v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
                   >
-                                    <v-btn
+                  <v-btn
                     elevation="0"
                     color="transparent"
                     :loading="item.selectable.loading"
@@ -175,7 +175,7 @@ const { loggerData } = storeToRefs(authModule);
 const showAdd = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "SUPPLIER_ADD"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -183,7 +183,7 @@ const showAdd = computed(() => {
 const showUpdate = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "SUPPLIER_UPDATE"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -191,7 +191,7 @@ const showUpdate = computed(() => {
 const showDelete = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "SUPPLIER_DELETE"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });

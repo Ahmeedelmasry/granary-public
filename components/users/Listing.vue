@@ -171,7 +171,9 @@ const authModule = authStore();
 const { loggerData } = storeToRefs(authModule);
 
 const showAdd = computed(() => {
-  return loggerData.value.authorities.find((el) => el.authority == "USER_ADD")
+  return loggerData.value.authorities.find(
+    (el) => el.authority == "USER_ADD"
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -179,7 +181,7 @@ const showAdd = computed(() => {
 const showUpdate = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "USER_UPDATE"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
@@ -187,7 +189,7 @@ const showUpdate = computed(() => {
 const showDelete = computed(() => {
   return loggerData.value.authorities.find(
     (el) => el.authority == "USER_DELETE"
-  )
+  ) && !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
     ? true
     : false;
 });
