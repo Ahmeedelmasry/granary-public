@@ -50,7 +50,7 @@
           </div>
         </div>
       </v-col>
-      <v-col cols="12" sm="6" md="4" lg="3">
+      <v-col cols="12" sm="6" md="4" lg="3" v-if="admin">
         <div class="field_container">
           <label for="granaryId">اختر الصومعة</label>
           <div class="input_parent position-relative">
@@ -142,18 +142,27 @@ import { granaryStore } from "@/stores/granary/granary";
 import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
 import moment from "moment";
+import { authStore } from "@/stores/auth/auth";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
+import { requiredIf, helpers } from "@vuelidate/validators";
 
 // Init Store
 const granaryModule = granaryStore();
 const supplierModule = supplierStore();
+const authModule = authStore();
 
 // Store Data
 const { granaries } = storeToRefs(granaryModule);
 const { suppliers } = storeToRefs(supplierModule);
+const { loggerData } = storeToRefs(authModule);
+
+const admin = computed(() => {
+  return loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+    ? true
+    : false;
+});
 
 // Local Data
 const data = ref({
@@ -165,10 +174,12 @@ const data = ref({
   ToDate: null,
 });
 
-const roles = ref({
-  granaryId: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
-  },
+const roles = computed(() => {
+  return {
+    granaryId: {
+      required: helpers.withMessage("هذا الحقل مطلوب", requiredIf(admin.value)),
+    },
+  };
 });
 
 let $v = useVuelidator(roles, data);

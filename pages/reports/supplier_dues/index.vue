@@ -16,6 +16,23 @@ import { supplierPaymentsStore } from "@/stores/supplier_payments/supplier_payme
 import { granaryStore } from "@/stores/granary/granary.js";
 import { supplierStore } from "@/stores/supplier/supplier.js";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "SUPPLIERPAYMENT_REPORT2"
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const supplierPaymentsModule = supplierPaymentsStore();

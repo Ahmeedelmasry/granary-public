@@ -87,7 +87,13 @@
                     <v-autocomplete
                       item-title="name"
                       item-value="id"
-                      :items="granaries.content"
+                      :items="
+                        loggerData.authorities.find(
+                          (el) => el.authority == 'ADMIN'
+                        )
+                          ? granaries.content
+                          : loggerData.granaries
+                      "
                       return-object
                       transition="slide-y-transition"
                       variant="outlined"
@@ -277,16 +283,19 @@ import { granaryStore } from "@/stores/granary/granary";
 import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
 import moment from "moment";
+import { authStore } from "@/stores/auth/auth";
 
 // Init STores
 const suppliersPaymentsModule = supplierPaymentsStore();
 const granaryModule = granaryStore();
+const authModule = authStore();
 const supplierModule = supplierStore();
 
 // Store Data
 const { granaries } = storeToRefs(granaryModule);
 const { supplierInvoice } = storeToRefs(suppliersPaymentsModule);
 const { suppliers } = storeToRefs(supplierModule);
+const { loggerData } = storeToRefs(authModule);
 
 // Local Data
 const searchForm = ref({

@@ -1,6 +1,6 @@
 <template>
   <div class="update_banner">
-    <v-dialog v-model="dialog" width="1000" persistent>
+    <v-dialog v-model="dialog" width="1000">
       <v-card>
         <v-card-title
           class="mb-0 text-center bg-grey-lighten-3 main_title font-weight-bold"
@@ -175,6 +175,7 @@
                       placeholder="اختر الصومعة"
                       id="granary"
                       v-model="data.granaries"
+                      chips
                       hide-details
                       :class="[
                         $v.$errors.find((el) => el.$property == 'granaries')
@@ -210,8 +211,24 @@
                       background-color: #f0f0f0 !important;
                       font-size: 18px;
                     "
-                    >{{ roleObj.title }}</v-card-title
                   >
+                    <v-row class="align-center">
+                      <v-col cols="3">
+                        {{ roleObj.title }}
+                      </v-col>
+                      <v-col cols="6"></v-col>
+                      <v-col cols="3">
+                        <v-checkbox
+                          label="الكل"
+                          :value="true"
+                          v-model="roleObj.selectAll"
+                          :disabled="data.role == 'ADMIN'"
+                          hide-details
+                          @update:model-value="selectAll(roleObj)"
+                        ></v-checkbox>
+                      </v-col>
+                    </v-row>
+                  </v-card-title>
                   <div class="d-flex flex-wrap">
                     <v-checkbox
                       :label="val.name"
@@ -271,11 +288,11 @@ const { the_user_roles } = storeToRefs(rolesModule);
 const { granaries } = storeToRefs(granaryModule);
 
 const data = ref({
-  username: "",
-  firstName: "",
-  lastName: "",
-  password: "",
-  role: "",
+  username: "aaaaaaaaa",
+  firstName: "aaaaaaaaa",
+  lastName: "aaaaaaaaa",
+  password: "123456",
+  role: "USER",
   granaries: [],
   isLocked: false,
 });
@@ -349,12 +366,39 @@ watch(
   }
 );
 
+watch(
+  () => the_user_roles.value,
+  (newVal) => {
+    for (const val of Object.entries(newVal)) {
+      let unchecked;
+      secondLoop: for (const val_2 of Object.entries(val[1].obj)) {
+        if (!val_2[1].value) {
+          unchecked = true;
+          break secondLoop;
+        }
+      }
+      if (unchecked) {
+        val[1].selectAll = false;
+      } else {
+        val[1].selectAll = true;
+      }
+    }
+  },
+  { deep: true }
+);
+
 // Methods
 const updateRolesStatus = (value) => {
   for (const val of Object.entries(the_user_roles.value)) {
     for (const val_2 of Object.entries(val[1].obj)) {
       val_2[1].value = value;
     }
+  }
+};
+
+const selectAll = (obj) => {
+  for (const val of Object.entries(obj.obj)) {
+    val[1].value = obj.selectAll ? true : false;
   }
 };
 
@@ -381,10 +425,13 @@ const submitData = async () => {
       for (const val of Object.entries(the_user_roles.value)) {
         for (const val_2 of Object.entries(val[1].obj)) {
           if (val_2[1].value) {
-            obj.authorities.push(`${val[0]}_${val_2[0]}`);
+            obj.authorities.push(
+              `${val[0] ? `${val[0]}_${val_2[0]}` : `${val_2[0]}`}`
+            );
           }
         }
       }
+      obj.authorities.push("LOOKUPS");
     }
 
     delete obj.role;

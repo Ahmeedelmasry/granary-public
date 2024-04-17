@@ -19,7 +19,7 @@
       </v-breadcrumbs>
     </div>
     <v-container fluid>
-      <v-row class="px-4">
+      <v-row class="px-4" dir="rtl">
         <v-col cols="3" v-for="route in localRoutes" :key="route.name">
           <v-card
             bordered
@@ -53,6 +53,8 @@
                   ? "مستحقات العملاء"
                   : route.name.includes("suppliers_payments")
                   ? "سدادات الموردين"
+                  : route.name.includes("aging-invoices")
+                  ? "يوميات العملاء"
                   : "التوريدات"
               }}
             </v-card-title>

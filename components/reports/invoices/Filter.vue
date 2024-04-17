@@ -52,7 +52,7 @@
           </div>
         </div>
       </v-col>
-      <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
+      <v-col cols="12" sm="6" md="4" lg="3" class="py-0" v-if="admin">
         <div class="field_container">
           <label for="granaryId">اختر الصومعة</label>
           <div class="input_parent position-relative">
@@ -208,7 +208,10 @@ import { productStore } from "@/stores/products/products.js";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 
+import { authStore } from "@/stores/auth/auth";
+
 // Init Store
+const authModule = authStore();
 const granaryModule = granaryStore();
 const supplierModule = supplierStore();
 const productsModule = productStore();
@@ -217,6 +220,13 @@ const productsModule = productStore();
 const { granaries } = storeToRefs(granaryModule);
 const { suppliers } = storeToRefs(supplierModule);
 const { products } = storeToRefs(productsModule);
+const { loggerData } = storeToRefs(authModule);
+
+const admin = computed(() => {
+  return loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+    ? true
+    : false;
+});
 
 // Local Data
 const data = ref({

@@ -7,12 +7,21 @@ export const authStore = defineStore("authStore", {
   state: () => ({
     loggerData: {},
     token: null,
+    selected_granary: null,
   }),
   actions: {
-    decodeToken(token){
-      console.log('here');
+    decodeToken(token) {
       const decoded = jwtDecode(token);
       this.loggerData = decoded;
+      console.log(decoded);
+      if (!this.loggerData.authorities.find((el) => el.authority == "ADMIN")) {
+        if (useCookie("selected_granary").value) {
+          this.selected_granary = [useCookie("selected_granary").value];
+        } else {
+          this.selected_granary = [decoded.granaries[0]];
+          useCookie("selected_granary").value = decoded.granaries[0];
+        }
+      }
       this.token = token;
     },
     async doLogin(data) {
@@ -21,7 +30,7 @@ export const authStore = defineStore("authStore", {
         .post(`${mainStore().apiURL}/user/login`, data)
         .then(async (res) => {
           result = true;
-          this.decodeToken(res.data.token)
+          this.decodeToken(res.data.token);
         })
         .catch((err) => {
           if (err.code == "ERR_NETWORK") {

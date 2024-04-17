@@ -134,7 +134,7 @@ const signIn = async () => {
     loading.value = false;
     if (result) {
       useCookie("logger", {
-        maxAge: loggerData.value.exp / 1000,
+        maxAge: loggerData.value.expFront,
       }).value = token.value;
       useRouter().push({ name: "index" });
     }

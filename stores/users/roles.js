@@ -5,6 +5,7 @@ export const userRoles = defineStore("userRoles", {
     the_user_roles: {
       SUPPLYINVOICE: {
         title: "فواتير التوريد",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -26,6 +27,7 @@ export const userRoles = defineStore("userRoles", {
       },
       SUPPLIERPAYMENT: {
         title: "سدادات الموردين",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -47,6 +49,7 @@ export const userRoles = defineStore("userRoles", {
       },
       COMPANYDUES: {
         title: "مستحقات الشركة",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -68,6 +71,7 @@ export const userRoles = defineStore("userRoles", {
       },
       PRODUCTTYPE: {
         title: "فروزات المنتج",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -89,6 +93,7 @@ export const userRoles = defineStore("userRoles", {
       },
       PRODUCT: {
         title: "المنتجات",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -110,6 +115,7 @@ export const userRoles = defineStore("userRoles", {
       },
       GRANARY: {
         title: "الصوامع",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -131,6 +137,7 @@ export const userRoles = defineStore("userRoles", {
       },
       CLIENT: {
         title: "العملاء",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -152,6 +159,7 @@ export const userRoles = defineStore("userRoles", {
       },
       SUPPLIER: {
         title: "الموردين",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -173,6 +181,7 @@ export const userRoles = defineStore("userRoles", {
       },
       PACKAGEUNIT: {
         title: "وحدات الفوارغ",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -194,6 +203,7 @@ export const userRoles = defineStore("userRoles", {
       },
       TAX: {
         title: "الضرائب",
+        selectAll: false,
         obj: {
           GETALL: {
             name: "عرض",
@@ -234,31 +244,27 @@ export const userRoles = defineStore("userRoles", {
           },
         },
       },
-      // reports: {
-      //   title: "التقارير",
-      //   obj: {
-      //     invoices: {
-      //       name: "فواتير التوريد",
-      //       value: false,
-      //     },
-      //     clientDaily: {
-      //       name: "يوميات العملاء",
-      //       value: false,
-      //     },
-      //     supplierDues: {
-      //       name: "مستحقات الموردين",
-      //       value: false,
-      //     },
-      //     supplierPayments: {
-      //       name: "سدادات الموردين",
-      //       value: false,
-      //     },
-      //     clientPayments: {
-      //       name: "سدادات الشركة",
-      //       value: false,
-      //     },
-      //   },
-      // },
+      "": {
+        title: "التقارير",
+        obj: {
+          SUPPLYINVOICE_REPORT: {
+            name: "يوميات العملاء",
+            value: false,
+          },
+          SUPPLIERPAYMENT_REPORT2: {
+            name: "مستحقات الموردين",
+            value: false,
+          },
+          SUPPLIERPAYMENT_REPORT1: {
+            name: "سدادات الموردين",
+            value: false,
+          },
+          GETCOMPANYDUESPAYMENTS_REPORT: {
+            name: "مستحقات الشركة",
+            value: false,
+          },
+        },
+      },
     },
   }),
 });

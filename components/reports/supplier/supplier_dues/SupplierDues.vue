@@ -212,7 +212,6 @@ watch(
 
 // Provide
 provide("supplierSelect", (data) => {
-  console.log(data);
   fromDate.value = data.FromDate;
   toDate.value = data.ToDate;
   selectedSupplier.value = data.supplierId;

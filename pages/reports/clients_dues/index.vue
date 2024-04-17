@@ -16,6 +16,23 @@ import { clientStore } from "@/stores/clients/clients.js";
 import { granaryStore } from "@/stores/granary/granary.js";
 import { supplierStore } from "@/stores/supplier/supplier.js";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "COMPANYDUES_REPORT"
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const clientModule = clientStore();
@@ -45,7 +62,7 @@ const getData = async (page, limit, filters) => {
         FromDate: filters.FromDate,
         ToDate: filters.ToDate,
         clientID: filters.clientID.id,
-        granaryId: filters.granaryId.id,
+        granaryId: filters.granaryId?.id,
         transactionType: filters.transactionType,
       }
     : {

@@ -56,6 +56,7 @@
                 <th>اسم المستخدم</th>
                 <th>الاسم الاول</th>
                 <th>اسم العائلة</th>
+                <th>العهدة</th>
                 <th class="hide_on_print" v-if="showUpdate || showDelete">
                   اجراء
                 </th>
@@ -67,6 +68,7 @@
                 <td>{{ item.selectable.username }}</td>
                 <td>{{ item.selectable.firstName }}</td>
                 <td>{{ item.selectable.lastName }}</td>
+                <td>{{ item.selectable.custody }}</td>
                 <td class="hide_on_print" v-if="showUpdate || showDelete">
                   <v-icon
                     color="blue"
@@ -75,22 +77,24 @@
                     v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
                   >
-                  <v-btn
-                    elevation="0"
-                    color="transparent"
-                    :loading="item.selectable.loading"
-                    :ripple="false"
+                  <v-icon
+                    color="red"
+                    style="cursor: pointer"
                     v-if="showDelete"
+                    class="mx-1"
+                    size="23"
+                    @click="(user = item.selectable), (openMoney = true)"
+                    >mdi-currency-usd</v-icon
                   >
-                    <v-icon
-                      color="red"
-                      style="cursor: pointer"
-                      class="ml-2"
-                      size="23"
-                      @click="(toDelete = item.selectable), (openDelete = true)"
-                      >mdi-lock</v-icon
-                    >
-                  </v-btn>
+                  <v-icon
+                    color="red"
+                    style="cursor: pointer"
+                    v-if="showDelete"
+                    :loading="item.selectable.loading"
+                    size="23"
+                    @click="(toDelete = item.selectable), (openDelete = true)"
+                    >mdi-lock</v-icon
+                  >
                 </td>
               </tr>
             </template>
@@ -138,6 +142,20 @@
       v-if="openUpdate"
       @closePopup="(openUpdate = false), (toUpdate = null)"
       :toUpdate="toUpdate"
+      @regetData="
+        (page = 1),
+          emits('regetItems', {
+            page: 1,
+            limit: perPage,
+          })
+      "
+    />
+
+    <users-money
+      :openPopup="openMoney"
+      v-if="openMoney"
+      @closePopup="(openMoney = false), (user = null)"
+      :user="user"
       @regetData="
         (page = 1),
           emits('regetItems', {
@@ -200,6 +218,8 @@ const openUpdate = ref(false);
 const openDelete = ref(false);
 const toUpdate = ref(null);
 const toDelete = ref(null);
+const user = ref(null);
+const openMoney = ref(false);
 const page = ref(1);
 const perPage = ref(10);
 
@@ -222,6 +242,7 @@ const headers = ref([
   { title: "اسم المورد", key: "name" },
   { title: "رقم الهاتف", key: "phone" },
   { title: "رقم البطاقة", key: "nationalid" },
+  { title: "قيمة العهدة", key: "custody" },
   { title: "اجراء", key: "actions" },
 ]);
 

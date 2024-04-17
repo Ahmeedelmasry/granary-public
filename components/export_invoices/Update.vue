@@ -22,7 +22,16 @@
                   <div class="input_parent position-relative">
                     <v-autocomplete
                       return-object
-                      :items="granaries.content"
+                      :disabled="!loggerData.authorities.find(
+                          (el) => el.authority == 'ADMIN'
+                        )"
+                      :items="
+                        loggerData.authorities.find(
+                          (el) => el.authority == 'ADMIN'
+                        )
+                          ? granaries.content
+                          : loggerData.granaries
+                      "
                       item-title="name"
                       item-value="id"
                       variant="outlined"
@@ -702,6 +711,7 @@ import { taxStore } from "@/stores/taxes/taxes.js";
 import { invoiceModule } from "@/stores/invoices/invoices.js";
 import { storeToRefs } from "pinia";
 import moment from "moment";
+import { authStore } from "@/stores/auth/auth";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -721,6 +731,7 @@ const productsModule = productStore();
 const productUnitsModule = productUnitsStore();
 const taxedModule = taxStore();
 const invoicesModule = invoiceModule();
+const authModule = authStore();
 
 // Store Data
 const { granaries } = storeToRefs(granaryModule);
@@ -729,6 +740,7 @@ const { suppliers } = storeToRefs(suppliersModule);
 const { products } = storeToRefs(productsModule);
 const { productUnits } = storeToRefs(productUnitsModule);
 const { taxes } = storeToRefs(taxedModule);
+const { loggerData } = storeToRefs(authModule);
 
 // Local Data
 const data = ref({
@@ -974,12 +986,15 @@ onMounted(() => {
   productsModule.doGetProducts(0, 10000);
   productUnitsModule.doGetProductUnits(0, 10000);
   taxedModule.doGetTaxes(0, 10000);
-  if (localStorage.getItem("selectedItems")) {
-    const localData = JSON.parse(localStorage.getItem("selectedItems"));
-    data.value.granary = localData.granary;
+  const localData = JSON.parse(localStorage.getItem("selectedItems"));
+  if (localData) {
     data.value.product = localData.product;
     data.value.date = localData.date;
     data.value.productUnit = localData.unit;
+    data.value.granary = localData.granary;
+  }
+  if (useCookie("selected_granary").value) {
+    data.value.granary = authModule.selected_granary[0];
   }
   dialog.value = props.openPopup;
 });

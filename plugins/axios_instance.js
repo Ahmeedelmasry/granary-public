@@ -11,14 +11,15 @@ export default defineNuxtPlugin(() => {
     },
     (error) => {
       if (error.response?.status == 403) {
-        console.log("Unauthorized");
         useCookie("logger").value = undefined;
         setTimeout(() => {
           useRouter().push({ name: "signin" });
           setTimeout(() => {
             authStore().loggerData = {};
             authStore().token = null;
-          }, 100);
+            useCookie("selected_granary").value = null;
+            authStore().selected_granary = null;
+          }, 200);
           mainStore().callResponse(true, "قم بتسجيل الدخول", 2);
         }, 100);
       }

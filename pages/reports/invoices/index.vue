@@ -16,6 +16,24 @@ import { invoiceModule } from "@/stores/invoices/invoices.js";
 import { granaryStore } from "@/stores/granary/granary.js";
 import { supplierStore } from "@/stores/supplier/supplier.js";
 import { storeToRefs } from "pinia";
+import { authStore } from "@/stores/auth/auth";
+
+
+definePageMeta({
+  middleware: [
+    (to, from) => {
+      const { loggerData } = storeToRefs(authStore());
+      if (
+        !loggerData.value.authorities.find(
+          (el) => el.authority == "SUPPLYINVOICE_GETALL"
+        ) &&
+        !loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+      ) {
+        return navigateTo("/");
+      }
+    },
+  ],
+});
 
 // Init STores
 const invoicesModule = invoiceModule();

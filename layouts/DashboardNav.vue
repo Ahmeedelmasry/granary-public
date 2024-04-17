@@ -9,7 +9,59 @@
           </v-col>
           <v-spacer></v-spacer>
           <v-col cols="6" class="text-center img_container text-end">
-            <v-icon color="white" size="25" class="me-2">mdi-bell</v-icon>
+            <span
+              class="me-4 d-inline-block"
+              v-if="
+                !authStore().loggerData.authorities.find(
+                  (el) => el.authority == 'ADMIN'
+                )
+              "
+              >{{ selected_granary ? selected_granary[0]?.name : "" }}</span
+            >
+            <div
+              class="me-3 d-inline-block"
+              id="granaries_menu_activator_responsive"
+              style="cursor: pointer"
+              v-if="
+                !authStore().loggerData.authorities.find(
+                  (el) => el.authority == 'ADMIN'
+                )
+              "
+            >
+              <v-icon color="white" size="25">mdi-store-24-hour</v-icon>
+              <v-menu
+                activator="#granaries_menu_activator_responsive"
+                transition="slide-y-transition"
+                location="bottom right"
+                offset="19"
+                class="profile_menu text-start"
+                width="200"
+              >
+                <v-list
+                  base-color="green"
+                  style="box-shadow: 0 0 20px 0 rgba(62, 28, 131, 0.1)"
+                  class="text-end"
+                  id="profile_menu"
+                  mandatory
+                  @update:selected="changeGranary"
+                  v-model:selected="selected_granary"
+                >
+                  <v-list-item
+                    class="top_bar"
+                    v-for="(granary, i) in loggerData.granaries"
+                    :key="i"
+                    :value="granary"
+                  >
+                    <v-list-item-title class="my-2">
+                      {{ granary.name }}
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+            <v-icon size="30" class="me-4 ms-2" @click="openSafe = true"
+              >mdi-safe</v-icon
+            >
             <v-avatar
               id="profile_menu_activator_responsive"
               style="cursor: pointer"
@@ -32,10 +84,10 @@
               >
                 <v-list-item class="top_bar">
                   <v-list-item-title>
-                    مرحبا, {{ loggerData.sub }}
+                    مرحبا, {{ loggerData.firstName }}
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item :to="{ name: 'profile' }">
                   <v-list-item-title>
                     الصفحة الشخصية
                     <v-icon class="me-2"
@@ -55,6 +107,11 @@
         </v-row>
       </v-container>
     </v-app-bar>
+    <Safe
+      v-if="openSafe"
+      :openPopup="openSafe"
+      @closePopup="openSafe = false"
+    />
   </div>
 </template>
 
@@ -69,10 +126,11 @@ const loginStore = authStore();
 // Props
 const props = defineProps(["currentWidth"]);
 
-const { loggerData, token } = storeToRefs(loginStore);
-
-// Data
+// Init Router
 const router = useRouter();
+// Data
+const { loggerData, token, selected_granary } = storeToRefs(loginStore);
+const openSafe = ref(false);
 
 // Event bus
 const { $event } = useNuxtApp();
@@ -86,9 +144,22 @@ const logout = () => {
   useCookie("logger").value = undefined;
   setTimeout(() => {
     router.push({ name: "signin" });
-    loggerData.value = {};
-    token.value = null;
-  }, 200);
+    setTimeout(() => {
+      loggerData.value = {};
+      token.value = null;
+      selected_granary.value = null;
+      useCookie("selected_granary").value = null;
+    }, 200);
+  }, 100);
+};
+
+const changeGranary = () => {
+  setTimeout(() => {
+    useCookie("selected_granary").value = selected_granary.value[0];
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  }, 100);
 };
 </script>
 

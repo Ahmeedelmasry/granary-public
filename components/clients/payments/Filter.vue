@@ -38,7 +38,11 @@
             <v-autocomplete
               item-title="name"
               item-value="id"
-              :items="getRelatedGranaries"
+              :items="
+                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                  ? getRelatedGranaries.related
+                  : getRelatedGranaries.userOnlyGranaryRelated
+              "
               transition="slide-y-transition"
               variant="outlined"
               :disabled="loading"
@@ -122,6 +126,7 @@
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { clientStore } from "@/stores/clients/clients.js";
+import { authStore } from "@/stores/auth/auth";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -129,9 +134,11 @@ import { required, helpers } from "@vuelidate/validators";
 
 // Init Store
 const clientModule = clientStore();
+const authModule = authStore();
 
 // Store Data
 const { clientLockup } = storeToRefs(clientModule);
+const { loggerData } = storeToRefs(authModule);
 
 // Local Data
 const data = ref({
@@ -160,9 +167,21 @@ let $v = useVuelidator(roles, data);
 
 // Computed
 const getRelatedGranaries = computed(() => {
-  if (data.value.clientID)
-    return clientLockup.value.find((el) => el.client.id == data.value.clientID)
-      .granaryList;
+  if (data.value.clientID) {
+    const related = clientLockup.value.find(
+      (el) => el.client.id == data.value.clientID
+    ).granaryList;
+    const userOnlyGranaryRelated = [];
+    if (!loggerData.value.authorities.find((el) => el.authority == "ADMIN"))
+      related.forEach((el) => {
+        loggerData.value.granaries.forEach((granary) => {
+          if (el.id == granary.id) {
+            userOnlyGranaryRelated.push(el);
+          }
+        });
+      });
+    return { related, userOnlyGranaryRelated };
+  }
   return [];
 });
 

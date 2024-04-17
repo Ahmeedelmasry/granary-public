@@ -33,7 +33,7 @@
           </span>
         </div>
       </v-col>
-      <v-col cols="12" sm="6" md="4" lg="3" class="py-0">
+      <v-col cols="12" sm="6" md="4" lg="3" class="py-0" v-if="admin">
         <div class="field_container">
           <label for="granaryId">اختر الصومعة</label>
           <div class="input_parent position-relative">
@@ -58,9 +58,9 @@
           </div>
           <span
             class="err_msg"
-            v-if="$v.$errors.find((el) => el.$property == 'clientID')"
+            v-if="$v.$errors.find((el) => el.$property == 'granaryId')"
           >
-            {{ $v.$errors.find((el) => el.$property == "clientID").$message }}
+            {{ $v.$errors.find((el) => el.$property == "granaryId").$message }}
           </span>
         </div>
       </v-col>
@@ -142,16 +142,25 @@
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { clientStore } from "@/stores/clients/clients.js";
+import { authStore } from "@/stores/auth/auth";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
+import { required, requiredIf, helpers } from "@vuelidate/validators";
 
 // Init Store
 const clientModule = clientStore();
+const authModule = authStore();
 
 // Store Data
 const { clientLockup } = storeToRefs(clientModule);
+const { loggerData } = storeToRefs(authModule);
+
+const admin = computed(() => {
+  return loggerData.value.authorities.find((el) => el.authority == "ADMIN")
+    ? true
+    : false;
+});
 
 // Local Data
 const data = ref({
@@ -162,13 +171,15 @@ const data = ref({
   transactionType: null,
 });
 
-const roles = ref({
-  clientID: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
-  },
-  granaryId: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
-  },
+const roles = computed(() => {
+  return {
+    clientID: {
+      required: helpers.withMessage("هذا الحقل مطلوب", required),
+    },
+    granaryId: {
+      required: helpers.withMessage("هذا الحقل مطلوب", requiredIf(admin.value)),
+    },
+  };
 });
 
 // Props
@@ -227,3 +238,11 @@ onMounted(() => {
   clientModule.doGetClientsLockup();
 });
 </script>
+
+<style lang="scss">
+.clientPaymentReportFilter {
+    .v-selection-control--inline .v-label {
+      font-size: 13px !important;
+    }
+}
+</style>

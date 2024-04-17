@@ -108,7 +108,9 @@ export const clientStore = defineStore("clientStore", {
           `${
             mainStore().apiURL
           }/companyDues/getCompanyDuesPayments?page=${page}&size=${limit}${
-            filters && filters.granaryId
+            authStore().selected_granary && authStore().selected_granary[0]
+              ? `&granaryId=${authStore().selected_granary[0].id}`
+              : filters && filters.granaryId
               ? `&granaryId=${filters.granaryId}`
               : ""
           }${

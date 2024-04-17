@@ -18,7 +18,9 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
               ? `&supplierId=${filters && filters.supplierId}`
               : ""
           }${
-            filters && filters.granaryId
+            authStore().selected_granary && authStore().selected_granary[0]
+              ? `&granaryId=${authStore().selected_granary[0].id}`
+              : filters && filters.granaryId
               ? `&granaryId=${filters.granaryId}`
               : ""
           }${
@@ -52,8 +54,10 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
               ? `&supplierId=${filters && filters.supplierId.id}`
               : ""
           }${
-            filters && filters.granaryId
-              ? `&granaryId=${filters.granaryId.id}`
+            authStore().selected_granary && authStore().selected_granary[0]
+              ? `&granaryId=${authStore().selected_granary[0].id}`
+              : filters && filters.granaryId
+              ? `&granaryId=${filters.granaryId}`
               : ""
           }${
             filters && filters.creationFromDate

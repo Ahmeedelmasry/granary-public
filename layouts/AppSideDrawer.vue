@@ -34,9 +34,9 @@
               justify-content: flex-end;
             "
             v-if="
-              loggerData.authorities.find(
+              loggerData.authorities?.find(
                 (el) => el.authority == 'SUPPLYINVOICE_GETALL'
-              ) || loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              ) || loggerData.authorities?.find((el) => el.authority == 'ADMIN')
             "
             append-icon="mdi-receipt-text"
             title="فواتير التوريد"
@@ -56,9 +56,9 @@
             value="suppliers_payments"
             :to="{ name: 'suppliers_payments' }"
             v-if="
-              loggerData.authorities.find(
+              loggerData.authorities?.find(
                 (el) => el.authority == 'SUPPLIERPAYMENT_GETALL'
-              ) || loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              ) || loggerData.authorities?.find((el) => el.authority == 'ADMIN')
             "
           >
           </v-list-item>
@@ -76,9 +76,9 @@
             value="clients_dues"
             :to="{ name: 'clients_dues' }"
             v-if="
-              loggerData.authorities.find(
+              loggerData.authorities?.find(
                 (el) => el.authority == 'COMPANYDUES_GETALL'
-              ) || loggerData.authorities.find((el) => el.authority == 'ADMIN')
+              ) || loggerData.authorities?.find((el) => el.authority == 'ADMIN')
             "
           >
           </v-list-item>
@@ -111,6 +111,12 @@
               title="تقرير التوريدات"
               value="reports-invoices"
               :to="{ name: 'reports-invoices' }"
+              v-if="
+                loggerData.authorities?.find(
+                  (el) => el.authority == 'SUPPLYINVOICE_GETALL'
+                ) ||
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -125,6 +131,12 @@
               title="يوميات العملاء"
               value="reports-no-aging-invoices"
               :to="{ name: 'reports-no-aging-invoices' }"
+              v-if="
+                loggerData.authorities?.find(
+                  (el) => el.authority == 'SUPPLYINVOICE_REPORT'
+                ) ||
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -139,6 +151,12 @@
               title="تقرير مستحقات الموردين"
               value="reports-suppliers_dues"
               :to="{ name: 'reports-supplier_dues' }"
+              v-if="
+                loggerData.authorities?.find(
+                  (el) => el.authority == 'SUPPLIERPAYMENT_REPORT2'
+                ) ||
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -153,6 +171,12 @@
               title="تقرير سدادات الموردين"
               value="reports-suppliers_payments"
               :to="{ name: 'reports-suppliers_payments' }"
+              v-if="
+                loggerData.authorities?.find(
+                  (el) => el.authority == 'SUPPLIERPAYMENT_REPORT1'
+                ) ||
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
+              "
             >
             </v-list-item>
             <v-list-item
@@ -167,6 +191,43 @@
               title="تقرير سدادات الشركة"
               value="reports-clients_dues"
               :to="{ name: 'reports-clients_dues' }"
+              v-if="
+                loggerData.authorities?.find(
+                  (el) => el.authority == 'COMPANYDUES_REPORT'
+                ) ||
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
+              "
+            >
+            </v-list-item>
+            <v-list-item
+              style="
+                gap: 0px !important;
+                padding: 10px 40px 10px 0;
+                display: flex;
+                justify-content: flex-end;
+              "
+              append-icon="mdi-circle-medium"
+              class="text-white"
+              title="تقرير تحويلات العهدة"
+              value="reports-transfer_custody"
+              :to="{ name: 'reports-transfer_custody' }"
+              v-if="
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
+              "
+            >
+            </v-list-item>
+            <v-list-item
+              style="
+                gap: 0px !important;
+                padding: 10px 40px 10px 0;
+                display: flex;
+                justify-content: flex-end;
+              "
+              append-icon="mdi-circle-medium"
+              class="text-white"
+              title="تقرير مصروفات العهدة"
+              value="reports-payment_custody"
+              :to="{ name: 'reports-payment_custody' }"
             >
             </v-list-item>
           </v-list-group>
@@ -198,10 +259,10 @@
               value="suppliers"
               :to="{ name: 'product_types' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'PRODUCTTYPE_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -218,10 +279,10 @@
               value="products"
               :to="{ name: 'products' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'PRODUCT_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -237,10 +298,10 @@
               value="granary"
               :to="{ name: 'granary' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'GRANARY_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -256,10 +317,10 @@
               value="clients"
               :to="{ name: 'clients' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'CLIENT_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -275,10 +336,10 @@
               value="product_types"
               :to="{ name: 'suppliers' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'SUPPLIER_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -307,10 +368,10 @@
               value="product_units"
               :to="{ name: 'product_units' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'PACKAGEUNIT_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -326,10 +387,10 @@
               value="taxes"
               :to="{ name: 'taxes' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'TAX_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
@@ -345,10 +406,10 @@
               value="users"
               :to="{ name: 'users' }"
               v-if="
-                loggerData.authorities.find(
+                loggerData.authorities?.find(
                   (el) => el.authority == 'USER_GETALL'
                 ) ||
-                loggerData.authorities.find((el) => el.authority == 'ADMIN')
+                loggerData.authorities?.find((el) => el.authority == 'ADMIN')
               "
             >
             </v-list-item>
