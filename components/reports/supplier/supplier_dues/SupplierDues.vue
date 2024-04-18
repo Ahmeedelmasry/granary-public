@@ -58,6 +58,7 @@
           >
             <template v-slot:headers>
               <tr>
+                <th>رقم</th>
                 <th>كود</th>
                 <th>اسم المورد</th>
                 <th>اجمالي الكمية</th>
@@ -77,22 +78,25 @@
             <template v-slot:item="{ item }">
               <tr>
                 <td>
+                  {{ item.index + 1 }}
+                </td>
+                <td>
                   {{ item.selectable.supplier.id }}
                 </td>
                 <td>
                   {{ item.selectable.supplier.name }}
                 </td>
                 <td>
-                  {{ item.selectable.totalAmountSupplied }}
+                  {{ parseInt(item.selectable.totalAmountSupplied) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalPriceSupplied }}
+                  {{ parseInt(item.selectable.totalPriceSupplied) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalCashPaied }}
+                  {{ parseInt(item.selectable.totalCashPaied) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalCashRemaining }}
+                  {{ parseInt(item.selectable.totalCashRemaining) }}
                 </td>
                 <!-- <td class="hide_till_print_table">
                   <div class="field_container">
@@ -104,7 +108,11 @@
                 <td class="hide_till_print_table">
                   <div class="field_container">
                     <div class="input_parent">
-                      <input autocomplete="off" type="text" style="width: 130px" />
+                      <input
+                        autocomplete="off"
+                        type="text"
+                        style="width: 130px"
+                      />
                     </div>
                   </div>
                 </td>
@@ -133,6 +141,7 @@ const selectedSupplier = ref(null);
 const selectedGranary = ref(null);
 
 const headers = ref([
+  { title: "ترتيب", key: "index" },
   { title: "رقم", key: "supplier.id" },
   { title: "كمية التوريد", key: "supplier.name" },
   { title: "قيمة التوريد", key: "totalAmountSupplied" },
@@ -210,10 +219,28 @@ watch(
   }
 );
 
+const totals = computed(() => {
+  const obj = {
+    totalAmountSupplied: 0,
+    totalPriceSupplied: 0,
+    totalCashPaied: 0,
+    totalCashRemaining: 0,
+  };
+  if (props.supplierDues && props.supplierDues.length) {
+    props.supplierDues.forEach((el) => {
+      obj.totalAmountSupplied += el.totalAmountSupplied;
+      obj.totalPriceSupplied += el.totalPriceSupplied;
+      obj.totalCashPaied += el.totalCashPaied;
+      obj.totalCashRemaining += el.totalCashRemaining;
+    });
+    return obj;
+  }
+});
+
 // Provide
 provide("supplierSelect", (data) => {
-  fromDate.value = data.FromDate;
-  toDate.value = data.ToDate;
+  fromDate.value = data.creationFromDate;
+  toDate.value = data.creationToDate;
   selectedSupplier.value = data.supplierId;
   selectedGranary.value = data.granaryId;
 });

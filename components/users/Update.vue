@@ -15,7 +15,8 @@
                 <div class="field_container">
                   <label for="typeName">اسم المستخدم</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       v-model="data.username"
                       placeholder="اسم المستخدم"
@@ -45,7 +46,8 @@
                 <div class="field_container">
                   <label for="typeName">الاسم الاول</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       v-model="data.firstName"
                       placeholder="الاسم الاول"
@@ -76,7 +78,8 @@
                 <div class="field_container">
                   <label for="typeName">اسم العائلة</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       v-model="data.lastName"
                       placeholder="اسم العائلة"
@@ -106,7 +109,8 @@
                 <div class="field_container">
                   <label for="typeName">كلمة المرور</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       v-model="data.password"
                       placeholder="كلمة المرور"
@@ -462,11 +466,43 @@ const submitData = async () => {
 // Hooks
 onMounted(() => {
   dialog.value = props.openPopup;
+  updateRolesStatus(false);
   granaryModule.doGetGranaries(0, 1000);
   if (props.toUpdate) {
-    data.value.name = props.toUpdate.selectable.name;
-    data.value.phone = props.toUpdate.selectable.phone;
-    data.value.nationalid = props.toUpdate.selectable.nationalid;
+    data.value.username = props.toUpdate.username;
+    data.value.firstName = props.toUpdate.firstName;
+    data.value.lastName = props.toUpdate.lastName;
+    if (props.toUpdate.authorities.find((el) => el.authority == "ADMIN")) {
+      data.value.role = "ADMIN";
+      updateRolesStatus(true);
+    } else {
+      data.value.role = "USER";
+      data.value.granaries = props.toUpdate.granaries;
+      setTimeout(() => {
+        props.toUpdate.authorities.forEach((auth) => {
+          const authArr = auth.authority.split("_");
+          if (auth.authority != "LOOKUPS") {
+            if (authArr[1]) {
+              if (
+                authArr[1] != "REPORT" &&
+                authArr[1] != "REPORT1" &&
+                authArr[1] != "REPORT2"
+              ) {
+                the_user_roles.value[authArr[0]].obj[authArr[1]].value = true;
+              } else {
+                if (auth.authority != "COMPANYDUES_REPORT") {
+                  the_user_roles.value[""].obj[auth.authority].value = true;
+                } else {
+                  the_user_roles.value[""].obj[
+                    "GETCOMPANYDUESPAYMENTS_REPORT"
+                  ].value = true;
+                }
+              }
+            }
+          }
+        });
+      }, 500);
+    }
   }
 });
 </script>
