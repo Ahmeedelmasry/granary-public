@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="dashboard_invoices_listing">
     <div class="page_toolbar d-flex align-center justify-space-between">
       <div class="toolbar_btns">
@@ -125,13 +125,13 @@
                   {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
                 </td>
                 <td class="hide_on_print" v-if="showUpdate || showDelete">
-                  <v-icon
+                  <!--<v-icon
                     color="blue"
                     style="cursor: pointer"
                     @click="(toUpdate = item), (openUpdate = true)"
                     v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
-                  >
+                  > -->
                   <v-btn
                     elevation="0"
                     color="transparent"
