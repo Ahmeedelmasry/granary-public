@@ -125,11 +125,7 @@
                   {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
                 </td>
                 <td class="hide_on_print" v-if="showUpdate || showDelete">
-<<<<<<< HEAD
                   <!--<v-icon
-=======
-                  <!-- <v-icon
->>>>>>> 51f199b96f338e8a04cb88b6bf47aa50d53a3aa7
                     color="blue"
                     style="cursor: pointer"
                     @click="(toUpdate = item), (openUpdate = true)"
