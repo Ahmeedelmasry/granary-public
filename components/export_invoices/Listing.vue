@@ -125,13 +125,13 @@
                   {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
                 </td>
                 <td class="hide_on_print" v-if="showUpdate || showDelete">
-                  <v-icon
+                  <!-- <v-icon
                     color="blue"
                     style="cursor: pointer"
                     @click="(toUpdate = item), (openUpdate = true)"
                     v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
-                  >
+                  > -->
                   <v-btn
                     elevation="0"
                     color="transparent"
@@ -242,10 +242,13 @@ import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
 import { storeToRefs } from "pinia";
+import { mainStore } from "@/stores";
 
 // Init Store
 const authModule = authStore();
+const mainModule = mainStore();
 const { loggerData } = storeToRefs(authModule);
+const { regetData } = storeToRefs(mainModule);
 
 const showAdd = computed(() => {
   return loggerData.value.authorities.find(
@@ -277,7 +280,7 @@ const openUpdate = ref(false);
 // const openDelete = ref(false);
 const toUpdate = ref(null);
 const showFilters = ref(false);
-// const toDelete = ref(null);
+const toDelete = ref(null);
 const page = ref(1);
 const perPage = ref(10);
 
@@ -359,6 +362,18 @@ watch(
 );
 
 watch(
+  () => regetData.value,
+  (newVal) => {
+    if (newVal) {
+      emits("regetItems", {
+        page: 1,
+        limit: perPage.value,
+      });
+    }
+  }
+);
+
+watch(
   () => perPage.value,
   (newVal) => {
     emits("regetItems", {
@@ -370,6 +385,12 @@ watch(
 
 // Methods
 const openDel = (item) => {
+  mainModule.handleErr(
+    "alert",
+    "حذف توريد",
+    `يرجي تاكيد الطلب قبل الحذف, تريد تاكيد حذف التوريدة رقم مستند ${item.documentNumber} ؟`,
+    { ...item, url: "supplyInvoice" }
+  );
   toDelete.value = item.selectable;
 };
 </script>

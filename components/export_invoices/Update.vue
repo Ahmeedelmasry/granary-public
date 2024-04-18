@@ -752,9 +752,9 @@ const { loggerData } = storeToRefs(authModule);
 // Local Data
 const config = ref({
   wrap: true,
-  altFormat: "d/m/Y",
+  altFormat: "d-m-Y",
   altInput: true,
-  dateFormat: "d/m/Y",
+  dateFormat: "d-m-Y",
   enabled: true,
 });
 
@@ -763,7 +763,7 @@ const data = ref({
   documentNumber: null,
   carNumber: null,
   supplier: null,
-  date: moment(new Date()).format("YYYY-MM-DD"),
+  date: moment(new Date()).format("DD-MM-YYYY"),
   product: null,
   productType: null,
   productMeasuringUnit: null,

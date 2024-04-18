@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "@/plugins/axios_instance.js";
+import { authStore } from "./auth/auth";
 
 export const mainStore = defineStore("mainStore", {
   state: () => ({
@@ -11,14 +12,17 @@ export const mainStore = defineStore("mainStore", {
     globalAlertType: "",
     globalAlertTitle: "",
     globalAlertText: "",
-    btn_text: "Close",
+    btn_text: "الغاء",
     globalAlert: false,
+    toDel: null,
+    regetData: false,
   }),
   actions: {
-    handleErr(type, title, text) {
+    handleErr(type, title, text, toDel) {
       this.globalAlertType = type;
       this.globalAlertTitle = title;
       this.globalAlertText = text;
+      this.toDel = toDel;
       this.globalAlert = true;
     },
     callResponse(responseType, msg, color) {
@@ -30,10 +34,14 @@ export const mainStore = defineStore("mainStore", {
       this.callSuccess = false;
       this.callMsg = "";
     },
-    async doDeleteItem(url, id) {
+    async doDeleteItem() {
       let result;
       await axios()
-        .delete(`${this.apiURL}/${url}/${id}`)
+        .delete(`${this.apiURL}/${this.toDel.url}/${this.toDel.id}`, {
+          headers: {
+            Authorization: `Bearer ${authStore().token}`,
+          },
+        })
         .then((res) => {
           result = true;
           this.callResponse(true, res.data.message, 1);
