@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم المورد</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.name"
                       placeholder="اسم المورد"
@@ -43,7 +43,7 @@
                 <div class="field_container">
                   <label for="typeName">رقم الهاتف</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.phone"
                       placeholder="رقم الهاتف"
@@ -71,7 +71,7 @@
                 <div class="field_container">
                   <label for="typeName">رقم البطاقة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.nationalid"
                       placeholder="رقم البطاقة"

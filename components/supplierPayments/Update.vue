@@ -152,7 +152,7 @@
                 <div class="field_container">
                   <label for="typeName">القيمة المستحقة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       :value="supplierInvoice"
                       placeholder="القيمة المستحقة"
@@ -168,7 +168,7 @@
                 <div class="field_container">
                   <label for="typeName">قيمة السداد</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.amount"
                       placeholder="قيمة السداد"
@@ -196,21 +196,22 @@
                 <div class="field_container">
                   <label for="typeName">تاريخ السداد</label>
                   <div class="input_parent position-relative">
-                    <input
-                      type="date"
-                      name="insertDate"
-                      id="insertDate"
+                    <div
                       :class="
                         $v.$errors.find((el) => el.$property == 'date')
                           ? 'err_field'
                           : ''
                       "
-                      style="padding-right: 0 !important"
-                      v-model="data.date"
-                    />
-                    <v-icon class="position-absolute"
-                      >mdi-calendar-outline</v-icon
                     >
+                      <flat-pickr
+                        name="date_from"
+                        id="date_from"
+                        v-model="data.date"
+                        :config="config"
+                        placeholder="سنة/يوم/شهر"
+                      />
+                      <v-icon class="position-absolute">mdi-calendar</v-icon>
+                    </div>
                   </div>
                 </div>
                 <span
@@ -284,6 +285,7 @@ import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
+import flatPickr from "vue-flatpickr-component";
 
 // Init STores
 const suppliersPaymentsModule = supplierPaymentsStore();
@@ -301,6 +303,14 @@ const { loggerData } = storeToRefs(authModule);
 const searchForm = ref({
   supplier: null,
   granary: null,
+});
+
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
 });
 
 const supplierFound = ref(false);
@@ -378,7 +388,7 @@ const submitData = async () => {
       due: Number(supplierInvoice.value),
       paid: Number(data.value.amount),
       remain: Number(supplierInvoice.value) - Number(data.value.amount),
-      date: moment(new Date(data.value.date)).format("DD-MM-YYYY"),
+      date: data.value.date,
       notes: data.value.notes,
     };
     const result = await suppliersPaymentsModule.doAddPayment(obj);

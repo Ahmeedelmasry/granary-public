@@ -72,15 +72,16 @@
         <div class="field_container">
           <label for="creationFromDate">من</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="creationFromDate"
-              :disabled="loading"
-              id="creationFromDate"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.creationFromDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -88,15 +89,16 @@
         <div class="field_container">
           <label for="creationToDate">الي</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="creationToDate"
-              id="creationToDate"
-              :disabled="loading"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.creationToDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -104,7 +106,7 @@
         <div class="field_container" dir="rtl">
           <label for="FromDate">تاريخ السداد (من)</label>
           <div class="input_parent position-relative">
-            <input
+            <input autocomplete="off"
               type="date"
               name="FromDate"
               id="FromDate"
@@ -120,7 +122,7 @@
         <div class="field_container" dir="rtl">
           <label for="ToDate">تاريخ السداد (الي)</label>
           <div class="input_parent position-relative">
-            <input
+            <input autocomplete="off"
               type="date"
               name="ToDate"
               v-model="data.ToDate"
@@ -161,6 +163,7 @@ import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
+import flatPickr from "vue-flatpickr-component";
 
 // Init Store
 const granaryModule = granaryStore();
@@ -188,6 +191,14 @@ const data = ref({
   ToDate: null,
 });
 
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
+});
+
 // Props
 const props = defineProps(["loading"]);
 
@@ -204,7 +215,7 @@ const submitFilter = () => {
       : null,
     creationToDate: data.value.creationToDate
       ? moment(
-          Date.now(data.value.creationToDate) + 24 * 60 * 60 * 1000
+          Date.now(new Date(data.value.creationToDate)) + 24 * 60 * 60 * 1000
         ).format("DD/MM/YYYY")
       : null,
     FromDate: data.value.FromDate

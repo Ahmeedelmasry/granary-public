@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم المستخدم</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.username"
                       placeholder="اسم المستخدم"
@@ -45,7 +45,7 @@
                 <div class="field_container">
                   <label for="typeName">الاسم الاول</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.firstName"
                       placeholder="الاسم الاول"
@@ -76,7 +76,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم العائلة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.lastName"
                       placeholder="اسم العائلة"
@@ -106,7 +106,7 @@
                 <div class="field_container">
                   <label for="typeName">كلمة المرور</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.password"
                       placeholder="كلمة المرور"
@@ -288,11 +288,11 @@ const { the_user_roles } = storeToRefs(rolesModule);
 const { granaries } = storeToRefs(granaryModule);
 
 const data = ref({
-  username: "aaaaaaaaa",
-  firstName: "aaaaaaaaa",
-  lastName: "aaaaaaaaa",
-  password: "123456",
-  role: "USER",
+  username: "",
+  firstName: "",
+  lastName: "",
+  password: "",
+  role: "",
   granaries: [],
   isLocked: false,
 });

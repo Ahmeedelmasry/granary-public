@@ -15,7 +15,7 @@
           <div class="field_container">
             <label for="username">اسم المستخدم</label>
             <div class="input_parent position-relative">
-              <input
+              <input autocomplete="off"
                 type="text"
                 placeholder="اسم المستخدم"
                 name="username"
@@ -43,7 +43,7 @@
           <div class="field_container">
             <label for="userPass">كلمة المرور</label>
             <div class="input_parent position-relative">
-              <input
+              <input autocomplete="off"
                 placeholder="كلمة المرور"
                 name="userPass"
                 id="userPass"

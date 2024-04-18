@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "swiper/css/navigation",
     "swiper/css/effect-cube",
     "assets/css/main.scss",
+    "flatpickr/dist/flatpickr.css",
   ],
   build: {
     transpile: ["vuetify", "print"],

@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم الوحدة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.name"
                       placeholder="اسم الوحدة"
@@ -43,7 +43,7 @@
                 <div class="field_container">
                   <label for="typeName">عدد الكيلوهات</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.quantityPerKilo"
                       placeholder="عدد الكيلوهات"

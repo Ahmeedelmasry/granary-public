@@ -31,15 +31,16 @@
         <div class="field_container">
           <label for="creationFromDate">من</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="creationFromDate"
-              :disabled="loading"
-              id="creationFromDate"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.creationFromDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -47,15 +48,16 @@
         <div class="field_container">
           <label for="creationToDate">الي</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="creationToDate"
-              id="creationToDate"
-              :disabled="loading"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.creationToDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -86,6 +88,7 @@
 import { userStore } from "@/stores/users/users";
 import { storeToRefs } from "pinia";
 import moment from "moment";
+import flatPickr from "vue-flatpickr-component";
 
 import { authStore } from "@/stores/auth/auth";
 
@@ -96,6 +99,14 @@ const usersModule = userStore();
 // Store Data
 const { loggerData } = storeToRefs(authModule);
 const { users } = storeToRefs(usersModule);
+
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
+});
 
 const admin = computed(() => {
   return loggerData.value.authorities.find((el) => el.authority == "ADMIN")
@@ -122,11 +133,11 @@ const submitFilter = () => {
     adminUserId: loggerData.value.DD,
     custodyUserId: data.value.custodyUserId || null,
     creationFromDate: data.value.creationFromDate
-      ? moment(data.value.creationFromDate).format("DD/MM/YYYY")
+      ? data.value.creationFromDate
       : null,
-      creationToDate: data.value.creationToDate
+    creationToDate: data.value.creationToDate
       ? moment(
-          Date.now(data.value.creationToDate) + 24 * 60 * 60 * 1000
+          Date.now(new Date(data.value.creationToDate)) + 24 * 60 * 60 * 1000
         ).format("DD/MM/YYYY")
       : null,
   };

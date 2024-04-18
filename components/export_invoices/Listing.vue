@@ -144,8 +144,8 @@
                       style="cursor: pointer"
                       class="ml-2"
                       size="23"
-                      @click="(toDelete = item.selectable), (openDelete = true)"
-                      >mdi-lock</v-icon
+                      @click="openDel(item.selectable)"
+                      >mdi-delete</v-icon
                     >
                   </v-btn>
                 </td>
@@ -367,6 +367,11 @@ watch(
     });
   }
 );
+
+// Methods
+const openDel = (item) => {
+  toDelete.value = item.selectable;
+};
 </script>
 
 <style lang="scss">

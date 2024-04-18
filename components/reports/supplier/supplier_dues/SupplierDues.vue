@@ -97,14 +97,14 @@
                 <!-- <td class="hide_till_print_table">
                   <div class="field_container">
                     <div class="input_parent">
-                      <input type="text" style="width: 130px" />
+                      <input autocomplete="off" type="text" style="width: 130px" />
                     </div>
                   </div>
                 </td> -->
                 <td class="hide_till_print_table">
                   <div class="field_container">
                     <div class="input_parent">
-                      <input type="text" style="width: 130px" />
+                      <input autocomplete="off" type="text" style="width: 130px" />
                     </div>
                   </div>
                 </td>

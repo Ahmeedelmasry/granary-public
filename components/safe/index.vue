@@ -33,7 +33,7 @@
                 <div class="field_container">
                   <label for="outingValue">قيمة المبلغ</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.outingValue"
                       placeholder="قيمة المبلغ"

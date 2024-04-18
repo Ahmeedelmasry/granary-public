@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم الضريبة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.name"
                       placeholder="اسم الضريبة"
@@ -50,7 +50,7 @@
                 <div class="field_container">
                   <label for="typeName">قيمة الضريبة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.amount"
                       placeholder="قيمة الضريبة"

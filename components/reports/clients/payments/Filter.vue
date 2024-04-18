@@ -69,15 +69,16 @@
         <div class="field_container" dir="rtl">
           <label for="FromDate">من</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="FromDate"
-              id="FromDate"
-              :disabled="loading"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.FromDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -86,15 +87,16 @@
         <div class="field_container" dir="rtl">
           <label for="ToDate">الي</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="ToDate"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.ToDate"
-              :disabled="loading"
-              id="ToDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -143,6 +145,7 @@ import { storeToRefs } from "pinia";
 import moment from "moment";
 import { clientStore } from "@/stores/clients/clients.js";
 import { authStore } from "@/stores/auth/auth";
+import flatPickr from "vue-flatpickr-component";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -169,6 +172,14 @@ const data = ref({
   FromDate: null,
   ToDate: null,
   transactionType: null,
+});
+
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
 });
 
 const roles = computed(() => {
@@ -222,11 +233,11 @@ const submitFilter = async () => {
       clientID: data.value.clientID.client,
       transactionType: data.value.transactionType,
       granaryId: data.value.granaryId,
-      FromDate: data.value.FromDate
-        ? moment(data.value.FromDate).format("DD/MM/YYYY")
-        : null,
+      FromDate: data.value.FromDate ? data.value.FromDate : null,
       ToDate: data.value.ToDate
-        ? moment(data.value.ToDate).format("DD/MM/YYYY")
+        ? moment(
+            Date.now(new Date(data.value.ToDate)) + 24 * 60 * 60 * 1000
+          ).format("DD/MM/YYYY")
         : null,
     };
     supplierChange(obj);
@@ -241,8 +252,8 @@ onMounted(() => {
 
 <style lang="scss">
 .clientPaymentReportFilter {
-    .v-selection-control--inline .v-label {
-      font-size: 13px !important;
-    }
+  .v-selection-control--inline .v-label {
+    font-size: 13px !important;
+  }
 }
 </style>

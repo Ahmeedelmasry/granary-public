@@ -1,6 +1,6 @@
 <template>
   <div class="update_banner">
-    <v-dialog v-model="dialog" :fullscreen="true">
+    <v-dialog v-model="dialog" :fullscreen="true" persistent>
       <v-card style="border-radius: unset !important">
         <v-card-title
           class="mb-0 text-center bg-grey-lighten-3 main_title font-safe-bold"
@@ -22,9 +22,11 @@
                   <div class="input_parent position-relative">
                     <v-autocomplete
                       return-object
-                      :disabled="!loggerData.authorities.find(
+                      :disabled="
+                        !loggerData.authorities.find(
                           (el) => el.authority == 'ADMIN'
-                        )"
+                        )
+                      "
                       :items="
                         loggerData.authorities.find(
                           (el) => el.authority == 'ADMIN'
@@ -123,7 +125,7 @@
                 <div class="field_container">
                   <label for="documentNumber">رقم المستند</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="رقم المستند"
                       name="documentNumber"
@@ -156,7 +158,7 @@
                 <div class="field_container">
                   <label for="carNumber">رقم السيارة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="رقم السيارة"
                       name="carNumber"
@@ -184,20 +186,24 @@
               <v-col cols="12" sm="6" md="3" lg="" v-if="clients.content">
                 <div class="field_container">
                   <label for="date">التاريخ</label>
-                  <div class="input_parent position-relative">
-                    <input
-                      type="date"
-                      name="date"
-                      id="date"
-                      v-model="data.date"
+                  <div class="input_parent position-relative flat_picker">
+                    <div
                       :class="
                         $v.$errors.find((el) => el.$property == 'date')
                           ? 'err_field'
                           : ''
                       "
-                      style="padding-right: 0 !important"
-                    />
-                    <v-icon class="position-absolute">mdi-calendar</v-icon>
+                    >
+                      <flat-pickr
+                        name="date_from"
+                        id="date_from"
+                        v-model="data.date"
+                        :config="config"
+                        placeholder="سنة/يوم/شهر"
+                        style="padding-right: 0 !important"
+                      />
+                      <v-icon class="position-absolute">mdi-calendar</v-icon>
+                    </div>
                   </div>
                 </div>
                 <span
@@ -291,7 +297,7 @@
                 <div class="field_container">
                   <label for="carWeightWith">الوزن القائم</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="الوزن القائم"
                       name="carWeightWith"
@@ -324,7 +330,7 @@
                 <div class="field_container">
                   <label for="carWeightWithOut">الوزن الفارغ</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="الوزن الفارغ"
                       name="carWeightWithOut"
@@ -360,7 +366,7 @@
                 <div class="field_container">
                   <label for="typeName">صافي الوزن</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="صافي الوزن"
                       name="typeName"
@@ -426,7 +432,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">اجمالي وزن الوحدات</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="وزن وحدات التعبئة بالكيلو"
                       name="totalPackingWeight"
@@ -464,7 +470,7 @@
                 <div class="field_container">
                   <label for="typeName">الصافي بعد خصم وزن الوحدات</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="الصافي بعد خصم وزن الوحدات"
                       name="typeName"
@@ -494,7 +500,7 @@
                 <div class="field_container">
                   <label for="agingPricePerTon">سعر التعتيق</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="سعر التعتيق"
                       name="agingPricePerTon"
@@ -527,7 +533,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">اجمالي التعتيق</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="اجمالي التعتيق"
                       name="totalPackingWeight"
@@ -543,7 +549,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">ضريبة دمغة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="ضريبة دمغة"
                       name="totalPackingWeight"
@@ -559,7 +565,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">ضريبة مهن زراعية</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="مهن زراعية"
                       name="totalPackingWeight"
@@ -575,7 +581,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">اجمالي الخصم</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="اجمالي الخصم"
                       name="totalPackingWeight"
@@ -600,7 +606,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">القيمة قبل الخصم</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="القيمة قبل الخصم"
                       name="totalPackingWeight"
@@ -622,7 +628,7 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">القيمة بعد الخصم</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="القيمة بعد الخصم"
                       name="totalPackingWeight"
@@ -647,7 +653,7 @@
                     >القيمة بعد الخصم والتعتيق</label
                   >
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       placeholder="القيمة بعد الخصم والتعتيق"
                       name="totalPackingWeight"
@@ -712,6 +718,7 @@ import { invoiceModule } from "@/stores/invoices/invoices.js";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
+import flatPickr from "vue-flatpickr-component";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -743,6 +750,14 @@ const { taxes } = storeToRefs(taxedModule);
 const { loggerData } = storeToRefs(authModule);
 
 // Local Data
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
+});
+
 const data = ref({
   granary: null,
   documentNumber: null,
@@ -950,7 +965,7 @@ const submitData = async () => {
           invoicTotalTaxesCut.value -
           agingTotalPrice.value
       ).toFixed(2),
-      date: moment(new Date(data.value.date)).format("DD-MM-YYYY"),
+      date: data.value.date,
     };
     const result = await invoicesModule.doAddInvoice(obj);
     if (result) {
@@ -961,6 +976,7 @@ const submitData = async () => {
           product: data.value.product,
           date: data.value.date,
           unit: data.value.productUnit,
+          agingPricePerTon: data.value.agingPricePerTon,
         })
       );
       emits("regetData");
@@ -992,6 +1008,7 @@ onMounted(() => {
     data.value.date = localData.date;
     data.value.productUnit = localData.unit;
     data.value.granary = localData.granary;
+    data.value.agingPricePerTon = localData.agingPricePerTon;
   }
   if (useCookie("selected_granary").value) {
     data.value.granary = authModule.selected_granary[0];

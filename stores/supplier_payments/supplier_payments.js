@@ -57,7 +57,7 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
             authStore().selected_granary && authStore().selected_granary[0]
               ? `&granaryId=${authStore().selected_granary[0].id}`
               : filters && filters.granaryId
-              ? `&granaryId=${filters.granaryId}`
+              ? `&granaryId=${filters.granaryId.id}`
               : ""
           }${
             filters && filters.creationFromDate

@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم المنتج</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.name"
                       placeholder="اسم المنتج"
@@ -165,7 +165,7 @@
                 <td class="text-center">
                   <div class="field_container pt-5">
                     <div class="input_parent">
-                      <input
+                      <input autocomplete="off"
                         class="px-0 text-center"
                         style="width: 200px"
                         placeholder="سعر الاردب"
@@ -185,7 +185,7 @@
                 <td class="text-center">
                   <div class="field_container pt-5">
                     <div class="input_parent">
-                      <input
+                      <input autocomplete="off"
                         class="px-0 text-center"
                         style="width: 200px"
                         placeholder="وزن الاردب"

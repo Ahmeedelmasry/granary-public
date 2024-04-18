@@ -3,13 +3,24 @@ import axios from "@/plugins/axios_instance.js";
 
 export const mainStore = defineStore("mainStore", {
   state: () => ({
-    // apiURL: `http://localhost:8081/Granary`,
-   apiURL: `https://granary.onrender.com/Granary`,
+    apiURL: `http://localhost:8081/Granary`,
+    // apiURL: `https://granary.onrender.com/Granary`,
     callSuccess: false,
     callMsg: "",
     callColor: 0,
+    globalAlertType: "",
+    globalAlertTitle: "",
+    globalAlertText: "",
+    btn_text: "Close",
+    globalAlert: false,
   }),
   actions: {
+    handleErr(type, title, text) {
+      this.globalAlertType = type;
+      this.globalAlertTitle = title;
+      this.globalAlertText = text;
+      this.globalAlert = true;
+    },
     callResponse(responseType, msg, color) {
       this.callSuccess = responseType;
       this.callMsg = msg;

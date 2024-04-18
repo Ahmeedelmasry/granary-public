@@ -14,7 +14,7 @@
             <div class="field_container">
               <label for="userName">اسم المستخدم</label>
               <div class="input_parent position-relative">
-                <input
+                <input autocomplete="off"
                   type="text"
                   placeholder="اسم المستخدم"
                   name="userName"
@@ -36,7 +36,7 @@
             <div class="field_container">
               <label for="firstName">الاسم الاول</label>
               <div class="input_parent position-relative">
-                <input
+                <input autocomplete="off"
                   type="text"
                   placeholder="الاسم الاول"
                   v-model="data.firstName"
@@ -65,7 +65,7 @@
             <div class="field_container">
               <label for="lastName">اسم العائلة</label>
               <div class="input_parent position-relative">
-                <input
+                <input autocomplete="off"
                   type="text"
                   placeholder="اسم العائلة"
                   name="lastName"
@@ -92,7 +92,7 @@
             <div class="field_container">
               <label for="password">رمز المرور</label>
               <div class="input_parent position-relative">
-                <input
+                <input autocomplete="off"
                   type="text"
                   placeholder="رمز المرور"
                   name="password"

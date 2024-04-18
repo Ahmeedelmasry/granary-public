@@ -54,7 +54,7 @@
               <td>
                 <div class="field_container pt-5">
                   <div class="input_parent">
-                    <input
+                    <input autocomplete="off"
                       class="px-0 text-center"
                       style="width: 100%"
                       placeholder="قم بادخال مبلغ السداد"

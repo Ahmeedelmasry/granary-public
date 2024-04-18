@@ -26,6 +26,7 @@
     <nuxt-layout>
       <NuxtPage />
     </nuxt-layout>
+    <Delete />
   </div>
 </template>
 
@@ -79,5 +80,13 @@ watch(
 }
 a:hover {
   text-decoration: none !important;
+}
+
+div.err_field {
+  input.input {
+    border-color: red !important;
+  }
+  border: none !important;
+  border-radius: 12px;
 }
 </style>

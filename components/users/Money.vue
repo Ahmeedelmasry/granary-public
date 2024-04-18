@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم المستخدم</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="username"
                       name="typeName"
@@ -30,7 +30,7 @@
                 <div class="field_container">
                   <label for="typeName">العهدة الحالية</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="currentAmount"
                       name="typeName"
@@ -45,7 +45,7 @@
                 <div class="field_container">
                   <label for="typeName">قيمة التحويل</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.custody"
                       placeholder="قيمة التحويل"

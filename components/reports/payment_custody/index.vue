@@ -57,6 +57,7 @@
                 <th>قبل الصرف</th>
                 <th>قيمة الصرف</th>
                 <th>بعد الصرف</th>
+                <th>سبب الصرف</th>
                 <th>تاريخ التحويل</th>
               </tr>
             </template>
@@ -77,6 +78,9 @@
                     parseInt(item.selectable.previousCustody) -
                     parseInt(item.selectable.outingValue)
                   }}
+                </td>
+                <td>
+                  {{ item.selectable.description }}
                 </td>
                 <td>
                   {{
@@ -115,6 +119,7 @@ const headers = ref([
   { title: "قيمة العهدة السابقة", key: "previousCustody" },
   { title: "قيمة التحويل", key: "addedValue" },
   { title: "بعد التحويل", key: "custodyUser" },
+  { title: "سبب الصرف", key: "description" },
   { title: "تاريخ التحويل", key: "creationDate" },
 ]);
 

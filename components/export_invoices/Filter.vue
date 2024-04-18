@@ -56,7 +56,7 @@
         <div class="field_container">
           <label for="carNumber">رقم السيارة</label>
           <div class="input_parent position-relative">
-            <input
+            <input autocomplete="off"
               type="text"
               placeholder="رقم السيارة"
               name="carNumber"
@@ -72,7 +72,7 @@
         <div class="field_container">
           <label for="documentNumber">رقم المستند</label>
           <div class="input_parent position-relative">
-            <input
+            <input autocomplete="off"
               type="text"
               placeholder="رقم المستند"
               name="documentNumber"

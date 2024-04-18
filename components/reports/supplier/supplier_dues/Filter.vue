@@ -85,15 +85,16 @@
         <div class="field_container" dir="rtl">
           <label for="FromDate">من</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="FromDate"
-              id="FromDate"
-              :disabled="loading"
-              v-model="data.FromDate"
-              style="padding-right: 0 !important"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
+              v-model="data.creationFromDate"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -101,15 +102,16 @@
         <div class="field_container" dir="rtl">
           <label for="ToDate">الي</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="ToDate"
-              v-model="data.ToDate"
-              :disabled="loading"
-              id="ToDate"
-              style="padding-right: 0 !important"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
+              v-model="data.creationToDate"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
-            <v-icon class="position-absolute">mdi-calendar</v-icon>
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -143,6 +145,7 @@ import { supplierStore } from "@/stores/supplier/supplier";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
+import flatPickr from "vue-flatpickr-component";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -174,6 +177,14 @@ const data = ref({
   ToDate: null,
 });
 
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
+});
+
 const roles = computed(() => {
   return {
     granaryId: {
@@ -198,19 +209,19 @@ const submitFilter = async () => {
       supplierId: data.value.supplierId,
       granaryId: data.value.granaryId,
       creationFromDate: data.value.creationFromDate
-        ? moment(data.value.creationFromDate).format("DD/MM/YYYY")
+        ? data.value.creationFromDate
         : null,
       creationToDate: data.value.creationToDate
         ? moment(
-            Date.now(data.value.creationToDate) + 24 * 60 * 60 * 1000
+            Date.now(new Date(data.value.creationToDate)) + 24 * 60 * 60 * 1000
           ).format("DD/MM/YYYY")
         : null,
-      FromDate: data.value.FromDate
-        ? moment(data.value.FromDate).format("DD/MM/YYYY")
-        : null,
-      ToDate: data.value.ToDate
-        ? moment(data.value.ToDate).format("DD/MM/YYYY")
-        : null,
+      // FromDate: data.value.FromDate
+      //   ? moment(data.value.FromDate).format("DD/MM/YYYY")
+      //   : null,
+      // ToDate: data.value.ToDate
+      //   ? moment(data.value.ToDate).format("DD/MM/YYYY")
+      //   : null,
     };
     supplierChange(obj);
     emits("filterData", obj);

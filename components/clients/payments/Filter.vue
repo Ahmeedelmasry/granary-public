@@ -70,13 +70,12 @@
         <div class="field_container" dir="rtl">
           <label for="FromDate">من</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="FromDate"
-              id="FromDate"
-              :disabled="loading"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.FromDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
             <v-icon class="position-absolute">mdi-calendar</v-icon>
           </div>
@@ -86,13 +85,12 @@
         <div class="field_container" dir="rtl">
           <label for="ToDate">الي</label>
           <div class="input_parent position-relative">
-            <input
-              type="date"
-              name="ToDate"
+            <flat-pickr
+              name="date_from"
+              id="date_from"
               v-model="data.ToDate"
-              :disabled="loading"
-              id="ToDate"
-              style="padding-right: 0 !important"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
             />
             <v-icon class="position-absolute">mdi-calendar</v-icon>
           </div>
@@ -131,6 +129,7 @@ import { authStore } from "@/stores/auth/auth";
 // Validator
 import useVuelidator from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
+import flatPickr from "vue-flatpickr-component";
 
 // Init Store
 const clientModule = clientStore();
@@ -146,6 +145,14 @@ const data = ref({
   granaryId: null,
   FromDate: null,
   ToDate: null,
+});
+
+const config = ref({
+  wrap: true,
+  altFormat: "d/m/Y",
+  altInput: true,
+  dateFormat: "d/m/Y",
+  enabled: true,
 });
 
 const roles = ref({
@@ -203,13 +210,11 @@ const submitFilter = async () => {
     const obj = {
       clientID: data.value.clientID,
       granaryId: data.value.granaryId,
-      FromDate: data.value.FromDate
-        ? moment(data.value.FromDate).format("DD/MM/YYYY")
-        : null,
+      FromDate: data.value.FromDate ? data.value.FromDate : null,
       ToDate: data.value.ToDate
-        ? moment(Date.now(data.value.ToDate) + 24 * 60 * 60 * 1000).format(
-            "DD/MM/YYYY"
-          )
+        ? moment(
+            Date.now(new Date(data.value.ToDate)) + 24 * 60 * 60 * 1000
+          ).format("DD/MM/YYYY")
         : null,
     };
     emits("filterData", obj);

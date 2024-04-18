@@ -15,7 +15,7 @@
                 <div class="field_container">
                   <label for="typeName">اسم الصومعة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.name"
                       placeholder="اسم الصومعة"
@@ -43,7 +43,7 @@
                 <div class="field_container">
                   <label for="typeName">المحافظة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.governorate"
                       placeholder="المحافظة"
@@ -74,7 +74,7 @@
                 <div class="field_container">
                   <label for="typeName">المدينة</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.city"
                       placeholder="المدينة"
@@ -102,7 +102,7 @@
                 <div class="field_container">
                   <label for="typeName">المنطقة / الحي</label>
                   <div class="input_parent position-relative">
-                    <input
+                    <input autocomplete="off"
                       type="text"
                       v-model="data.region"
                       placeholder="المنطقة / الحي"
