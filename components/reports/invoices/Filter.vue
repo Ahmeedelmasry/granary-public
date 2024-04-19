@@ -277,7 +277,7 @@ const submitFilter = () => {
     FromDate: data.value.creationFromDate ? data.value.creationFromDate : null,
     ToDate: data.value.creationToDate
       ? moment(
-          Date.now(new Date(data.value.creationToDate)) + 24 * 60 * 60 * 1000
+          moment(data.value.creationToDate, "DD/MM/YYYY").add({ days: 1 })
         ).format("DD/MM/YYYY")
       : null,
     // FromDate: data.value.FromDate

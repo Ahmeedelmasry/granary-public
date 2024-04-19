@@ -238,7 +238,7 @@ const submitFilter = async () => {
       FromDate: data.value.FromDate ? data.value.FromDate : null,
       ToDate: data.value.ToDate
         ? moment(
-            Date.now(new Date(data.value.ToDate)) + 24 * 60 * 60 * 1000
+            moment(data.value.ToDate, "DD/MM/YYYY").add({ days: 1 })
           ).format("DD/MM/YYYY")
         : null,
     };
