@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="update_banner">
     <v-dialog v-model="dialog" :fullscreen="true" persistent>
       <v-card style="border-radius: unset !important">
@@ -780,7 +780,7 @@ const roles = ref({
   granary: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
   documentNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
-    minLength: helpers.withMessage("يجب ادخال اكثر من 3 مدخلات", minLength(3)),
+    minLength: helpers.withMessage("يجب ادخال اكثر من 1 مدخلات", minLength(1)),
   },
   carNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
@@ -988,7 +988,6 @@ const submitData = async () => {
       data.value.carWeightWith = null;
       data.value.carWeightWithOut = null;
       data.value.totalPackingWeight = null;
-      data.value.agingPricePerTon = null;
     }
     btnLoading.value = false;
   }
