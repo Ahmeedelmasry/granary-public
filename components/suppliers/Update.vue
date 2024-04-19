@@ -144,7 +144,6 @@ const btnLoading = ref(false);
 const roles = ref({
   name: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
   phone: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
     numeric: helpers.withMessage("هذا الحقل يقبل ارقام فقط", numeric),
     minLength: helpers.withMessage(
       "هذا الحقل يجب ان يتكون من 11 رقم",
@@ -156,7 +155,6 @@ const roles = ref({
     ),
   },
   nationalid: {
-    required: helpers.withMessage("هذا الحقل مطلوب", required),
     numeric: helpers.withMessage("هذا الحقل يقبل ارقام فقط", numeric),
     minLength: helpers.withMessage(
       "هذا الحقل يجب ان يتكون من 14 رقم",
