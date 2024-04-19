@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard_banners_listing">
+  <div class="supplierDuesListing">
     <div class="page_toolbar d-flex align-center justify-space-between">
       <div class="toolbar_btns">
         <v-btn
@@ -107,7 +107,7 @@
                 </td> -->
                 <td class="hide_till_print_table">
                   <div class="field_container">
-                    <div class="input_parent">
+                    <div class="input_parent sig">
                       <input
                         autocomplete="off"
                         type="text"
@@ -116,6 +116,23 @@
                     </div>
                   </div>
                 </td>
+              </tr>
+              <tr v-if="item.index + 1 == supplierDues.length">
+                <td colspan="2" style="font-size: 14px">الاجمالي</td>
+                <td style="font-size: 14px"></td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalAmountSupplied) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalPriceSupplied) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalCashPaied) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalCashRemaining) }}
+                </td>
+                <td style="font-size: 14px" class="hide_till_print_table"></td>
               </tr>
             </template>
             <template v-slot:no-data>
@@ -246,4 +263,10 @@ provide("supplierSelect", (data) => {
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.supplierDuesListing {
+  .v-table {
+    padding-bottom: 0 !important;
+  }
+}
+</style>

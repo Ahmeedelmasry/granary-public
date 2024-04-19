@@ -130,6 +130,7 @@ import { authStore } from "@/stores/auth/auth";
 import useVuelidator from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 
 // Init Store
 const clientModule = clientStore();
@@ -153,6 +154,7 @@ const config = ref({
   altInput: true,
   dateFormat: "d/m/Y",
   enabled: true,
+  locale: Arabic,
 });
 
 const roles = ref({

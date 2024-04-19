@@ -110,6 +110,12 @@
                     <v-icon class="position-absolute"
                       >mdi-account-cowboy-hat
                     </v-icon>
+                    <v-icon
+                      class="position-absolute"
+                      style="left: 10px; right: unset; z-index: 111"
+                      @click="openAddSupplier = true"
+                      >mdi-plus-circle</v-icon
+                    >
                   </div>
                 </div>
                 <span
@@ -695,17 +701,6 @@
           </v-container>
           <div class="actions text-center mt-7">
             <v-btn
-              color="red"
-              class="mr-3"
-              @click="dialog = false"
-              :disabled="btnLoading"
-              width="200"
-              height="50"
-              rounded
-              elevation="0"
-              >الغاء</v-btn
-            >
-            <v-btn
               color="green"
               width="200"
               height="50"
@@ -715,10 +710,27 @@
               :loading="btnLoading"
               >حفظ</v-btn
             >
+            <v-btn
+              color="red"
+              class="ml-3"
+              @click="dialog = false"
+              :disabled="btnLoading"
+              width="200"
+              height="50"
+              rounded
+              elevation="0"
+              >الغاء</v-btn
+            >
           </div>
         </v-form>
       </v-card>
     </v-dialog>
+    <suppliers-update
+      :openPopup="openAddSupplier"
+      v-if="openAddSupplier"
+      @closePopup="openAddSupplier = false"
+      @regetData="suppliersModule.doGetSuppliers(0, 10000)"
+    />
   </div>
 </template>
 
@@ -734,6 +746,7 @@ import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -790,12 +803,13 @@ const data = ref({
 });
 const dialog = ref(false);
 const btnLoading = ref(false);
+const openAddSupplier = ref(false);
 
 const roles = ref({
   granary: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
   documentNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
-    minLength: helpers.withMessage("يجب ادخال اكثر من 3 مدخلات", minLength(3)),
+    minLength: helpers.withMessage("يجب ادخال اكثر من مدخل", minLength(1)),
   },
   carNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),

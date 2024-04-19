@@ -108,19 +108,19 @@
         </div>
         <div class="actions text-center mt-5">
           <v-btn
-            color="red"
-            class="mr-3"
-            @click="dialog = false"
-            width="100"
-            :disabled="btnLoading"
-            >الغاء</v-btn
-          >
-          <v-btn
             color="green"
             @click="submitData"
             :loading="btnLoading"
             width="100"
             >دفع</v-btn
+          >
+          <v-btn
+            color="red"
+            class="ml-3"
+            @click="dialog = false"
+            width="100"
+            :disabled="btnLoading"
+            >الغاء</v-btn
           >
         </div>
       </v-card>

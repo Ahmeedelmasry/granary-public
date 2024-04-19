@@ -84,15 +84,15 @@
           </tfoot>
         </v-table>
         <div class="actions text-center mt-5">
+          <v-btn color="green" @click="submitData" :loading="btnLoading"
+            >دفع</v-btn
+          >
           <v-btn
             color="red"
-            class="mr-3"
+            class="ml-3"
             @click="dialog = false"
             :disabled="btnLoading"
             >الغاء</v-btn
-          >
-          <v-btn color="green" @click="submitData" :loading="btnLoading"
-            >دفع</v-btn
           >
         </div>
       </v-card>

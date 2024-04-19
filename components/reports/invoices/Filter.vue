@@ -211,6 +211,7 @@ import { storeToRefs } from "pinia";
 
 import { authStore } from "@/stores/auth/auth";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 import moment from "moment";
 
 // Init Store
@@ -249,6 +250,7 @@ const config = ref({
   altInput: true,
   dateFormat: "d/m/Y",
   enabled: true,
+  locale: Arabic,
 });
 
 // Props
