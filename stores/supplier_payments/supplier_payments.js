@@ -61,11 +61,11 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
               : ""
           }${
             filters && filters.creationFromDate
-              ? `&creationFromDate=${filters.creationFromDate}`
+              ? `&fromDate=${filters.creationFromDate}`
               : ""
           }${
             filters && filters.creationToDate
-              ? `&creationToDate=${filters.creationToDate}`
+              ? `&toDate=${filters.creationToDate}`
               : ""
           }${
             filters && filters.FromDate ? `&FromDate=${filters.FromDate}` : ""

@@ -24,7 +24,7 @@
           </td>
           <th class="pb-2">تاريخ الي</th>
           <td>
-            {{ toDate || "الكل" }}
+            {{ moment(moment(toDate, 'DD/MM/YYYY').add({ days: -1 })).format('DD/MM/YYYY') || "الكل" }}
           </td>
         </tr>
       </tbody>

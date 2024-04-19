@@ -809,11 +809,7 @@ const roles = ref({
   granary: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
   documentNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
-<<<<<<< HEAD
-    minLength: helpers.withMessage("يجب ادخال اكثر من 1 مدخلات", minLength(1)),
-=======
     minLength: helpers.withMessage("يجب ادخال اكثر من مدخل", minLength(1)),
->>>>>>> 906b4804fd05bb40c72b9d3170e476bcb9adeb7a
   },
   carNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
