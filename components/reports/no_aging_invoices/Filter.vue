@@ -217,10 +217,10 @@ const submitFilter = () => {
     productTypeId: data.value.productTypeId
       ? data.value.productTypeId.id
       : null,
-    creationFromDate: data.value.creationFromDate
+    FromDate: data.value.creationFromDate
       ? data.value.creationFromDate
       : null,
-    creationToDate: data.value.creationToDate
+    ToDate: data.value.creationToDate
       ? moment(
           moment(data.value.creationToDate, "DD/MM/YYYY").add({ days: 1 })
         ).format("DD/MM/YYYY")
