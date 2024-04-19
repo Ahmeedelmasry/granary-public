@@ -152,7 +152,8 @@
                 <div class="field_container">
                   <label for="typeName">القيمة المستحقة</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       :value="supplierInvoice"
                       placeholder="القيمة المستحقة"
@@ -168,7 +169,8 @@
                 <div class="field_container">
                   <label for="typeName">قيمة السداد</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       v-model="data.amount"
                       placeholder="قيمة السداد"
@@ -256,16 +258,16 @@
             </v-row>
           </v-container>
           <div class="actions text-center mb-7" v-if="supplierFound">
+            <v-btn color="green" type="submit" width="100" :loading="btnLoading"
+              >حفظ</v-btn
+            >
             <v-btn
               color="red"
-              class="mr-3"
+              class="ml-3"
               @click="dialog = false"
               :disabled="btnLoading"
               width="100"
               >الغاء</v-btn
-            >
-            <v-btn color="green" type="submit" width="100" :loading="btnLoading"
-              >حفظ</v-btn
             >
           </div>
         </v-form>
@@ -286,6 +288,7 @@ import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 
 // Init STores
 const suppliersPaymentsModule = supplierPaymentsStore();
@@ -311,6 +314,7 @@ const config = ref({
   altInput: true,
   dateFormat: "d/m/Y",
   enabled: true,
+  locale: Arabic,
 });
 
 const supplierFound = ref(false);

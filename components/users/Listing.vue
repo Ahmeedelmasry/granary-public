@@ -73,7 +73,7 @@
                   <v-icon
                     color="blue"
                     style="cursor: pointer"
-                    @click="(toUpdate = item), (openUpdate = true)"
+                    @click="(toUpdate = item.selectable), (openUpdate = true)"
                     v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
                   >
@@ -92,8 +92,8 @@
                     v-if="showDelete"
                     :loading="item.selectable.loading"
                     size="23"
-                    @click="(toDelete = item.selectable), (openDelete = true)"
-                    >mdi-lock</v-icon
+                    @click="openDel(item.selectable)"
+                    >mdi-delete</v-icon
                   >
                 </td>
               </tr>
@@ -183,10 +183,13 @@ import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
 import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
 import { authStore } from "@/stores/auth/auth";
 import { storeToRefs } from "pinia";
+import { mainStore } from "@/stores";
 
 // Init Store
 const authModule = authStore();
+const mainModule = mainStore();
 const { loggerData } = storeToRefs(authModule);
+const { regetData } = storeToRefs(mainModule);
 
 const showAdd = computed(() => {
   return loggerData.value.authorities.find(
@@ -289,6 +292,29 @@ watch(
     });
   }
 );
+
+watch(
+  () => regetData.value,
+  (newVal) => {
+    if (newVal) {
+      emits("regetItems", {
+        page: 1,
+        limit: perPage.value,
+      });
+    }
+  }
+);
+
+// Methods
+const openDel = (item) => {
+  mainModule.handleErr(
+    "alert",
+    "حذف توريد",
+    `يرجي تاكيد الطلب قبل الحذف, تريد تاكيد حذف المستخدم ${item.username} ؟`,
+    { ...item, url: "user" }
+  );
+  toDelete.value = item.selectable;
+};
 </script>
 
 <style lang="scss"></style>

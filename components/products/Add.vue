@@ -200,18 +200,18 @@
         <v-divider></v-divider>
         <div class="actions text-center mt-5">
           <v-btn
-            color="red"
-            class="mr-3"
-            @click="dialog = false"
-            :disabled="btnLoading"
-            >الغاء</v-btn
-          >
-          <v-btn
             color="green"
             type="submit"
             @click="submitData"
             :loading="btnLoading"
             >حفظ</v-btn
+          >
+          <v-btn
+            color="red"
+            class="ml-3"
+            @click="dialog = false"
+            :disabled="btnLoading"
+            >الغاء</v-btn
           >
         </div>
       </v-card>

@@ -89,6 +89,7 @@ import { userStore } from "@/stores/users/users";
 import { storeToRefs } from "pinia";
 import moment from "moment";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 
 import { authStore } from "@/stores/auth/auth";
 
@@ -106,6 +107,7 @@ const config = ref({
   altInput: true,
   dateFormat: "d/m/Y",
   enabled: true,
+  locale: Arabic,
 });
 
 const admin = computed(() => {

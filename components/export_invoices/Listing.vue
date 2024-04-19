@@ -125,13 +125,13 @@
                   {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
                 </td>
                 <td class="hide_on_print" v-if="showUpdate || showDelete">
-                  <!--<v-icon
+                  <v-icon
                     color="blue"
                     style="cursor: pointer"
-                    @click="(toUpdate = item), (openUpdate = true)"
+                    @click="(toUpdate = item.selectable), (openUpdate = true)"
                     v-if="showUpdate"
                     >mdi-square-edit-outline</v-icon
-                  > -->
+                  >
                   <v-btn
                     elevation="0"
                     color="transparent"
@@ -163,6 +163,8 @@
                 </td>
                 <td style="font-size: 14px !important">
                   {{ totals.afterDisc }}
+                </td>
+                <td style="font-size: 14px !important">
                 </td>
               </tr>
             </template>

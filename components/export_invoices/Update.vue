@@ -110,6 +110,12 @@
                     <v-icon class="position-absolute"
                       >mdi-account-cowboy-hat
                     </v-icon>
+                    <v-icon
+                      class="position-absolute"
+                      style="left: 10px; right: unset; z-index: 111"
+                      @click="openAddSupplier = true"
+                      >mdi-plus-circle</v-icon
+                    >
                   </div>
                 </div>
                 <span
@@ -125,7 +131,8 @@
                 <div class="field_container">
                   <label for="documentNumber">رقم المستند</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="رقم المستند"
                       name="documentNumber"
@@ -158,7 +165,8 @@
                 <div class="field_container">
                   <label for="carNumber">رقم السيارة</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="رقم السيارة"
                       name="carNumber"
@@ -297,7 +305,8 @@
                 <div class="field_container">
                   <label for="carWeightWith">الوزن القائم</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="الوزن القائم"
                       name="carWeightWith"
@@ -330,7 +339,8 @@
                 <div class="field_container">
                   <label for="carWeightWithOut">الوزن الفارغ</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="الوزن الفارغ"
                       name="carWeightWithOut"
@@ -366,7 +376,8 @@
                 <div class="field_container">
                   <label for="typeName">صافي الوزن</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="صافي الوزن"
                       name="typeName"
@@ -432,7 +443,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">اجمالي وزن الوحدات</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="وزن وحدات التعبئة بالكيلو"
                       name="totalPackingWeight"
@@ -470,7 +482,8 @@
                 <div class="field_container">
                   <label for="typeName">الصافي بعد خصم وزن الوحدات</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="الصافي بعد خصم وزن الوحدات"
                       name="typeName"
@@ -500,7 +513,8 @@
                 <div class="field_container">
                   <label for="agingPricePerTon">سعر التعتيق</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="سعر التعتيق"
                       name="agingPricePerTon"
@@ -533,7 +547,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">اجمالي التعتيق</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="اجمالي التعتيق"
                       name="totalPackingWeight"
@@ -549,7 +564,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">ضريبة دمغة</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="ضريبة دمغة"
                       name="totalPackingWeight"
@@ -565,7 +581,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">ضريبة مهن زراعية</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="مهن زراعية"
                       name="totalPackingWeight"
@@ -581,7 +598,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">اجمالي الخصم</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="اجمالي الخصم"
                       name="totalPackingWeight"
@@ -606,7 +624,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">القيمة قبل الخصم</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="القيمة قبل الخصم"
                       name="totalPackingWeight"
@@ -628,7 +647,8 @@
                 <div class="field_container">
                   <label for="totalPackingWeight">القيمة بعد الخصم</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="القيمة بعد الخصم"
                       name="totalPackingWeight"
@@ -653,7 +673,8 @@
                     >القيمة بعد الخصم والتعتيق</label
                   >
                   <div class="input_parent position-relative">
-                    <input autocomplete="off"
+                    <input
+                      autocomplete="off"
                       type="text"
                       placeholder="القيمة بعد الخصم والتعتيق"
                       name="totalPackingWeight"
@@ -680,17 +701,6 @@
           </v-container>
           <div class="actions text-center mt-7">
             <v-btn
-              color="red"
-              class="mr-3"
-              @click="dialog = false"
-              :disabled="btnLoading"
-              width="200"
-              height="50"
-              rounded
-              elevation="0"
-              >الغاء</v-btn
-            >
-            <v-btn
               color="green"
               width="200"
               height="50"
@@ -700,10 +710,27 @@
               :loading="btnLoading"
               >حفظ</v-btn
             >
+            <v-btn
+              color="red"
+              class="ml-3"
+              @click="dialog = false"
+              :disabled="btnLoading"
+              width="200"
+              height="50"
+              rounded
+              elevation="0"
+              >الغاء</v-btn
+            >
           </div>
         </v-form>
       </v-card>
     </v-dialog>
+    <suppliers-update
+      :openPopup="openAddSupplier"
+      v-if="openAddSupplier"
+      @closePopup="openAddSupplier = false"
+      @regetData="suppliersModule.doGetSuppliers(0, 10000)"
+    />
   </div>
 </template>
 
@@ -719,6 +746,7 @@ import { storeToRefs } from "pinia";
 import moment from "moment";
 import { authStore } from "@/stores/auth/auth";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -775,12 +803,17 @@ const data = ref({
 });
 const dialog = ref(false);
 const btnLoading = ref(false);
+const openAddSupplier = ref(false);
 
 const roles = ref({
   granary: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
   documentNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
+<<<<<<< HEAD
     minLength: helpers.withMessage("يجب ادخال اكثر من 1 مدخلات", minLength(1)),
+=======
+    minLength: helpers.withMessage("يجب ادخال اكثر من مدخل", minLength(1)),
+>>>>>>> 906b4804fd05bb40c72b9d3170e476bcb9adeb7a
   },
   carNumber: {
     required: helpers.withMessage("هذا الحقل مطلوب", required),
@@ -842,7 +875,11 @@ const totalWeightFromCar = computed(() => {
 });
 
 const totalClearWeight = computed(() => {
-  if (totalWeightFromCar.value > 0 && Number(data.value.totalPackingWeight)) {
+  if (
+    totalWeightFromCar.value > 0 &&
+    data.value.totalPackingWeight &&
+    Number(data.value.totalPackingWeight)
+  ) {
     return (
       parseFloat(totalWeightFromCar.value) -
       parseFloat(data.value.totalPackingWeight)
@@ -967,7 +1004,13 @@ const submitData = async () => {
       ).toFixed(2),
       date: data.value.date,
     };
-    const result = await invoicesModule.doAddInvoice(obj);
+    let result;
+    if (props.toUpdate) {
+      obj.id = props.toUpdate.id;
+      result = await invoicesModule.doUpdateInvoice(obj);
+    } else {
+      result = await invoicesModule.doAddInvoice(obj);
+    }
     if (result) {
       localStorage.setItem(
         "selectedItems",
@@ -980,6 +1023,9 @@ const submitData = async () => {
         })
       );
       emits("regetData");
+      if (props.toUpdate) {
+        dialog.value = false;
+      }
       $v.value.$reset();
       data.value.documentNumber = null;
       data.value.carNumber = null;
@@ -994,13 +1040,18 @@ const submitData = async () => {
 };
 
 // Hooks
-onMounted(() => {
-  clientsModule.doGetClients(0, 10000);
-  granaryModule.doGetGranaries(0, 10000);
-  suppliersModule.doGetSuppliers(0, 10000);
-  productsModule.doGetProducts(0, 10000);
-  productUnitsModule.doGetProductUnits(0, 10000);
-  taxedModule.doGetTaxes(0, 10000);
+onMounted(async () => {
+  dialog.value = props.openPopup;
+
+  await Promise.all([
+    clientsModule.doGetClients(0, 10000),
+    granaryModule.doGetGranaries(0, 10000),
+    suppliersModule.doGetSuppliers(0, 10000),
+    productsModule.doGetProducts(0, 10000),
+    productUnitsModule.doGetProductUnits(0, 10000),
+    taxedModule.doGetTaxes(0, 10000),
+  ]);
+
   const localData = JSON.parse(localStorage.getItem("selectedItems"));
   if (localData) {
     data.value.product = localData.product;
@@ -1012,6 +1063,25 @@ onMounted(() => {
   if (useCookie("selected_granary").value) {
     data.value.granary = authModule.selected_granary[0];
   }
-  dialog.value = props.openPopup;
+  if (props.toUpdate) {
+    data.value.granary = props.toUpdate.granary;
+    data.value.documentNumber = props.toUpdate.documentNumber;
+    data.value.carNumber = props.toUpdate.carNumber;
+    data.value.supplier = props.toUpdate.supplier;
+    data.value.date = moment(new Date(props.toUpdate.date)).format(
+      "DD-MM-YYYY"
+    );
+    data.value.product = products.value.content.find((el) => {
+      return el.id == props.toUpdate.product.id;
+    });
+    data.value.productType = data.value.product.typePriceList.find(
+      (el) => el.productType.id == props.toUpdate.productType.id
+    );
+    data.value.productMeasuringUnit = props.toUpdate.packageUnit;
+    data.value.carWeightWith = props.toUpdate.carWeightWith;
+    data.value.carWeightWithOut = props.toUpdate.carWeightWithOut;
+    data.value.totalPackingWeight = props.toUpdate.totalPackingWeight;
+    data.value.agingPricePerTon = props.toUpdate.agingPricePerTon;
+  }
 });
 </script>

@@ -3,12 +3,7 @@
     <table
       class="w-100 text-right"
       dir="rtl"
-      style="
-        border: 1px solid rgb(179, 179, 179);
-        border-radius: 12px;
-        padding: 13px;
-        background: #f0f0f0ba;
-      "
+      style="border-radius: 12px; padding: 13px; background: #f0f0f0ba"
       id="not_styled_print"
     >
       <tbody>
@@ -25,11 +20,11 @@
         <tr>
           <th class="pb-2">تاريخ من</th>
           <td class="pb-2">
-            {{ fromDate ? moment(fromDate).format("DD-MM-YYYY") : "الكل" }}
+            {{ fromDate || "الكل" }}
           </td>
           <th class="pb-2">تاريخ الي</th>
           <td>
-            {{ toDate ? moment(toDate).format("DD-MM-YYYY") : "الكل" }}
+            {{ toDate || "الكل" }}
           </td>
         </tr>
       </tbody>

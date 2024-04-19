@@ -146,6 +146,7 @@ import moment from "moment";
 import { clientStore } from "@/stores/clients/clients.js";
 import { authStore } from "@/stores/auth/auth";
 import flatPickr from "vue-flatpickr-component";
+import { Arabic } from "flatpickr/dist/l10n/ar.js";
 
 // Validator
 import useVuelidator from "@vuelidate/core";
@@ -180,6 +181,7 @@ const config = ref({
   altInput: true,
   dateFormat: "d/m/Y",
   enabled: true,
+  locale: Arabic,
 });
 
 const roles = computed(() => {

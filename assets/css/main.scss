@@ -349,6 +349,21 @@ input[type="date"] {
   display: none;
 }
 @media print {
+  th,
+  td {
+    font-size: 25px !important;
+    font-weight: bold !important;
+  }
+  .sig {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    padding-right: 20px !important;
+    input {
+      width: 90% !important;
+      padding-top: 20px !important;
+      padding-bottom: 20px !important;
+    }
+  }
   .hide_on_print,
   .v-data-table-footer {
     display: none !important;
@@ -375,12 +390,11 @@ input[type="date"] {
 }
 
 .clientPaymentReportFilter {
-  display: none I !important;
+  display: none !important;
 }
 
 .menu_drawer_dashboard {
   .v-list-item__prepend {
     margin-right: auto;
-
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard_banners_listing">
+  <div class="supplierDuesListing">
     <div class="page_toolbar d-flex align-center justify-space-between">
       <div class="toolbar_btns">
         <v-btn
@@ -58,6 +58,7 @@
           >
             <template v-slot:headers>
               <tr>
+                <th>رقم</th>
                 <th>كود</th>
                 <th>اسم المورد</th>
                 <th>اجمالي الكمية</th>
@@ -77,22 +78,25 @@
             <template v-slot:item="{ item }">
               <tr>
                 <td>
+                  {{ item.index + 1 }}
+                </td>
+                <td>
                   {{ item.selectable.supplier.id }}
                 </td>
                 <td>
                   {{ item.selectable.supplier.name }}
                 </td>
                 <td>
-                  {{ item.selectable.totalAmountSupplied }}
+                  {{ parseInt(item.selectable.totalAmountSupplied) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalPriceSupplied }}
+                  {{ parseInt(item.selectable.totalPriceSupplied) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalCashPaied }}
+                  {{ parseInt(item.selectable.totalCashPaied) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalCashRemaining }}
+                  {{ parseInt(item.selectable.totalCashRemaining) }}
                 </td>
                 <!-- <td class="hide_till_print_table">
                   <div class="field_container">
@@ -103,11 +107,32 @@
                 </td> -->
                 <td class="hide_till_print_table">
                   <div class="field_container">
-                    <div class="input_parent">
-                      <input autocomplete="off" type="text" style="width: 130px" />
+                    <div class="input_parent sig">
+                      <input
+                        autocomplete="off"
+                        type="text"
+                        style="width: 130px"
+                      />
                     </div>
                   </div>
                 </td>
+              </tr>
+              <tr v-if="item.index + 1 == supplierDues.length">
+                <td colspan="2" style="font-size: 14px">الاجمالي</td>
+                <td style="font-size: 14px"></td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalAmountSupplied) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalPriceSupplied) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalCashPaied) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ parseInt(totals.totalCashRemaining) }}
+                </td>
+                <td style="font-size: 14px" class="hide_till_print_table"></td>
               </tr>
             </template>
             <template v-slot:no-data>
@@ -133,6 +158,7 @@ const selectedSupplier = ref(null);
 const selectedGranary = ref(null);
 
 const headers = ref([
+  { title: "ترتيب", key: "index" },
   { title: "رقم", key: "supplier.id" },
   { title: "كمية التوريد", key: "supplier.name" },
   { title: "قيمة التوريد", key: "totalAmountSupplied" },
@@ -210,13 +236,37 @@ watch(
   }
 );
 
+const totals = computed(() => {
+  const obj = {
+    totalAmountSupplied: 0,
+    totalPriceSupplied: 0,
+    totalCashPaied: 0,
+    totalCashRemaining: 0,
+  };
+  if (props.supplierDues && props.supplierDues.length) {
+    props.supplierDues.forEach((el) => {
+      obj.totalAmountSupplied += el.totalAmountSupplied;
+      obj.totalPriceSupplied += el.totalPriceSupplied;
+      obj.totalCashPaied += el.totalCashPaied;
+      obj.totalCashRemaining += el.totalCashRemaining;
+    });
+    return obj;
+  }
+});
+
 // Provide
 provide("supplierSelect", (data) => {
-  fromDate.value = data.FromDate;
-  toDate.value = data.ToDate;
+  fromDate.value = data.creationFromDate;
+  toDate.value = data.creationToDate;
   selectedSupplier.value = data.supplierId;
   selectedGranary.value = data.granaryId;
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.supplierDuesListing {
+  .v-table {
+    padding-bottom: 0 !important;
+  }
+}
+</style>
