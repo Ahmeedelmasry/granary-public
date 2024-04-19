@@ -144,7 +144,7 @@ const items = [
     },
   },
   {
-    title: "تقرير مستحقات الشركة",
+    title: "تقرير سدادات الشركة",
     disabled: true,
   },
 ];
@@ -202,6 +202,7 @@ provide("supplierSelect", (data) => {
   selectedClient.value = data.clientID;
   selectedGranary.value = data.granaryId;
 });
+
 </script>
 
 <style lang="scss">
