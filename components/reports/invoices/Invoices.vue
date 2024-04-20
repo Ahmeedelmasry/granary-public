@@ -82,13 +82,13 @@
                   {{ item.selectable.productType.name }}
                 </td>
                 <td>
-                  {{ item.selectable.totalClearWeight.toFixed(2) }}
+                  {{ parseInt(item.selectable.totalClearWeight) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalPrice.toFixed(2) }}
+                  {{ parseInt(item.selectable.totalPrice) }}
                 </td>
                 <td>
-                  {{ item.selectable.totalDiscountWithAging.toFixed(2) }}
+                  {{ parseInt(item.selectable.totalDiscountWithAging) }}
                 </td>
                 <td>
                   {{ parseInt(item.selectable.totalAfterDiscountWithAging) }}
@@ -97,12 +97,12 @@
               <tr v-if="item.index + 1 == invoices.content.length">
                 <td colspan="7" style="font-size: 14px">الاجمالي</td>
                 <td colspan="1" style="font-size: 14px">
-                  {{ totals.clearWeight.toFixed(2) }}
+                  {{ parseInt(totals.clearWeight) }}
                 </td>
                 <td colspan="1" style="font-size: 14px">
-                  {{ totals.beforeDisc.toFixed(2) }}
+                  {{ parseInt(totals.beforeDisc) }}
                 </td>
-                <td style="font-size: 14px">{{ totals.disc.toFixed(2) }}</td>
+                <td style="font-size: 14px">{{ parseInt(totals.disc) }}</td>
                 <td style="font-size: 14px">
                   {{ totals.afterDisc }}
                 </td>

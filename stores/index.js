@@ -5,7 +5,7 @@ import { authStore } from "./auth/auth";
 export const mainStore = defineStore("mainStore", {
   state: () => ({
     apiURL: `http://localhost:8081/Granary`,
-   // apiURL: `https://granary.onrender.com/Granary`,
+    // apiURL: `https://granary.onrender.com/Granary`,
     callSuccess: false,
     callMsg: "",
     callColor: 0,
