@@ -18,6 +18,8 @@ export const clientStore = defineStore("clientStore", {
           },
         })
         .then((res) => {
+          const cont = res.data.content.filter((el) => !el.locked);
+          res.data.content = cont;
           this.clients = res.data;
         });
     },

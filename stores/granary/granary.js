@@ -16,6 +16,8 @@ export const granaryStore = defineStore("granaryStore", {
           },
         })
         .then((res) => {
+          const cont = res.data.content.filter((el) => !el.locked);
+          res.data.content = cont;
           this.granaries = res.data;
         });
     },

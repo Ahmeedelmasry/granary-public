@@ -16,6 +16,8 @@ export const taxStore = defineStore("taxStore", {
           },
         })
         .then((res) => {
+          const cont = res.data.content.filter((el) => !el.locked);
+          res.data.content = cont;
           this.taxes = res.data;
         });
     },

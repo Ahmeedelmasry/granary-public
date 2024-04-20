@@ -82,8 +82,8 @@
                       style="cursor: pointer"
                       class="ml-2"
                       size="23"
-                      @click="(toDelete = item.selectable), (openDelete = true)"
-                      >mdi-lock</v-icon
+                      @click="openDel(item.selectable)"
+                      >mdi-delete</v-icon
                     >
                   </v-btn>
                 </td>
@@ -99,34 +99,34 @@
               <span class="d-none"></span>
             </template>
           </v-data-table-server>
-          <div
-            class="text-center pt-2 d-flex justify-space-between hide_on_print"
-            style="width: 60%"
-            v-if="!loading"
-          >
-            <div class="ps-5 d-flex align-center">
-              <v-select
-                v-model="perPage"
-                :items="[10, 50, 100, 500]"
-                variant="outlined"
-                hide-details
-              ></v-select>
-              <label
-                for=""
-                class="mb-2 d-block text-end ms-3 mt-1"
-                style="font-size: 12px"
-                >النتائج لكل صفحة</label
-              >
-            </div>
-            <v-pagination
-              v-model="page"
-              :length="
-                productUnits.totalElements
-                  ? Math.ceil(productUnits.totalElements / perPage)
-                  : 1
-              "
-            ></v-pagination>
-          </div>
+          <v-row v-if="!loading" class="align-center">
+            <v-col cols="3">
+              <div class="ps-5 d-flex align-center">
+                <v-select
+                  v-model="perPage"
+                  :items="[10, 50, 100, 500]"
+                  variant="outlined"
+                  hide-details
+                ></v-select>
+                <label
+                  for=""
+                  class="mb-2 d-block text-end ms-3 mt-1"
+                  style="font-size: 12px"
+                  >النتائج لكل صفحة</label
+                >
+              </div>
+            </v-col>
+            <v-col cols="9">
+              <v-pagination
+                v-model="page"
+                :length="
+                  productUnits.totalElements
+                    ? Math.ceil(productUnits.totalElements / perPage)
+                    : 1
+                "
+              ></v-pagination
+            ></v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -163,9 +163,13 @@ import { VDataTableServer } from "vuetify/lib/labs/components.mjs";
 import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
 import { authStore } from "@/stores/auth/auth";
 import { storeToRefs } from "pinia";
+import { mainStore } from "@/stores";
 
 // Init Store
 const authModule = authStore();
+const mainModule = mainStore();
+
+const { regetData } = storeToRefs(mainModule);
 const { loggerData } = storeToRefs(authModule);
 
 const showAdd = computed(() => {
@@ -264,6 +268,30 @@ watch(
     });
   }
 );
+
+watch(
+  () => regetData.value,
+  (newVal) => {
+    if (newVal) {
+      emits("regetItems", {
+        page: 1,
+        limit: perPage.value,
+      });
+    }
+  }
+);
+
+// Methods
+const openDel = (item) => {
+  mainModule.handleErr(
+    "alert",
+    "حذف توريد",
+    `يرجي تاكيد الطلب قبل الحذف, تريد تاكيد حذف الفارغ ${item.name} ؟`,
+    { ...item, url: "packageUnit" }
+  );
+
+  toDelete.value = item.selectable;
+};
 </script>
 
 <style lang="scss"></style>

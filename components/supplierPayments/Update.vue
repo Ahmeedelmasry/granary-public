@@ -315,16 +315,6 @@ onMounted(() => {
   granaryModule.doGetGranaries(0, 10000);
   supplierModule.doGetSuppliers(0, 10000);
   dialog.value = props.openPopup;
-  if (props.toUpdate) {
-    data.value.supplier = props.toUpdate.selectable.supplier;
-    data.value.granary = props.toUpdate.selectable.granary;
-    data.value.amount = props.toUpdate.selectable.amount;
-    data.value.notes = props.toUpdate.selectable.notes;
-    data.value.date = props.toUpdate.selectable.date
-      .split(":")
-      .slice(0, 2)
-      .join(":");
-  }
   if (localStorage.getItem("supplierPayDate")) {
     data.value.date = localStorage.getItem("supplierPayDate");
   }

@@ -16,6 +16,8 @@ export const supplierStore = defineStore("supplierStore", {
           },
         })
         .then((res) => {
+          const cont = res.data.content.filter((el) => !el.locked);
+          res.data.content = cont;
           this.suppliers = res.data;
         });
     },

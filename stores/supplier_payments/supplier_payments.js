@@ -78,6 +78,8 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
           }
         )
         .then((res) => {
+          const cont = res.data.content.filter((el) => !el.locked);
+          res.data.content = cont;
           this.supplierDues = res.data;
         });
     },

@@ -418,15 +418,15 @@ onMounted(async () => {
     });
   });
 
-  props.toUpdate.selectable.measuringUnitList.forEach((el) => {
-    data.value.measuringUnits.push(el);
+  // props.toUpdate.selectable.measuringUnitList.forEach((el) => {
+  //   data.value.measuringUnits.push(el);
 
-    props.units.content.forEach((e) => {
-      if (e.id == el.id) {
-        e.disabled = true;
-      }
-    });
-  });
+  //   props.units.content.forEach((e) => {
+  //     if (e.id == el.id) {
+  //       e.disabled = true;
+  //     }
+  //   });
+  // });
 
   data.value.name = props.toUpdate.selectable.name;
 });

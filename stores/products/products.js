@@ -16,6 +16,8 @@ export const productStore = defineStore("productStore", {
           },
         })
         .then((res) => {
+          const cont = res.data.content.filter((el) => !el.isLocked);
+          res.data.content = cont;
           this.products = res.data;
         });
     },

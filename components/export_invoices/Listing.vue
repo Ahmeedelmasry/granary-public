@@ -164,8 +164,7 @@
                 <td style="font-size: 14px !important">
                   {{ totals.afterDisc }}
                 </td>
-                <td style="font-size: 14px !important">
-                </td>
+                <td style="font-size: 14px !important"></td>
               </tr>
             </template>
             <template v-slot:loading>
@@ -179,34 +178,34 @@
             </template>
           </v-data-table-server>
 
-          <div
-            class="text-center pt-2 d-flex justify-space-between hide_on_print"
-            style="width: 60%"
-            v-if="!loading"
-          >
-            <div class="ps-5 d-flex align-center">
-              <v-select
-                v-model="perPage"
-                :items="[10, 50, 100, 500]"
-                variant="outlined"
-                hide-details
-              ></v-select>
-              <label
-                for=""
-                class="mb-2 d-block text-end ms-3 mt-1"
-                style="font-size: 12px"
-                >النتائج لكل صفحة</label
-              >
-            </div>
-            <v-pagination
-              v-model="page"
-              :length="
-                invoices.totalElements
-                  ? Math.ceil(invoices.totalElements / perPage)
-                  : 1
-              "
-            ></v-pagination>
-          </div>
+          <v-row v-if="!loading" class="align-center">
+            <v-col cols="3">
+              <div class="ps-5 d-flex align-center">
+                <v-select
+                  v-model="perPage"
+                  :items="[10, 50, 100, 500]"
+                  variant="outlined"
+                  hide-details
+                ></v-select>
+                <label
+                  for=""
+                  class="mb-2 d-block text-end ms-3 mt-1"
+                  style="font-size: 12px"
+                  >النتائج لكل صفحة</label
+                >
+              </div>
+            </v-col>
+            <v-col cols="9">
+              <v-pagination
+                v-model="page"
+                :length="
+                  invoices.totalElements
+                    ? Math.ceil(invoices.totalElements / perPage)
+                    : 1
+                "
+              ></v-pagination
+            ></v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
