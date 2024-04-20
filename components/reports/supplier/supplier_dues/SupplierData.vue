@@ -1,11 +1,7 @@
 <template>
   <div class="dues_supplier_payments">
-    <table
-      class="w-100 text-right"
-      dir="rtl"
-      style="border-radius: 12px; padding: 13px; background: #f0f0f0ba"
-      id="not_styled_print"
-    >
+    <table class="w-100 text-right" dir="rtl" style="border-radius: 12px; padding: 13px; background: #f0f0f0ba"
+      id="not_styled_print">
       <tbody>
         <tr>
           <th class="pb-2">اسم المورد:</th>
@@ -24,7 +20,7 @@
           </td>
           <th class="pb-2">تاريخ الي</th>
           <td>
-            {{ moment(moment(toDate, 'DD/MM/YYYY').add({ days: -1 })).format('DD/MM/YYYY') || "الكل" }}
+            {{ toDate }}
           </td>
         </tr>
       </tbody>
@@ -49,6 +45,7 @@ td {
   color: rgba(0, 0, 0, 0.69) !important;
   font-size: 14px;
 }
+
 th {
   font-size: 14px;
 }

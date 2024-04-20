@@ -237,9 +237,7 @@ const submitFilter = async () => {
       granaryId: data.value.granaryId,
       FromDate: data.value.FromDate ? data.value.FromDate : null,
       ToDate: data.value.ToDate
-        ? moment(
-            moment(data.value.ToDate, "DD/MM/YYYY").add({ days: 1 })
-          ).format("DD/MM/YYYY")
+        ? data.value.ToDate
         : null,
     };
     supplierChange(obj);
