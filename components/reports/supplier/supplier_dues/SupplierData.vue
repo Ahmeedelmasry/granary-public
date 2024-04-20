@@ -20,7 +20,7 @@
           </td>
           <th class="pb-2">تاريخ الي</th>
           <td>
-            {{ toDate }}
+            {{ toDate || 'الكل'}}
           </td>
         </tr>
       </tbody>

@@ -7,9 +7,10 @@
           <div class="input_parent position-relative">
             <v-autocomplete item-title="name" item-value="id" :items="suppliers.content" transition="slide-y-transition"
               variant="outlined" hide-details v-model="data.supplierId" auto-select-first return-object
-              :disabled="loading" placeholder="اختر المورد" name="supplier" id="supplier" :custom-filter="(item, text, obj) =>
-                  obj.title.toString().includes(text) ||
-                  obj.value.toString().includes(text)
+              :disabled="loading" placeholder="اختر المورد" name="supplier" id="supplier" :custom-filter="(item, text, obj) => {
+                return obj.title.toString().includes(text) ||
+                  obj.value.id.toString().includes(text)
+              }
                 ">
               <template v-slot:prepend-item>
                 <div class="d-flex ps-4 pe-2 py-2" style="justify-content: space-between">
@@ -36,8 +37,8 @@
             <v-autocomplete item-title="name" item-value="id" return-object :items="granaries.content"
               transition="slide-y-transition" variant="outlined" :disabled="loading" hide-details
               v-model="data.granaryId" placeholder="اختر الصومعة" :class="$v.$errors.find((el) => el.$property == 'granaryId')
-                  ? 'err_field'
-                  : ''
+                ? 'err_field'
+                : ''
                 "></v-autocomplete>
             <v-icon class="position-absolute">mdi-store-24-hour</v-icon>
           </div>
