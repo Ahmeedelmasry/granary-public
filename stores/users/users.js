@@ -48,7 +48,7 @@ export const userStore = defineStore("userStore", {
       await axios()({
         data: data,
         method: "PATCH",
-        url: `${mainStore().apiURL}/tax`,
+        url: `${mainStore().apiURL}/user`,
         headers: {
           Authorization: `Bearer ${authStore().token}`,
         },

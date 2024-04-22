@@ -3,7 +3,7 @@
     <SuppliersListing
       :suppliers="suppliers"
       :loading="loading"
-      @regetItems="getData($event.page, $event.limit)"
+      @regetItems="getData($event.page, $event.limit, $event.search)"
     />
   </div>
 </template>
@@ -39,9 +39,9 @@ const { suppliers } = storeToRefs(suppliersModule);
 const loading = ref(true);
 
 // Methods
-const getData = async (page, limit) => {
+const getData = async (page, limit, search = null) => {
   loading.value = true;
-  await suppliersModule.doGetSuppliers(page - 1, limit);
+  await suppliersModule.doGetSuppliers(page - 1, limit, search);
   loading.value = false;
 };
 

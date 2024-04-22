@@ -78,6 +78,19 @@
             <template v-slot:no-data>
               <div>لايوجد بيانات</div>
             </template>
+            <template v-slot:tfoot>
+              <tr v-if="totals">
+                <td colspan="2" style="font-size: 14px">الاجمالي</td>
+                <td style="font-size: 14px"></td>
+                <td style="font-size: 14px">
+                  {{ Number(totals.paid).toFixed(2) }}
+                </td>
+                <td style="font-size: 14px">
+                  {{ Number(totals.remain).toFixed(2) }}
+                </td>
+                <td style="font-size: 14px" class="hide_till_print_table"></td>
+              </tr>
+            </template>
           </v-data-table-server>
         </v-col>
       </v-row>
@@ -167,6 +180,22 @@ watch(
     });
   }
 );
+
+const totals = computed(() => {
+  const obj = {
+    paid: 0,
+    remain: 0,
+  };
+  if (props.payments?.content && props.payments.content.length) {
+    props.payments.content.forEach((el) => {
+      obj.paid += el.paid;
+      obj.remain += el.remain;
+    });
+    console.log(obj);
+    return obj;
+  }
+  return null;
+});
 </script>
 
 <style lang="scss"></style>

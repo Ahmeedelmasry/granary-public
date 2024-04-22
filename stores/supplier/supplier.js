@@ -8,13 +8,18 @@ export const supplierStore = defineStore("supplierStore", {
     suppliers: [],
   }),
   actions: {
-    async doGetSuppliers(page, limit) {
+    async doGetSuppliers(page, limit, search) {
       await axios()
-        .get(`${mainStore().apiURL}/supplier?page=${page}&size=${limit}`, {
-          headers: {
-            Authorization: `Bearer ${authStore().token}`,
-          },
-        })
+        .get(
+          `${mainStore().apiURL}/supplier?page=${page}&size=${limit}${
+            search ? `&searchText=${search}` : "&searchText="
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${authStore().token}`,
+            },
+          }
+        )
         .then((res) => {
           const cont = res.data.content.filter((el) => !el.locked);
           res.data.content = cont;

@@ -321,7 +321,10 @@ const roles = computed(() => {
     lastName: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
     role: { required: helpers.withMessage("هذا الحقل مطلوب", required) },
     password: {
-      required: helpers.withMessage("هذا الحقل مطلوب", required),
+      requiredUnless: helpers.withMessage(
+        "هذا الحقل مطلوب",
+        requiredUnless(props.toUpdate)
+      ),
       minLength: helpers.withMessage(
         "هذا الحقل يجب ان يتكون من 6 رقم",
         minLength(6)
@@ -439,19 +442,16 @@ const submitData = async () => {
     }
 
     delete obj.role;
+    if (!obj.password) delete obj.password;
+    if (obj.authorities.find((el) => el == "ADMIN")) delete obj.granaries;
 
     if (props.toUpdate) {
-      // const result = await supplierModule.doUpdateSupplier({
-      //   id: props.toUpdate.selectable.id,
-      //   name: data.value.name,
-      //   phone: data.value.phone,
-      //   nationalid: data.value.nationalid,
-      //   isLocked: false,
-      // });
-      // if (result) {
-      //   emits("regetData");
-      //   dialog.value = false;
-      // }
+      obj.id = props.toUpdate.id;
+      const result = await userModule.doUpdateUser(obj);
+      if (result) {
+        emits("regetData");
+        dialog.value = false;
+      }
     } else {
       const result = await userModule.doAddUser(obj);
       if (result) {

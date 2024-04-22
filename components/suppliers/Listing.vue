@@ -49,6 +49,38 @@
             no-data-text="لايوجد بيانات"
             show-current-page
           >
+            <template v-slot:thead>
+              <th colspan="5" style="background-color: white !important">
+                <div class="my-3">
+                  <form
+                    action=""
+                    @submit.prevent="
+                      emits('regetItems', {
+                        page: 1,
+                        limit: perPage,
+                        search,
+                      })
+                    "
+                  >
+                    <v-text-field
+                      class="w-100"
+                      hide-details
+                      variant="outlined"
+                      rounded="lg"
+                      v-model="search"
+                      prepend-icon="mdi-magnify"
+                      @click:prepend="
+                        emits('regetItems', {
+                          page: 1,
+                          limit: perPage,
+                          search,
+                        })
+                      "
+                    ></v-text-field>
+                  </form>
+                </div>
+              </th>
+            </template>
             <template v-slot:loading>
               <v-skeleton-loader type="table-row@6"></v-skeleton-loader>
             </template>
@@ -145,6 +177,7 @@
           emits('regetItems', {
             page: 1,
             limit: perPage,
+            search,
           })
       "
     />
@@ -157,6 +190,7 @@
         emits('regetItems', {
           page: 1,
           limit: perPage,
+          search,
         })
       "
     />
@@ -206,6 +240,7 @@ const openUpdate = ref(false);
 const openDelete = ref(false);
 const toUpdate = ref(null);
 const toDelete = ref(null);
+const search = ref(null);
 const page = ref(1);
 const perPage = ref(10);
 
