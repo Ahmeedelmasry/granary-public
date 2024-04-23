@@ -39,7 +39,7 @@
           v-if="data.length && !loading"
         >
           <h1 dir="rtl" class="my-2 hide_till_print main_report_heading">
-            اجمالي تراكمي ال{{ product.name }}
+            اجمالي تراكمي ال{{ product?.name }}
           </h1>
           <table dir="rtl" class="w-100" id="normal_table">
             <thead>
