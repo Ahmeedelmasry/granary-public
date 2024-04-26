@@ -7,6 +7,7 @@
           <div class="input_parent position-relative">
             <v-autocomplete
               item-title="client.name"
+              autocomplete="off"
               item-value="client.id"
               :items="clientLockup"
               transition="slide-y-transition"
@@ -38,6 +39,7 @@
           <label for="granaryId">اختر الصومعة</label>
           <div class="input_parent position-relative">
             <v-autocomplete
+              autocomplete="off"
               item-title="name"
               item-value="id"
               :items="getRelatedGranaries"

@@ -7,6 +7,7 @@
           <div class="input_parent position-relative">
             <v-autocomplete
               item-title="name"
+              autocomplete="off"
               item-value="id"
               :items="suppliers.content"
               transition="slide-y-transition"

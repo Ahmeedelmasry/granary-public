@@ -5,9 +5,18 @@
         <div class="field_container">
           <label for="granaryId">اختر الصومعة</label>
           <div class="input_parent position-relative">
-            <v-autocomplete item-title="name" item-value="id" :items="granaries.content" transition="slide-y-transition"
-              variant="outlined" :disabled="loading" hide-details v-model="data.granaryId"
-              placeholder="اختر الصومعة"></v-autocomplete>
+            <v-autocomplete
+              item-title="name"
+              item-value="id"
+              :items="granaries.content"
+              transition="slide-y-transition"
+              variant="outlined"
+              autocomplete="off"
+              :disabled="loading"
+              hide-details
+              v-model="data.granaryId"
+              placeholder="اختر الصومعة"
+            ></v-autocomplete>
             <v-icon class="position-absolute">mdi-store-24-hour</v-icon>
           </div>
         </div>
@@ -17,9 +26,20 @@
         <div class="field_container">
           <label for="productId">المنتج</label>
           <div class="input_parent position-relative">
-            <v-autocomplete return-object :items="products.content" item-title="name" item-value="id" name="productId"
-              id="productId" v-model="data.productId" variant="outlined" placeholder="اختر المنتج"
-              @update:model-value="data.productTypeId = null" hide-details></v-autocomplete>
+            <v-autocomplete
+              autocomplete="off"
+              return-object
+              :items="products.content"
+              item-title="name"
+              item-value="id"
+              name="productId"
+              id="productId"
+              v-model="data.productId"
+              variant="outlined"
+              placeholder="اختر المنتج"
+              @update:model-value="data.productTypeId = null"
+              hide-details
+            ></v-autocomplete>
             <v-icon class="position-absolute">mdi-basket</v-icon>
           </div>
         </div>
@@ -28,9 +48,20 @@
         <div class="field_container">
           <label for="productTypeId">الفرز</label>
           <div class="input_parent position-relative">
-            <v-autocomplete return-object :items="productTypes" item-title="productType.name" item-value="id"
-              variant="outlined" name="productTypeId" id="productTypeId" no-data-text="لايوجد بيانات"
-              v-model="data.productTypeId" hide-details placeholder="اختر الفرز"></v-autocomplete>
+            <v-autocomplete
+              autocomplete="off"
+              return-object
+              :items="productTypes"
+              item-title="productType.name"
+              item-value="id"
+              variant="outlined"
+              name="productTypeId"
+              id="productTypeId"
+              no-data-text="لايوجد بيانات"
+              v-model="data.productTypeId"
+              hide-details
+              placeholder="اختر الفرز"
+            ></v-autocomplete>
             <v-icon class="position-absolute">mdi-sitemap </v-icon>
           </div>
         </div>
@@ -39,9 +70,16 @@
         <div class="field_container">
           <label for="creationFromDate">من</label>
           <div class="input_parent position-relative">
-            <flat-pickr name="date_from" id="date_from" v-model="data.creationFromDate" :config="config"
-              placeholder="سنة/يوم/شهر" />
-            <v-icon class="position-absolute" style="z-index: -1">mdi-calendar</v-icon>
+            <flat-pickr
+              name="date_from"
+              id="date_from"
+              v-model="data.creationFromDate"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
+            />
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -49,9 +87,16 @@
         <div class="field_container">
           <label for="creationToDate">الي</label>
           <div class="input_parent position-relative">
-            <flat-pickr name="date_from" id="date_from" v-model="data.creationToDate" :config="config"
-              placeholder="سنة/يوم/شهر" />
-            <v-icon class="position-absolute" style="z-index: -1">mdi-calendar</v-icon>
+            <flat-pickr
+              name="date_from"
+              id="date_from"
+              v-model="data.creationToDate"
+              :config="config"
+              placeholder="سنة/يوم/شهر"
+            />
+            <v-icon class="position-absolute" style="z-index: -1"
+              >mdi-calendar</v-icon
+            >
           </div>
         </div>
       </v-col>
@@ -87,9 +132,24 @@
           </div>
         </div>
       </v-col> -->
-      <v-col cols="12" sm="6" md="4" lg="3" class="pb-1" style="display: flex; align-items: flex-end">
-        <v-btn color="blue" width="100" height="40" elevation="0" @click="submitFilter" class="font-weight-bold"
-          :disabled="loading">بحث</v-btn>
+      <v-col
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+        class="pb-1"
+        style="display: flex; align-items: flex-end"
+      >
+        <v-btn
+          color="blue"
+          width="100"
+          height="40"
+          elevation="0"
+          @click="submitFilter"
+          class="font-weight-bold"
+          :disabled="loading"
+          >بحث</v-btn
+        >
       </v-col>
     </v-row>
   </div>
@@ -160,12 +220,8 @@ const submitFilter = () => {
     productTypeId: data.value.productTypeId
       ? data.value.productTypeId.id
       : null,
-    FromDate: data.value.creationFromDate
-      ? data.value.creationFromDate
-      : null,
-    ToDate: data.value.creationToDate
-      ? data.value.creationToDate
-      : null,
+    FromDate: data.value.creationFromDate ? data.value.creationFromDate : null,
+    ToDate: data.value.creationToDate ? data.value.creationToDate : null,
     // FromDate: data.value.FromDate ? data.value.FromDate : null,
     // ToDate: data.value.ToDate
     //   ? moment(data.value.ToDate).format("DD/MM/YYYY")

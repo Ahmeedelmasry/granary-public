@@ -11,6 +11,7 @@
               :items="users.content"
               transition="slide-y-transition"
               variant="outlined"
+              autocomplete="off"
               hide-details
               v-model="data.userId"
               auto-select-first
