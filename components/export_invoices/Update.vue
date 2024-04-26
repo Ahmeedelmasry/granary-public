@@ -65,7 +65,7 @@
                   <label for="supplier">المورد</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
-              autocomplete="off"
+                      autocomplete="off"
                       return-object
                       :items="suppliers.content"
                       item-value="id"
@@ -236,7 +236,7 @@
                   <label for="product">المنتج</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
-              autocomplete="off"
+                      autocomplete="off"
                       return-object
                       :items="products.content"
                       item-title="name"
@@ -274,7 +274,7 @@
                   <label for="productType">الفرز</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
-              autocomplete="off"
+                      autocomplete="off"
                       return-object
                       :items="productTypes"
                       item-title="productType.name"
@@ -411,7 +411,7 @@
                   <label for="productUnit">وحدة التعبئة</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
-              autocomplete="off"
+                      autocomplete="off"
                       item-title="name"
                       item-value="id"
                       return-object
@@ -1042,6 +1042,21 @@ const submitData = async () => {
 
 // Hooks
 onMounted(async () => {
+  // document.documentElement.addEventListener("keyup", (event) => {
+  //   if (
+  //     event.key === "Tab" &&
+  //     event.target.value
+  //   ) {
+  //     const tabEvent = new KeyboardEvent("keydown", {
+  //       key: "Tab",
+  //       code: "Tab",
+  //       keyCode: 9,
+  //       which: 9,
+  //     });
+  //     event.target.dispatchEvent(tabEvent);
+  //   }
+  // });
+
   dialog.value = props.openPopup;
 
   await Promise.all([
