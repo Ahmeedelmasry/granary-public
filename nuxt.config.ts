@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   //   port: 5000,
   // },
   nitro: {
-    preset: "node",
+    preset: "node-server",
     compressPublicAssets: true,
   },
   // app: {
