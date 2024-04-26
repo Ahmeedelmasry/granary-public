@@ -21,6 +21,7 @@
                   <label for="granary">الصومعة</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
+                      autocomplete="off"
                       return-object
                       :disabled="
                         !loggerData.authorities.find(
@@ -64,6 +65,7 @@
                   <label for="supplier">المورد</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
+              autocomplete="off"
                       return-object
                       :items="suppliers.content"
                       item-value="id"
@@ -234,6 +236,7 @@
                   <label for="product">المنتج</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
+              autocomplete="off"
                       return-object
                       :items="products.content"
                       item-title="name"
@@ -271,6 +274,7 @@
                   <label for="productType">الفرز</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
+              autocomplete="off"
                       return-object
                       :items="productTypes"
                       item-title="productType.name"
@@ -407,6 +411,7 @@
                   <label for="productUnit">وحدة التعبئة</label>
                   <div class="input_parent position-relative">
                     <v-autocomplete
+              autocomplete="off"
                       item-title="name"
                       item-value="id"
                       return-object

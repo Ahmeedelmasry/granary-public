@@ -9,6 +9,7 @@
               item-title="client.name"
               item-value="client.id"
               :items="clientLockup"
+              autocomplete="off"
               transition="slide-y-transition"
               variant="outlined"
               hide-details
@@ -37,6 +38,7 @@
           <div class="input_parent position-relative">
             <v-autocomplete
               item-title="name"
+              autocomplete="off"
               item-value="id"
               :items="
                 loggerData.authorities.find((el) => el.authority == 'ADMIN')

@@ -8,6 +8,7 @@
             <v-autocomplete
               return-object
               :items="products.content"
+              autocomplete="off"
               item-title="name"
               item-value="id"
               name="productId"

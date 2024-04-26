@@ -10,6 +10,7 @@
               item-value="id"
               :items="suppliers.content"
               transition="slide-y-transition"
+              autocomplete="off"
               variant="outlined"
               hide-details
               v-model="data.supplierId"
@@ -58,6 +59,7 @@
           <div class="input_parent position-relative">
             <v-autocomplete
               item-title="name"
+              autocomplete="off"
               item-value="id"
               :items="granaries.content"
               transition="slide-y-transition"
@@ -77,6 +79,7 @@
           <label for="productId">المنتج</label>
           <div class="input_parent position-relative">
             <v-autocomplete
+              autocomplete="off"
               return-object
               :items="products.content"
               item-title="name"
@@ -98,6 +101,7 @@
           <label for="productTypeId">الفرز</label>
           <div class="input_parent position-relative">
             <v-autocomplete
+              autocomplete="off"
               return-object
               :items="productTypes"
               item-title="productType.name"

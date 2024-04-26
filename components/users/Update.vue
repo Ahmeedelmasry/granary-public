@@ -141,6 +141,7 @@
                   <div class="input_parent position-relative">
                     <v-autocomplete
                       :items="createUserRoles"
+              autocomplete="off"
                       item-title="name"
                       variant="outlined"
                       placeholder="دور المستخدم"
@@ -172,6 +173,7 @@
                   <div class="input_parent position-relative">
                     <v-autocomplete
                       :items="granaries.content"
+              autocomplete="off"
                       item-title="name"
                       item-value="id"
                       variant="outlined"

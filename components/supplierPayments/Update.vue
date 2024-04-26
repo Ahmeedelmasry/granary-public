@@ -2,7 +2,10 @@
   <div class="update_banner">
     <v-dialog v-model="dialog" width="800" persistent>
       <v-card>
-        <v-card-title class="mb-0 text-center bg-grey-lighten-3 main_title font-weight-bold" style="font-size: 22px">
+        <v-card-title
+          class="mb-0 text-center bg-grey-lighten-3 main_title font-weight-bold"
+          style="font-size: 22px"
+        >
           {{ toUpdate ? "تعديل بيانات السداد" : "ادخال سداد جديد" }}
         </v-card-title>
         <v-form class="px-5" @submit.prevent="submitData">
@@ -12,28 +15,52 @@
                 <div class="field_container">
                   <label for="typeName">اختر المورد</label>
                   <div class="input_parent position-relative">
-                    <v-autocomplete item-title="name" item-value="id" auto-select-first :items="suppliers.content"
-                      return-object transition="slide-y-transition" variant="outlined" placeholder="اختر المورد"
-                      hide-details @update:model-value="
+                    <v-autocomplete
+              autocomplete="off"
+                      item-title="name"
+                      item-value="id"
+                      auto-select-first
+                      :items="suppliers.content"
+                      return-object
+                      transition="slide-y-transition"
+                      variant="outlined"
+                      placeholder="اختر المورد"
+                      hide-details
+                      @update:model-value="
                         supplierFound ? (supplierFound = false) : false
-                        " v-model="searchForm.supplier" :class="$v_search.$errors.find(
-                        (el) => el.$property == 'supplier'
-                      )
+                      "
+                      v-model="searchForm.supplier"
+                      :class="
+                        $v_search.$errors.find(
+                          (el) => el.$property == 'supplier'
+                        )
                           ? 'err_field'
                           : ''
-                        " name="supplier" id="supplier" :custom-filter="(item, text, obj) =>
+                      "
+                      name="supplier"
+                      id="supplier"
+                      :custom-filter="
+                        (item, text, obj) =>
                           obj.title.toString().includes(text) ||
                           obj.value.id.toString().includes(text)
-                        ">
+                      "
+                    >
                       <template v-slot:prepend-item>
-                        <div class="d-flex ps-4 pe-2 py-2" style="justify-content: space-between">
+                        <div
+                          class="d-flex ps-4 pe-2 py-2"
+                          style="justify-content: space-between"
+                        >
                           <span>الاسم</span>
                           <span>الكود</span>
                         </div>
                       </template>
 
                       <template v-slot:item="{ props, item }">
-                        <div v-bind="props" class="d-flex select_slot" style="justify-content: space-between">
+                        <div
+                          v-bind="props"
+                          class="d-flex select_slot"
+                          style="justify-content: space-between"
+                        >
                           <v-list-item>{{ item.raw.name }}</v-list-item>
                           <v-list-item>{{ item.raw.id }}</v-list-item>
                         </div>
@@ -42,9 +69,12 @@
                     <v-icon class="position-absolute">mdi-store-24-hour</v-icon>
                   </div>
                 </div>
-                <span class="err_msg" v-if="
-                  $v_search.$errors.find((el) => el.$property == 'supplier')
-                ">
+                <span
+                  class="err_msg"
+                  v-if="
+                    $v_search.$errors.find((el) => el.$property == 'supplier')
+                  "
+                >
                   {{
                     $v_search.$errors.find((el) => el.$property == "supplier")
                       .$message
@@ -55,26 +85,45 @@
                 <div class="field_container">
                   <label for="typeName">اختر الصومعة</label>
                   <div class="input_parent position-relative">
-                    <v-autocomplete item-title="name" item-value="id" :items="loggerData.authorities.find(
-                      (el) => el.authority == 'ADMIN'
-                    )
-                        ? granaries.content
-                        : loggerData.granaries
-                      " return-object transition="slide-y-transition" variant="outlined" placeholder="اختر الصومعة"
-                      hide-details v-model="searchForm.granary" @update:model-value="
+                    <v-autocomplete
+                      item-title="name"
+              autocomplete="off"
+                      item-value="id"
+                      :items="
+                        loggerData.authorities.find(
+                          (el) => el.authority == 'ADMIN'
+                        )
+                          ? granaries.content
+                          : loggerData.granaries
+                      "
+                      return-object
+                      transition="slide-y-transition"
+                      variant="outlined"
+                      placeholder="اختر الصومعة"
+                      hide-details
+                      v-model="searchForm.granary"
+                      @update:model-value="
                         supplierFound ? (supplierFound = false) : false
-                        " :class="$v_search.$errors.find(
-                        (el) => el.$property == 'granary'
-                      )
+                      "
+                      :class="
+                        $v_search.$errors.find(
+                          (el) => el.$property == 'granary'
+                        )
                           ? 'err_field'
                           : ''
-                        "></v-autocomplete>
-                    <v-icon class="position-absolute">mdi-account-cowboy-hat</v-icon>
+                      "
+                    ></v-autocomplete>
+                    <v-icon class="position-absolute"
+                      >mdi-account-cowboy-hat</v-icon
+                    >
                   </div>
                 </div>
-                <span class="err_msg" v-if="
-                  $v_search.$errors.find((el) => el.$property == 'granary')
-                ">
+                <span
+                  class="err_msg"
+                  v-if="
+                    $v_search.$errors.find((el) => el.$property == 'granary')
+                  "
+                >
                   {{
                     $v_search.$errors.find((el) => el.$property == "granary")
                       .$message
@@ -83,18 +132,37 @@
               </v-col>
               <v-col cols="12" v-if="!supplierFound">
                 <div class="text-center">
-                  <v-btn color="blue" width="100" class="mr-3" :loading="searchLoading"
-                    @click="searchSupplier">بحث</v-btn>
-                  <v-btn color="red" width="100" class="mr-3" :disabled="searchLoading"
-                    @click="dialog = false">الغاء</v-btn>
+                  <v-btn
+                    color="blue"
+                    width="100"
+                    class="mr-3"
+                    :loading="searchLoading"
+                    @click="searchSupplier"
+                    >بحث</v-btn
+                  >
+                  <v-btn
+                    color="red"
+                    width="100"
+                    class="mr-3"
+                    :disabled="searchLoading"
+                    @click="dialog = false"
+                    >الغاء</v-btn
+                  >
                 </div>
               </v-col>
               <v-col cols="12" md="6" v-if="supplierFound">
                 <div class="field_container">
                   <label for="typeName">القيمة المستحقة</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off" type="text" :value="supplierInvoice" placeholder="القيمة المستحقة"
-                      name="typeName" id="typeName" readonly />
+                    <input
+                      autocomplete="off"
+                      type="text"
+                      :value="supplierInvoice"
+                      placeholder="القيمة المستحقة"
+                      name="typeName"
+                      id="typeName"
+                      readonly
+                    />
                     <v-icon class="position-absolute">mdi-currency-usd</v-icon>
                   </div>
                 </div>
@@ -103,15 +171,26 @@
                 <div class="field_container">
                   <label for="typeName">قيمة السداد</label>
                   <div class="input_parent position-relative">
-                    <input autocomplete="off" type="text" v-model="data.amount" placeholder="قيمة السداد"
-                      name="typeName" id="typeName" :class="$v.$errors.find((el) => el.$property == 'amount')
+                    <input
+                      autocomplete="off"
+                      type="text"
+                      v-model="data.amount"
+                      placeholder="قيمة السداد"
+                      name="typeName"
+                      id="typeName"
+                      :class="
+                        $v.$errors.find((el) => el.$property == 'amount')
                           ? 'err_field'
                           : ''
-                        " />
+                      "
+                    />
                     <v-icon class="position-absolute">mdi-currency-usd</v-icon>
                   </div>
                 </div>
-                <span class="err_msg" v-if="$v.$errors.find((el) => el.$property == 'amount')">
+                <span
+                  class="err_msg"
+                  v-if="$v.$errors.find((el) => el.$property == 'amount')"
+                >
                   {{
                     $v.$errors.find((el) => el.$property == "amount").$message
                   }}
@@ -121,17 +200,28 @@
                 <div class="field_container">
                   <label for="typeName">تاريخ السداد</label>
                   <div class="input_parent position-relative">
-                    <div :class="$v.$errors.find((el) => el.$property == 'date')
-                        ? 'err_field'
-                        : ''
-                      ">
-                      <flat-pickr name="date_from" id="date_from" v-model="data.date" :config="config"
-                        placeholder="سنة/يوم/شهر" />
+                    <div
+                      :class="
+                        $v.$errors.find((el) => el.$property == 'date')
+                          ? 'err_field'
+                          : ''
+                      "
+                    >
+                      <flat-pickr
+                        name="date_from"
+                        id="date_from"
+                        v-model="data.date"
+                        :config="config"
+                        placeholder="سنة/يوم/شهر"
+                      />
                       <v-icon class="position-absolute">mdi-calendar</v-icon>
                     </div>
                   </div>
                 </div>
-                <span class="err_msg" v-if="$v.$errors.find((el) => el.$property == 'date')">
+                <span
+                  class="err_msg"
+                  v-if="$v.$errors.find((el) => el.$property == 'date')"
+                >
                   {{ $v.$errors.find((el) => el.$property == "date").$message }}
                 </span>
               </v-col>
@@ -139,15 +229,29 @@
                 <div class="field_container">
                   <label for="typeName">ملاحظات <span>(اختياري)</span></label>
                   <div class="input_parent position-relative">
-                    <textarea type="text" v-model="data.notes" placeholder="ملاحظات" name="typeName" id="typeName"
-                      :class="$v.$errors.find((el) => el.$property == 'notes')
+                    <textarea
+                      type="text"
+                      v-model="data.notes"
+                      placeholder="ملاحظات"
+                      name="typeName"
+                      id="typeName"
+                      :class="
+                        $v.$errors.find((el) => el.$property == 'notes')
                           ? 'err_field'
                           : ''
-                        " style="resize: none" rows="4"></textarea>
-                    <v-icon class="position-absolute" style="top: 22px">mdi-note-edit-outline</v-icon>
+                      "
+                      style="resize: none"
+                      rows="4"
+                    ></textarea>
+                    <v-icon class="position-absolute" style="top: 22px"
+                      >mdi-note-edit-outline</v-icon
+                    >
                   </div>
                 </div>
-                <span class="err_msg" v-if="$v.$errors.find((el) => el.$property == 'notes')">notes
+                <span
+                  class="err_msg"
+                  v-if="$v.$errors.find((el) => el.$property == 'notes')"
+                  >notes
                   {{
                     $v.$errors.find((el) => el.$property == "notes").$message
                   }}
@@ -156,8 +260,17 @@
             </v-row>
           </v-container>
           <div class="actions text-center mb-7" v-if="supplierFound">
-            <v-btn color="green" type="submit" width="100" :loading="btnLoading">حفظ</v-btn>
-            <v-btn color="red" class="ml-3" @click="dialog = false" :disabled="btnLoading" width="100">الغاء</v-btn>
+            <v-btn color="green" type="submit" width="100" :loading="btnLoading"
+              >حفظ</v-btn
+            >
+            <v-btn
+              color="red"
+              class="ml-3"
+              @click="dialog = false"
+              :disabled="btnLoading"
+              width="100"
+              >الغاء</v-btn
+            >
           </div>
         </v-form>
       </v-card>
