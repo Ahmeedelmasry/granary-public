@@ -13,7 +13,6 @@ export const authStore = defineStore("authStore", {
     decodeToken(token) {
       const decoded = jwtDecode(token);
       this.loggerData = decoded;
-      console.log(decoded);
       if (!this.loggerData.authorities.find((el) => el.authority == "ADMIN")) {
         if (useCookie("selected_granary").value) {
           this.selected_granary = [useCookie("selected_granary").value];

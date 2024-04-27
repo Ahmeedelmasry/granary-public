@@ -113,7 +113,6 @@ export const userStore = defineStore("userStore", {
         )
         .then((res) => {
           result = true;
-          console.log(res.data, "Transfers");
           this.transfers = res.data;
         })
         .catch((err) => {
@@ -167,7 +166,6 @@ export const userStore = defineStore("userStore", {
         )
         .then((res) => {
           result = true;
-          console.log(res.data, "Payments");
           this.payments = res.data;
         })
         .catch((err) => {

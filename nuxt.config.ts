@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devServer: {
-    port: 3001,
-  },
+  // devServer: {
+  //   port: 3001,
+  // },
   nitro: {
     preset: "node-server",
     compressPublicAssets: true,

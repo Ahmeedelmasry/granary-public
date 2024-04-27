@@ -11,7 +11,6 @@ export const supplierPaymentsStore = defineStore("supplierPaymentsStore", {
   }),
   actions: {
     async doGetPayments(page, limit, filters) {
-      console.log(filters)
       await axios()
         .get(
           `${mainStore().apiURL}/supplierPayment?page=${page}&size=${limit}${
